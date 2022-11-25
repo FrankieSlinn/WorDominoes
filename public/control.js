@@ -320,12 +320,17 @@ let dominoesPlaced = 0;
 let rotated = false;
 let chosen1Temp = 0; 
 let chosen2Temp = 0;
+let testExport = "testExport works!!!";
+let score = 0;
 //Initial domino allocation 5
 console.log(letters.length);
 console.log("dominoes length", dominoes.length);
 
-//Database
+score = document.getElementById("score")
+score.value = 100;
+console.log("score value", score.value);
 
+//Database
 
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length-1)));
@@ -533,7 +538,6 @@ for (let i = 0; i < letterHand.length; i++) {
   document.querySelector(tiles[i]).innerHTML = `${letterHand[i]}`;
 }
 }
-
 
 //Make Word 1st field
 
@@ -839,7 +843,6 @@ document.querySelector(".submit2").addEventListener("click", function () {
 });
 //selectDomGrid();
 
-
   for (let i = 0; i < gridTiles.length; i++) {
    
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
@@ -884,7 +887,6 @@ document.querySelector(".submit2").addEventListener("click", function () {
       }
     }
   });
-
 
 
 function rotation(){
@@ -1069,9 +1071,7 @@ function evaluateGrid(i) {
   
     tilesPlaced = true;
 
-
     document.querySelector(".chosenDom").style["display"] = "none";
-
 
   } else {
     console.log(" no fits");
@@ -1082,7 +1082,6 @@ function evaluateGrid(i) {
     gridValues[i][1]=0;
     tilesPlaced = false;
     i="";
-
 
 
     for (let i = 0; i < gridTiles.length; i++) {
@@ -1170,7 +1169,6 @@ function displayTile(i){
     chosen1 = chosen1; 
     chosen2 = chosen2;
 }};
-
 
 //give new word tiles and domino after first go
 function newTilesDominoes() {
@@ -1288,7 +1286,6 @@ function resetNextTurn() {
   //chosen1 = 0;
   //chosen2 = 0;
 
-
   //selDomValue();
 }
 document.querySelector(".giveUp").addEventListener("click", function(){
@@ -1302,4 +1299,6 @@ document.querySelector(".giveUp").addEventListener("click", function(){
   document.querySelector(".presentLet").innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".presentLet").style['font-size'] = "2rem";
 });
-localStorage.setItem("test", JSON.stringify("IT WORKS!!!!!"));
+
+
+//

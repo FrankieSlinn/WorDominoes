@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorDominoes</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="/../style.css"> 
 </head>
 <body>
     <nav>
@@ -110,17 +110,49 @@
           <div class = "tile12 tile"></div>
           <div class = "tile13 tile"></div>
           <div class = "tile14 tile"></div>
-          <div class = "tile15 tile"></div>
+          < class = "tile15 tile"><//div>
   </div>
-      </div>
 
+      </div>
       
+ 
+    
+      
+      <form action="/example" method="POST">
+        Handle: <input type="text" name="lname" id = "lname"><br>
+        <input type="hidden" name="score" id = "score"><br>     
+       <button type="submit">Send to backend</button>
+      </form>
+  
       <br>
+      <h2> Quotes </h2>
+      <ul class="quotes">
+        <!-- Loop through quotes -->
+        <script>
+          let highestScores = [];
+          let min = Math.min(highestScores);
+          </script>
+        <% for(var i = 0; i < quotes.length; i++) {%>
+       
+          <li class="quote">
+            <!-- Output name from the iterated quote object -->
+            <span><%= quotes[i].lname %></span>:
+            <!-- Output quote from the iterated quote object -->
+            <span><%= quotes[i].score %></span>
+          </li>
+        <% } %>
+      </ul>
+      <%- include ("./partials/header") %>
+
+
       <button class = giveUp>Give Up</button>
+
+ 
+     
                 <div class = "coffee">🖤 WorDominoes? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>     
         <footer class = "copyright">@2022 F. Kissling</footer>    
      </div>   
-    <script src="control.js"></script>
+    <script src="../control.js"></script>
 
 </body>
 </html>
