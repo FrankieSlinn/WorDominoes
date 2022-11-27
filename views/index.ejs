@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorDominoes</title>
-    <link rel="stylesheet" href="/../style.css"> 
+    <link rel="stylesheet" href="/../style.css" type="text/css"> 
 </head>
 <body>
     <nav>
@@ -60,11 +60,9 @@
           <div class = "domGrid12 domG"></div>
      
         </div>
+        </div>
   
-        <br>
-       </div>
-    
-        <br>
+
         
         <div class = "domHand">
           <button class = "dom1 dom"></button>
@@ -72,29 +70,32 @@
           <button class = "dom3 dom"></button>
           <button class = "dom4 dom"></button>
         </div>
-       
+        
         <p class = "presentLet">Choose a domino above. You'll create 2 words for this tile: each word needs to be the length of its  side of the domino</p>
         <br>
         <br>
         <div class = "chosenDomContainer">
           <div class = "chosenDom"></div>
-          </div>
+        </div>
+
         <div class = "textSubmit">
         <div class = "feedback1"></div>
-        <div class = "wordText1 wordText" placeHoler = "Select tiles below to make a word"></div>
+        
         <div class = "word1Instruct wordInstruct"></div>
+        <div class = "wordText1 wordText" placeholder = "Select tiles below to make a word"></div>
         <div class = "buttons1" hidden>
         <button class = "redo1 redo">Redo First Word</button>
         <button class = "submit1 submit">Submit First Word</button>
         </div>
         <div class = "feedback2"></div>
-        <div class = "wordText2 wordText"></div>
+   
         <div class = "word2Instruct wordInstruct" hidden>Select Tiles Below to Make the second Word</div>
+        <div class = "wordText2 wordText"></div>
         <div class = "buttons2" hidden>
         <button class = "redo2 redo">Redo Second Word</button>
         <button class = "submit2 submit">Submit Second Word</button>
+          </div> 
         </div>
-   
         <div class = "handLetters" hidden>
           <div class = "tile1 tile"></div>
           <div class = "tile2 tile"></div>
@@ -110,48 +111,44 @@
           <div class = "tile12 tile"></div>
           <div class = "tile13 tile"></div>
           <div class = "tile14 tile"></div>
-          < class = "tile15 tile"><//div>
+          <div class = "tile15 tile"><div>
+            
   </div>
-
-      </div>
-      
+        
  
-    
-      
+  </div>
+  </div>
+ 
+  <div class = "giveUpContainer">
+    <p class = scoreMessage></p>
+   <button class = "giveUp">Give Up</button>
+  </div>
+  <br>
+  <br>      
+ 
+    <div class = "hallOfFame" hidden>
+      <p class = "hallOfFameMessage">Congratulations, you made it into the Hall of Fame! Enter a Handle and See How You Have Done Against the Others.</p>
+      <br>
+      <br>
       <form action="/example" method="POST">
         Handle: <input type="text" name="lname" id = "lname"><br>
         <input type="hidden" name="score" id = "score"><br>     
-       <button type="submit">Send to backend</button>
+       <button type="submit">Get into Hall of Fame</button>
       </form>
   
-      <br>
-      <h2> Quotes </h2>
-      <ul class="quotes">
-        <!-- Loop through quotes -->
-        <script>
-          let highestScores = [];
-          let min = Math.min(highestScores);
-          </script>
-        <% for(var i = 0; i < quotes.length; i++) {%>
-       
-          <li class="quote">
-            <!-- Output name from the iterated quote object -->
-            <span><%= quotes[i].lname %></span>:
-            <!-- Output quote from the iterated quote object -->
-            <span><%= quotes[i].score %></span>
-          </li>
-        <% } %>
-      </ul>
-      <%- include ("./partials/header") %>
 
-
-      <button class = giveUp>Give Up</button>
-
+     </div>
  
+</div>
+
      
-                <div class = "coffee">🖤 WorDominoes? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>     
-        <footer class = "copyright">@2022 F. Kissling</footer>    
-     </div>   
+                
+ 
+<footer>
+          <div class = "coffee">🖤 WorDominoes? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>
+          <div class = "copyright"> @2022 F. Kissling</div>
+ </footer class = "footer">    
+     
     <script src="../control.js"></script>
 
 </body>

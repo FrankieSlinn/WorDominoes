@@ -1,0 +1,16 @@
+<p>Hall of Fame</p>
+
+<ul class="quotes">
+    <!-- Loop through quotes -->
+ 
+    <% for(var i = 0; i < quotes.length; i++) {%>
+   
+      <li class="quote">
+        <!-- Output name from the iterated quote object -->
+        <span><%= quotes[i].lname %></span>:
+        <!-- Output quote from the iterated quote object -->
+        <span><%= quotes[i].score %></span>
+      </li>
+    <% } %>
+  </ul>
+  <%- include ("./partials/header") %>

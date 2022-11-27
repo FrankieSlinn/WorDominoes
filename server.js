@@ -29,12 +29,15 @@ MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mong
 
     }
   )
+  app.get('/', (req,res)=>{
+    res.render('index.ejs')
+  })
 
 //test
-app.get('/', (req,res)=>{
+app.get('/hallOfFame', (req,res)=>{
   db.collection('quotes').find().toArray()
     .then(results => {
-      res.render('index.ejs', { quotes: results })
+      res.render('hallOfFame.ejs', { quotes: results })
     })
 })
 

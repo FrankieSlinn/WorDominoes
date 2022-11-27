@@ -326,11 +326,13 @@ let score = 0;
 console.log(letters.length);
 console.log("dominoes length", dominoes.length);
 
+//Set up score so compatible with backend. Test value
+
 score = document.getElementById("score")
 score.value = 100;
 console.log("score value", score.value);
 
-//Database
+document.querySelector(".textSubmit").style["display"] = "none";
 
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length-1)));
@@ -415,6 +417,7 @@ let selDomValue = function () {
       console.log("selDomValue running");
       console.log("dominoHand before selection", dominoHand);
       document.querySelector(doms[j]).addEventListener("click", function () {
+        document.querySelector(".textSubmit").style["display"] = "inline-block";
         chosenDomIndex = j;
         domHandValues.push(...Object.values(dominoHand[j]));
         chosenKey.push(...Object.keys(dominoHand[j]));
@@ -456,6 +459,9 @@ let selDomValue = function () {
         document.querySelector(
           ".wordText2"
         ).style['display'] = "none";
+        document.querySelector(
+          ".giveUp"
+        ).style['display'] = "inline-block";
         //domHandFirst.concat.apply = [...domHandValues];
         console.log("chosen1, chosen2", chosen1, chosen2);
         chosenValue = String(chosen1 + chosen2);
@@ -1040,6 +1046,8 @@ function evaluateGrid(i) {
       score+=gridValues[i][1];
     }
     score = score+30; 
+    score.value = score;
+    console.log("scorevalue", score.value);
     localStorage.setItem("score", JSON.stringify(score));
       document.querySelector(".instruction").innerHTML =
         `Congratulations, You have achieved Word Domination! Your score is ${score}`;
@@ -1294,10 +1302,11 @@ document.querySelector(".giveUp").addEventListener("click", function(){
     score+=gridValues[i][0];
     score+=gridValues[i][1];
   }
+  score.value = score;
   localStorage.setItem("score", JSON.stringify(score));
 
   document.querySelector(".presentLet").innerHTML = `You Have Scored ${score} Points`;
-  document.querySelector(".presentLet").style['font-size'] = "2rem";
+  document.querySelector(".presentLet").style['font-size'] = "1.5rem";
 });
 
 

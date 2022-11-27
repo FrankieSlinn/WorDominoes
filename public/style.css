@@ -190,6 +190,7 @@ color: #333;
   grid-row: 2;
 }
 
+
 .chosenDomContainer{
   text-align: center;
   justify-content: center;
@@ -204,21 +205,21 @@ margin-bottom: -5rem;
 }
 
 .textSubmit{
-  display: inline-grid;
+  display: inline-grid !important;
   grid-auto-columns: minmax(150px, 1fr);
-
-  grid-template-rows: 1.5rem 3rem 3rem 5rem;
-  grid-row-gap: 1.5rem;
+  grid-template-rows: 1.5rem 3rem 3rem 3rem;
+  grid-row-gap: 1rem;
   grid-column-gap: 2rem;
  text-align: center;
- margin-top: -4rem;
- margin: 0 5rem;
+ margin-top: 0rem;
+ margin-bottom: -2rem;
+ margin-left: 2rem;
+ margin-right: 2rem;
+
+
  padding: 0rem;
-
-
   align-items: center;
-  margin: 1rem 2rem;
-  width: 65%;
+  width: 100%;
 }
 
 
@@ -270,31 +271,38 @@ margin-bottom: -5rem;
   grid-column: 2;
   grid-row: 3;
 }
-.handLetters{
-padding-top: 1rem;
-  align-items: center;
+/*.handLetters{
 
-  grid-column: 1/span 2;
-  grid-row: 4;
-}
+  padding-top: 1rem;
+    align-items: center;
+    height: 8rem;
+    width: 100%;
+    margin: auto;
+  
+
+  }*/
 .tile{
-  display: inline-block;
-  align-items: center;
+
+display: inline-block;
+flex-direction: column;
   text-align: center;
-  vertical-align: middle;
-  height: 1.2rem; 
-  width: 0.5rem;
+
+  height: auto; 
+  width: auto;
   background-color: #ABABAB;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   padding: 1rem;
-  margin-right:0.2rem;
-  margin-bottom: 2rem;
+  margin: auto;
   border: #333 solid 2px; 
+  margin: 0.2rem;
 
 }
-
+.giveUpContainer{
+  text-align: center;
+  justify-content: center;
+}
 .giveUp{
   font-weight: 700;
   background-color: #f26419;
@@ -302,11 +310,23 @@ padding-top: 1rem;
   border-color: #f26419;
   margin-top: 4rem;
 }
+.hallOfFame{
+  margin-top: 3rem;
+}
+.hallOfFameMessage{
+  font-size: 1.25rem;
+  font-weight: 700;
+
+}
+.footer{
+  text-align: center;
+  display: inline-block;
+}
 
   .coffee{    
     text-align: center;
     padding: 1.5rem;
-    margin-top: 4rem;
+    margin-top: 0.5rem;
     font-size: 0.75rem;
   }
  
