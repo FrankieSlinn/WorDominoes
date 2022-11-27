@@ -105,10 +105,16 @@ button:active {
   border-color: #2e7b36;
   cursor: pointer;
 }
+.presentLetContainer{
+  text-align: center;
+}
 .presentLet{
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: -2.5rem;
+  width: 85%;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 .gridContainer{
   justify-content: center;
@@ -219,7 +225,7 @@ margin-bottom: -5rem;
 
  padding: 0rem;
   align-items: center;
-  width: 100%;
+  width: 85%;
 }
 
 

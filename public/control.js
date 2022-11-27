@@ -417,6 +417,8 @@ let selDomValue = function () {
       console.log("selDomValue running");
       console.log("dominoHand before selection", dominoHand);
       document.querySelector(doms[j]).addEventListener("click", function () {
+        //ensure not rotated
+        secondWordValid = false;
         document.querySelector(".textSubmit").style["display"] = "inline-block";
         chosenDomIndex = j;
         domHandValues.push(...Object.values(dominoHand[j]));
@@ -445,6 +447,8 @@ let selDomValue = function () {
           toString(domHandValues.join(","))
         );
         domKey = String(chosenKey);
+        //prevent rotation
+        secondWordValid = false;
         chosen1 = String(domHandValues[0])[0];
         chosen2 = String(domHandValues[0])[1];
         document.querySelector(
@@ -753,7 +757,7 @@ xhr2.addEventListener("readystatechange", function () {
       secondWordValid = true;
       document.querySelector(".word2Instruct").innerHTML =
         "Congratulations, you completed a tile!";
-      //rotation();
+   
         
 
       document.querySelector(".presentLet").innerHTML =
@@ -865,7 +869,11 @@ document.querySelector(".submit2").addEventListener("click", function () {
     } 
     });
   }
+  
+
+    
   document.querySelector(".chosenDom").addEventListener("click", function(){
+    if (secondWordValid==true){
     console.log("rotated ==false", rotated ==false);
     if(rotated ==false){
      
@@ -882,6 +890,7 @@ document.querySelector(".submit2").addEventListener("click", function () {
     rotated = true;
     }
     else{
+      console.log("else statement rotated is false")
       rotated = false;
       if(chosen1 = chosen2Temp){
      if(domKey!=""){document.querySelector(".chosenDom").innerHTML =  "<img src = Images/" +
@@ -891,15 +900,20 @@ document.querySelector(".submit2").addEventListener("click", function () {
         chosen2 = chosen2Temp;
         rotated = false;
       }
-    }
+    }}
   });
+  
 
-
+/*
 function rotation(){
+  if(secondWordValid == true){
   console.log("rotation running");
   document.querySelector(".chosenDom").addEventListener("click", function(){
+    if(secondWordValid == true){
+    console.log("rotation clicked");
     console.log("rotated ==false", rotated ==false);
     if(rotated ==false){
+     
       
      
       console.log("rotated is true.chosendom html should change")
@@ -912,8 +926,11 @@ function rotation(){
     chosen1 = chosen2Temp;
     chosen2 = chosen1Temp
     rotated = true;
-    }
-    else{
+    console.log("rotated", rotated);
+    
+  }
+    else if(rotated==true){
+
       console.log("rotated was true")
       
       if(chosen1 = chosen2Temp){
@@ -924,10 +941,12 @@ function rotation(){
         chosen2 = chosen2Temp;
         rotated = false;
       }
-    }
+    
+  }}
   });
-  document.querySelector(".chosenDom").innerHTML 
+
 }
+}*/
 //rotation();
 
 function pushGridValues(i) {
@@ -1053,6 +1072,7 @@ function evaluateGrid(i) {
         `Congratulations, You have achieved Word Domination! Your score is ${score}`;
       document.querySelector(".chosenDom").style["display"] = "none";
       document.querySelector(".instruction").style["font-size"] = "2rem";
+      
 
     }
     else if (
@@ -1066,6 +1086,8 @@ function evaluateGrid(i) {
     document.querySelector(".instruction").innerHTML =
       "Congratulations, you placed a tile!";
       displayTile(currentGridValue);
+      //To stop rotation
+      secondWordValid = false;
     gridValueCompare = [];
    
     gridValues[i][0]=Number(chosen1);
@@ -1256,6 +1278,8 @@ function refillLetters() {
     // console.log("letters length after refill", letters.length)
     // console.log("letterHand after first turn", letterHand);
     // console.log("i in refillletters",i)
+    //reset rotation
+    secondWordValid = false;
   }
   for (let j = 0; j < tiles.length; j++) {
     //  console.log("j in innerhtml for letters", j);
