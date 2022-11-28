@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000; app.listen (port, () => {console.log (`Li
 //console.log(typeof PORT);
 var db;
 
+
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
@@ -35,6 +36,7 @@ MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mong
 
 //test
 app.get('/hallOfFame', (req,res)=>{
+  db.collection('quotes').find().sort({score:1})
   db.collection('quotes').find().toArray()
     .then(results => {
       res.render('hallOfFame.ejs', { quotes: results })

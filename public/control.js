@@ -236,7 +236,7 @@ let gridValues = [
   [0, 0],
   [0, 0],
 ];
-let currentGridValue= 0;
+let currentGridValue = 0;
 //array of four. 0: end of last tile 1: beginning of current tile 2: end of current tile 3: beginning of next tile
 let gridValueCompare = [];
 
@@ -318,7 +318,7 @@ let tilePlaced = false;
 let turns = 1;
 let dominoesPlaced = 0;
 let rotated = false;
-let chosen1Temp = 0; 
+let chosen1Temp = 0;
 let chosen2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
@@ -328,14 +328,14 @@ console.log("dominoes length", dominoes.length);
 
 //Set up score so compatible with backend. Test value
 
-score = document.getElementById("score")
-score.value = 100;
+score = document.getElementById("score");
+score.value = parseInt(50);3+
 console.log("score value", score.value);
 
 document.querySelector(".textSubmit").style["display"] = "none";
 
 function randomNumberDom() {
-  return Math.abs(Math.floor(Math.random() * (dominoes.length-1)));
+  return Math.abs(Math.floor(Math.random() * (dominoes.length - 1)));
 }
 
 //generate first domino hand
@@ -347,31 +347,31 @@ if (firstGo == true) {
   let rand1 = dominoes[randomNumberDom()];
   console.log("rand1", rand1);
   dominoHand.push(rand1);
-  dominoes.splice(dominoes.indexOf(rand1),1);
+  dominoes.splice(dominoes.indexOf(rand1), 1);
   dominoesUsed.push(rand1);
- 
+
   console.log("dominohand after rand1", dominoHand);
   console.log("dominoes after rand1", dominoes);
   console.log("after rand1", dominoes.length);
   let rand2 = dominoes[randomNumberDom()];
   console.log("rand2", rand2);
   dominoHand.push(rand2);
-  dominoes.splice(dominoes.indexOf(rand2),1);
-  
+  dominoes.splice(dominoes.indexOf(rand2), 1);
+
   console.log("after rand2", dominoes.length);
   let rand3 = dominoes[randomNumberDom()];
   console.log("rand3", rand3);
   dominoHand.push(rand3);
-  dominoes.splice(dominoes.indexOf(rand3),1);
+  dominoes.splice(dominoes.indexOf(rand3), 1);
 
   console.log("after rand3", dominoes.lengh);
   let rand4 = dominoes[randomNumberDom()];
   dominoHand.push(rand4);
-  dominoes.splice(dominoes.indexOf(rand4),1);;
+  dominoes.splice(dominoes.indexOf(rand4), 1);
 
   //dominoesUsed.forEach((item)=>dominoes.splice(dominoesUsed.indexOf(item), 1));
-  console.log
- 
+  console.log;
+
   console.log("after rand4", dominoes.length);
 
   console.log("dominoHand", dominoHand);
@@ -454,43 +454,36 @@ let selDomValue = function () {
         document.querySelector(
           ".word1Instruct"
         ).innerHTML = `Make a Word With ${chosen1} Letters`;
-        document.querySelector(
-          ".wordText1"
-        ).style['display'] = "inline-block";
-        document.querySelector(
-          ".word2Instruct"
-        ).style['display'] = "none";
-        document.querySelector(
-          ".wordText2"
-        ).style['display'] = "none";
-        document.querySelector(
-          ".giveUp"
-        ).style['display'] = "inline-block";
+        document.querySelector(".wordText1").style["display"] = "inline-block";
+        document.querySelector(".word2Instruct").style["display"] = "none";
+        document.querySelector(".wordText2").style["display"] = "none";
+        document.querySelector(".giveUp").style["display"] = "inline-block";
         //domHandFirst.concat.apply = [...domHandValues];
         console.log("chosen1, chosen2", chosen1, chosen2);
         chosenValue = String(chosen1 + chosen2);
         console.log("domKey", domKey);
-        if(rotated == false){
-        chosenName =
-          "<img src = Images/" +
-          domKey +
-          '.png style="width:60px;height:120px;">';}
-          else{
-            chosenName =
+        if (rotated == false) {
+          chosenName =
+            "<img src = Images/" +
+            domKey +
+            '.png style="width:60px;height:120px;">';
+        } else {
+          chosenName =
             "<img src = Images/" +
             domKey +
             '.png style="width:60px;height:120px;transform:rotate(180deg)">';
-          }
+        }
         document.querySelector(".chosenDom").innerHTML = chosenName;
         document.querySelector(".chosenDom").style["display"] = "inline-block";
-        document.querySelector(".handLetters").style["display"] = "inline-block";
+        document.querySelector(".handLetters").style["display"] =
+          "inline-block";
         document.querySelector(doms[j]).innerHTML = "";
         //doms.splice(j,1);
         //dominoHand.splice(indexOf(j,1));
         document.querySelector(
           ".word1Instruct"
         ).innerHTML = `Make a word with ${chosen1} letters`;
-        document.querySelector(".wordText2").style["display"] =  "none";
+        document.querySelector(".wordText2").style["display"] = "none";
         document.querySelector(
           ".word2Instruct"
         ).innerHTML = `Make a word with ${chosen2} letters`;
@@ -498,11 +491,12 @@ let selDomValue = function () {
         showLetters();
         //function printChosenOne(){
         //  return chosen1};
-        document.querySelector(".wordText2").style['display'] = "inline-block";
-        document.querySelector(".wordText").style["background-color"] =  "#ABABAB";
+        document.querySelector(".wordText2").style["display"] = "inline-block";
+        document.querySelector(".wordText").style["background-color"] =
+          "#ABABAB";
         showLetters();
         document.querySelector(".presentLet").innerHTML = "";
-        
+
         selectedDomino = true;
       });
     }
@@ -543,10 +537,10 @@ console.log("letterHandin beginning", letterHand);
 console.log("letters after splice", letters);
 
 //populate letter tiles
-function showLetters(){
-for (let i = 0; i < letterHand.length; i++) {
-  document.querySelector(tiles[i]).innerHTML = `${letterHand[i]}`;
-}
+function showLetters() {
+  for (let i = 0; i < letterHand.length; i++) {
+    document.querySelector(tiles[i]).innerHTML = `${letterHand[i]}`;
+  }
 }
 
 //Make Word 1st field
@@ -717,7 +711,7 @@ document.querySelector(".submit1").addEventListener("click", function () {
     ".word2Instruct"
   ).innerHTML = `Make a word with ${chosen2} letters`;
   document.querySelector(".word2Instruct").style["display"] = "Inline-block";
-  document.querySelector(".wordText2").style["background-color"] =  "#ABABAB";
+  document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
 
   xhr.open(
     "GET",
@@ -757,16 +751,12 @@ xhr2.addEventListener("readystatechange", function () {
       secondWordValid = true;
       document.querySelector(".word2Instruct").innerHTML =
         "Congratulations, you completed a tile!";
-   
-        
 
       document.querySelector(".presentLet").innerHTML =
         "<strong>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br>To rotate, click on the domino below.</strong>";
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
       document.querySelector(".handLetters").style["display"] = "none";
-      
-      
 
       console.log("secondWordValid", secondWordValid, secondWord);
       console.log("letterHand before splice", letterHand);
@@ -853,56 +843,54 @@ document.querySelector(".submit2").addEventListener("click", function () {
 });
 //selectDomGrid();
 
-  for (let i = 0; i < gridTiles.length; i++) {
-   
-    document.querySelector(gridTiles[i]).addEventListener("click", function () {
-
-      console.log("selectDomGrid running");
-      console.log("tilePlaced", tilePlaced);
-      if (tilePlaced ==false){
+for (let i = 0; i < gridTiles.length; i++) {
+  document.querySelector(gridTiles[i]).addEventListener("click", function () {
+    console.log("selectDomGrid running");
+    console.log("tilePlaced", tilePlaced);
+    if (tilePlaced == false) {
       currentGridValue = i;
-        console.log("in in selectDomGrid", i);
-        console.log("pngName", pngName);
-        pushGridValues(currentGridValue);
-
-       
-    } 
-    });
-  }
-  
-
-    
-  document.querySelector(".chosenDom").addEventListener("click", function(){
-    if (secondWordValid==true){
-    console.log("rotated ==false", rotated ==false);
-    if(rotated ==false){
-     
-      console.log("rotated is true.chosendom html should change")
-      //ensure the domKey is present or will show "image not found"
-    if(domKey!=""){document.querySelector(".chosenDom").innerHTML = "<img src = Images/" +
-    domKey +
-    '.png style="width:60px;height:120px;transform:rotate(180deg)">';}
-    document.querySelector(".chosenDom").style["display"] = "inline-block";
-    chosen1Temp = chosen1;
-    chosen2Temp = chosen2;
-    chosen1 = chosen2Temp;
-    chosen2 = chosen1Temp
-    rotated = true;
+      console.log("in in selectDomGrid", i);
+      console.log("pngName", pngName);
+      pushGridValues(currentGridValue);
     }
-    else{
-      console.log("else statement rotated is false")
+  });
+}
+
+document.querySelector(".chosenDom").addEventListener("click", function () {
+  if (secondWordValid == true) {
+    console.log("rotated ==false", rotated == false);
+    if (rotated == false) {
+      console.log("rotated is true.chosendom html should change");
+      //ensure the domKey is present or will show "image not found"
+      if (domKey != "") {
+        document.querySelector(".chosenDom").innerHTML =
+          "<img src = Images/" +
+          domKey +
+          '.png style="width:60px;height:120px;transform:rotate(180deg)">';
+      }
+      document.querySelector(".chosenDom").style["display"] = "inline-block";
+      chosen1Temp = chosen1;
+      chosen2Temp = chosen2;
+      chosen1 = chosen2Temp;
+      chosen2 = chosen1Temp;
+      rotated = true;
+    } else {
+      console.log("else statement rotated is false");
       rotated = false;
-      if(chosen1 = chosen2Temp){
-     if(domKey!=""){document.querySelector(".chosenDom").innerHTML =  "<img src = Images/" +
-        domKey +
-        '.png style="width:60px;height:120px;">';}
+      if ((chosen1 = chosen2Temp)) {
+        if (domKey != "") {
+          document.querySelector(".chosenDom").innerHTML =
+            "<img src = Images/" +
+            domKey +
+            '.png style="width:60px;height:120px;">';
+        }
         chosen1 = chosen1Temp;
         chosen2 = chosen2Temp;
         rotated = false;
       }
-    }}
-  });
-  
+    }
+  }
+});
 
 /*
 function rotation(){
@@ -952,97 +940,87 @@ function rotation(){
 function pushGridValues(i) {
   currentGridValue = i;
   console.log("pushGridValues Running");
-  console.log("i in pushGridValues", i)
-  
-  if (1<=i&&i<=3) {
-    console.log("tile not first or last")
+  console.log("i in pushGridValues", i);
+
+  if (1 <= i && i <= 3) {
+    console.log("tile not first or last");
     if (gridValueCompare.length < 4) {
-      gridValueCompare.push(Number(gridValues[i -1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i+1][0]));
-      console.log("gridValueCompare between 0 and 3", gridValueCompare);
-      i = "";
-    }}
-    else if(i==4){
-      console.log("i is 4");
       gridValueCompare.push(Number(gridValues[i - 1][1]));
       gridValueCompare.push(Number(chosen1));
       gridValueCompare.push(Number(chosen2));
       gridValueCompare.push(Number(gridValues[i + 1][0]));
-      console.log("gridValueCompare 4", gridValueCompare);
-      i="";
+      console.log("gridValueCompare between 0 and 3", gridValueCompare);
+      i = "";
     }
-    else if(i==5){
-      console.log("i is 5");
-      gridValueCompare.push(Number(gridValues[i -1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i + 1][1]));
-      console.log("gridValueCompare 4", gridValueCompare);
-      i="";
-    }
-    else if(i==6){
-      console.log("i is 6");
-      gridValueCompare.push(Number(gridValues[i + 1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i - 1][1]));
-      console.log("gridValueCompare between 6", gridValueCompare);
-      i="";
-    }
-    else if(i==7){
-      console.log("i is 7");
-      gridValueCompare.push(Number(gridValues[i + 1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i - 1][0]));
-      console.log("gridValueCompare between 6 and 7", gridValueCompare);
-      i="";
-    }
-    else if(i==8){
-      gridValueCompare.push(Number(gridValues[i + 1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i - 1][0]));
-      console.log("gridValueCompare between 6 and 9",  i, gridValueCompare);
-      i="";
-    }
-    else if(i==9){     
-       gridValueCompare.push(Number(gridValues[i + 1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
-      gridValueCompare.push(Number(gridValues[i - 1][0]));
-      console.log("gridValueCompare 9", i, gridValueCompare);
-      i="";
-
-    }
-    else if(i==10){     
-      gridValueCompare.push(Number(gridValues[i + 1][1]));
-     gridValueCompare.push(Number(chosen1));
-     gridValueCompare.push(Number(chosen2));
-     gridValueCompare.push(Number(gridValues[i - 1][0]));
-     console.log("gridValueCompare between 6 and 9", gridValueCompare);
-     i="";
-
-   }
-
-   else if (i == 0) {
+  } else if (i == 4) {
+    console.log("i is 4");
+    gridValueCompare.push(Number(gridValues[i - 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i + 1][0]));
+    console.log("gridValueCompare 4", gridValueCompare);
+    i = "";
+  } else if (i == 5) {
+    console.log("i is 5");
+    gridValueCompare.push(Number(gridValues[i - 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    console.log("gridValueCompare 4", gridValueCompare);
+    i = "";
+  } else if (i == 6) {
+    console.log("i is 6");
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i - 1][1]));
+    console.log("gridValueCompare between 6", gridValueCompare);
+    i = "";
+  } else if (i == 7) {
+    console.log("i is 7");
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i - 1][0]));
+    console.log("gridValueCompare between 6 and 7", gridValueCompare);
+    i = "";
+  } else if (i == 8) {
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i - 1][0]));
+    console.log("gridValueCompare between 6 and 9", i, gridValueCompare);
+    i = "";
+  } else if (i == 9) {
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i - 1][0]));
+    console.log("gridValueCompare 9", i, gridValueCompare);
+    i = "";
+  } else if (i == 10) {
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(chosen1));
+    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(gridValues[i - 1][0]));
+    console.log("gridValueCompare between 6 and 9", gridValueCompare);
+    i = "";
+  } else if (i == 0) {
     gridValueCompare.push(Number(gridValues[gridValues.length - 1][0]));
     gridValueCompare.push(Number(chosen1));
     gridValueCompare.push(Number(chosen2));
     gridValueCompare.push(Number(gridValues[i + 1][0]));
     console.log("i=0", gridValueCompare);
     i = "";
-  } else if (i == (gridValues.length - 1)) {
+  } else if (i == gridValues.length - 1) {
     gridValueCompare.push(Number(gridValues[0][0]));
     gridValueCompare.push(Number(chosen1));
     gridValueCompare.push(Number(chosen2));
-    gridValueCompare.push(Number(gridValues[i-1][0]));
+    gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("i=11", gridValueCompare);
     i = "";
   }
-  console.log("currentGridValue in push Grid Values", currentGridValue)
+  console.log("currentGridValue in push Grid Values", currentGridValue);
 
   evaluateGrid(currentGridValue);
 }
@@ -1051,100 +1029,92 @@ function evaluateGrid(i) {
   console.log("currentGridValue in evaluate grid", currentGridValue);
   if (
     ((gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-    (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
-    (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
-    (gridValueCompare[0] == gridValueCompare[1] &&
-      gridValueCompare[2] == gridValueCompare[3]))&&
-      (dominoesPlaced == gridTiles.length)
+      (gridValueCompare[0] == gridValueCompare[1] &&
+        gridValueCompare[3] == 0) ||
+      (gridValueCompare[2] == gridValueCompare[3] &&
+        gridValueCompare[0] == 0) ||
+      (gridValueCompare[0] == gridValueCompare[1] &&
+        gridValueCompare[2] == gridValueCompare[3])) &&
+    dominoesPlaced == gridTiles.length
   ) {
-    //...(Object.values(gridValues[9])) is 0  NOTE: doesn't work with [0]  
-    console.log("WordDomination!!!!!")
+    //...(Object.values(gridValues[9])) is 0  NOTE: doesn't work with [0]
+    console.log("WordDomination!!!!!");
     let score = 0;
-    for(let i=0; i<gridValues.length; i++){
-      score+=gridValues[i][0];
-      score+=gridValues[i][1];
+    for (let i = 0; i < gridValues.length; i++) {
+      score += gridValues[i][0];
+      score += gridValues[i][1];
     }
-    score = score+30; 
+    score = score + 30;
     score.value = score;
     console.log("scorevalue", score.value);
     localStorage.setItem("score", JSON.stringify(score));
-      document.querySelector(".instruction").innerHTML =
-        `Congratulations, You have achieved Word Domination! Your score is ${score}`;
-      document.querySelector(".chosenDom").style["display"] = "none";
-      document.querySelector(".instruction").style["font-size"] = "2rem";
-      
-
-    }
-    else if (
-      (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-      (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
-      (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
-      (gridValueCompare[0] == gridValueCompare[1] &&
-        gridValueCompare[2] == gridValueCompare[3])
-    ) {
-      console.log("tile successfully placed")
+    document.querySelector(
+      ".instruction"
+    ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
+    document.querySelector(".chosenDom").style["display"] = "none";
+    document.querySelector(".instruction").style["font-size"] = "2rem";
+  } else if (
+    (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
+    (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
+    (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
+    (gridValueCompare[0] == gridValueCompare[1] &&
+      gridValueCompare[2] == gridValueCompare[3])
+  ) {
+    console.log("tile successfully placed");
     document.querySelector(".instruction").innerHTML =
       "Congratulations, you placed a tile!";
-      displayTile(currentGridValue);
-      //To stop rotation
-      secondWordValid = false;
+    displayTile(currentGridValue);
+    //To stop rotation
+    secondWordValid = false;
     gridValueCompare = [];
-   
-    gridValues[i][0]=Number(chosen1);
-    gridValues[i][1]=Number(chosen2);
-    console.log("new gridvalues", gridValues[i][0])
-    console.log("new gridvalues", gridValues[i][1])
+
+    gridValues[i][0] = Number(chosen1);
+    gridValues[i][1] = Number(chosen2);
+    console.log("new gridvalues", gridValues[i][0]);
+    console.log("new gridvalues", gridValues[i][1]);
     firstGo = false;
-   
-    i="";
-   
-  
+
+    i = "";
+
     tilesPlaced = true;
 
     document.querySelector(".chosenDom").style["display"] = "none";
-
   } else {
     console.log(" no fits");
     document.querySelector(".instruction").innerHTML =
       "It looks like this tile doesn't fit, try somwhere else";
     gridValueCompare = [];
-    gridValues[i][0]=0;
-    gridValues[i][1]=0;
+    gridValues[i][0] = 0;
+    gridValues[i][1] = 0;
     tilesPlaced = false;
-    i="";
-
+    i = "";
 
     for (let i = 0; i < gridTiles.length; i++) {
-      document.querySelector(gridTiles[i]).addEventListener("click", function () {
-       currentGridValue = i;
-        console.log("selectDomGrid in evaluate gridrunning");
-  
-  
-       // gridTilesi = gridTiles[i];
-        //gridValuesi = gridValues[i];
-        //console.log("dominoHand in selectDomGrid after splice", dominoHand);
-  
-  
+      document
+        .querySelector(gridTiles[i])
+        .addEventListener("click", function () {
+          currentGridValue = i;
+          console.log("selectDomGrid in evaluate gridrunning");
+
+          // gridTilesi = gridTiles[i];
+          //gridValuesi = gridValues[i];
+          //console.log("dominoHand in selectDomGrid after splice", dominoHand);
+
           console.log("in in selectDomGrid", i);
-    
 
           pushGridValues(currentGridValue);
-         
-        }
-      );
+        });
     }
-      //document.querySelector(gridTiles[i]).addEventListener("click", pushGridValues());
-    }
-  
-
+    //document.querySelector(gridTiles[i]).addEventListener("click", pushGridValues());
   }
-  //issue too many dominoes spliced only happens with wrong tile placed
+}
+//issue too many dominoes spliced only happens with wrong tile placed
 
 //Doesn't contain other functions
 
-function displayTile(i){
-  if (firstGo==false&&tilePlaced ==false){
-  console.log("currentGridValue in display tile", currentGridValue);
+function displayTile(i) {
+  if (firstGo == false && tilePlaced == false) {
+    console.log("currentGridValue in display tile", currentGridValue);
 
     console.log("in in selectDomGrid", currentGridValue);
     console.log("domTile selected");
@@ -1154,51 +1124,51 @@ function displayTile(i){
       console.log("6<=i<=9", 6 <= i <= 9);
       console.log("i for rotation", i);
       console.log("pngName with rotation");
-      if(rotated == false){
-        console.log("dom on grid hor rotated is false")
-      pngNameGrid =
-        "<img src = Images/" +
-        domKey +
-        '.png  style="width:30px;height:60px;transform:rotate(-90deg);margin-top:-15px;">';
-      console.log("tiles on top, bottom", pngName);}
-      else{
+      if (rotated == false) {
+        console.log("dom on grid hor rotated is false");
         pngNameGrid =
-        "<img src = Images/" +
-        domKey +
-        '.png  style="width:30px;height:60px;transform:rotate(90deg);margin-top:-15px;">'; 
+          "<img src = Images/" +
+          domKey +
+          '.png  style="width:30px;height:60px;transform:rotate(-90deg);margin-top:-15px;">';
+        console.log("tiles on top, bottom", pngName);
+      } else {
+        pngNameGrid =
+          "<img src = Images/" +
+          domKey +
+          '.png  style="width:30px;height:60px;transform:rotate(90deg);margin-top:-15px;">';
       }
       //document.querySelector(doms[i]).innerHTML = "";
     } else if (4 <= i <= 5 || 10 <= i <= 11) {
       console.log("unrotate pngname, i", i);
-      if(rotated == false){
-      pngNameGrid =
-        "<img src = Images/" +
-        domKey +
-        '.png  style="width:30px;height:60px;">';
-      console.log("tiles on sides", pngName);}else{
+      if (rotated == false) {
         pngNameGrid =
-        "<img src = Images/" +
-        domKey +
-        '.png  style="width:30px;height:60px;transform:rotate(180deg)">';
+          "<img src = Images/" +
+          domKey +
+          '.png  style="width:30px;height:60px;">';
+        console.log("tiles on sides", pngName);
+      } else {
+        pngNameGrid =
+          "<img src = Images/" +
+          domKey +
+          '.png  style="width:30px;height:60px;transform:rotate(180deg)">';
       }
     }
     document.querySelector(gridTiles[i]).innerHTML = pngNameGrid;
-    document.querySelector(".chosenDom").innerHTML ="";
+    document.querySelector(".chosenDom").innerHTML = "";
     //name for chosenDom, ensure not impacted by rotation
     chosenName =
-    "<img src = Images/" +
-    domKey +
-    '.png style="width:60px;height:120px;">';
+      "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
     console.log("gridtilesi in displaytile", gridTiles[i]);
     newTilesDominoes();
     refillLetters();
-    dominoesPlaced +=1;
+    dominoesPlaced += 1;
     tilePlaced = true;
     domKey = "";
-    rotated= false;
-    chosen1 = chosen1; 
+    rotated = false;
+    chosen1 = chosen1;
     chosen2 = chosen2;
-}};
+  }
+}
 
 //give new word tiles and domino after first go
 function newTilesDominoes() {
@@ -1206,32 +1176,43 @@ function newTilesDominoes() {
     console.log("new Tiles Dominoes running");
 
     let rand1 = randomNumberDom();
-    
+
     //ranDomino = dominoes[rand1]-1;
 
     //console.log("dominoes after spliced chosen dominoe", dominoes)
     // console.log("chosenDomIndex", chosenDomIndex);
     // console.log("dominoHand next turn before push",dominoHand);
     console.log("rand1", rand1);
-    console.log("String(Object.keys(dominoes[rand1]))", String(Object.keys(dominoes[rand1])));
+    console.log(
+      "String(Object.keys(dominoes[rand1]))",
+      String(Object.keys(dominoes[rand1]))
+    );
     // console.log("dominoes[rand1]", dominoes[rand1]);
     if (dominoHand.length < 4) {
       dominoHand.push(dominoes[rand1]);
     }
-    console.log("dominoes length before refill splice", dominoes, dominoes.length);
-    dominoes.splice(rand1,1);
+    console.log(
+      "dominoes length before refill splice",
+      dominoes,
+      dominoes.length
+    );
+    dominoes.splice(rand1, 1);
     //console.log("dominoes.indexOf(rand1)", dominoes.indexOf(rand1))
-    console.log("dominoes length before refill splice", dominoes, dominoes.length);
-   // console.log("dominoes after splice add", dominoHand);
+    console.log(
+      "dominoes length before refill splice",
+      dominoes,
+      dominoes.length
+    );
+    // console.log("dominoes after splice add", dominoHand);
     for (let i = 0; i < dominoHand.length; i++) {
       //domHandKeys1.push(...Object.keys(dominoHand[i]));
       console.log(
         "key in pngNam New Dom Tiles",
         String(Object.keys(dominoHand[i]))
       );
-     // console.log("dominoHandlength", dominoHand.length);
-     // console.log("dominoHand", dominoHand);
-     // console.log("doms[i]", doms[i]);
+      // console.log("dominoHandlength", dominoHand.length);
+      // console.log("dominoHand", dominoHand);
+      // console.log("doms[i]", doms[i]);
       let pngName =
         "<img src = Images/" +
         String(Object.keys(dominoHand[i])) +
@@ -1252,11 +1233,8 @@ function newTilesDominoes() {
       );
       document.querySelector(".presentLet").innerHTML =
         "Now select another domino that will fit in the grid";
-        document.querySelector(".wordText").style['display'] =
-        "none";
-        document.querySelector(".wordText2").style['display'] =
-        "none";
-      
+      document.querySelector(".wordText").style["display"] = "none";
+      document.querySelector(".wordText2").style["display"] = "none";
     }
     tilePlaced = true;
   }
@@ -1295,7 +1273,7 @@ function refillLetters() {
 }
 
 function resetNextTurn() {
-  console.log("resetNextTurn running")
+  console.log("resetNextTurn running");
   selectedDomino = false;
   document.querySelector(".wordText1").innerHTML = "";
   wordText1 = "";
@@ -1304,7 +1282,7 @@ function resetNextTurn() {
   document.querySelector(".word1Instruct").innerHTML = "";
   document.querySelector(".word2Instruct").innerHTML = "";
   //document.querySelector(".rotate").style['display']= "none";
-  
+
   ///make sure not too many letters get removed
   lettersUsed1 = [];
   lettersUsed2 = [];
@@ -1320,18 +1298,19 @@ function resetNextTurn() {
 
   //selDomValue();
 }
-document.querySelector(".giveUp").addEventListener("click", function(){
+document.querySelector(".giveUp").addEventListener("click", function () {
   let score = 0;
-  for(let i=0; i<gridValues.length; i++){
-    score+=gridValues[i][0];
-    score+=gridValues[i][1];
+  for (let i = 0; i < gridValues.length; i++) {
+    score += gridValues[i][0];
+    score += gridValues[i][1];
   }
   score.value = score;
   localStorage.setItem("score", JSON.stringify(score));
 
-  document.querySelector(".presentLet").innerHTML = `You Have Scored ${score} Points`;
-  document.querySelector(".presentLet").style['font-size'] = "1.5rem";
+  document.querySelector(
+    ".presentLet"
+  ).innerHTML = `You Have Scored ${score} Points`;
+  document.querySelector(".presentLet").style["font-size"] = "1.5rem";
 });
-
 
 //

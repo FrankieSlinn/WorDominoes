@@ -94,7 +94,7 @@ button {
   border-color: #1f5124;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-top: 1rem;
 }
 
@@ -341,5 +341,8 @@ flex-direction: column;
     text-align: center;
     margin-top: 1rem;
     font-size: 0.75rem;
+  }
+  #score{
+    display: none;
   }
 

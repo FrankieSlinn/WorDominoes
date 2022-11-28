@@ -1,16 +1,23 @@
-<p>Hall of Fame</p>
 
-<ul class="quotes">
-    <!-- Loop through quotes -->
- 
-    <% for(var i = 0; i < quotes.length; i++) {%>
-   
-      <li class="quote">
-        <!-- Output name from the iterated quote object -->
-        <span><%= quotes[i].lname %></span>:
-        <!-- Output quote from the iterated quote object -->
-        <span><%= quotes[i].score %></span>
-      </li>
-    <% } %>
-  </ul>
-  <%- include ("./partials/header") %>
+
+<p>Hall of Fame</p>
+<% 
+sortArray = []
+
+for(var i = 1; i < quotes.length; i++) { 
+  sortArray.push([quotes[i].lname, parseInt(quotes[i].score)]) };
+  sortArray.sort((a, b) => b[1]-a[1]);
+  sortArray.splice(20, sortArray.length-20); %>
+
+
+  <ol class = "HOF"><%
+  for(var i = 0; i < sortArray.length; i++){%>
+    <li class="HOFentry">
+      <!-- Output name from the iterated quote object -->
+      <span><%= sortArray[i][0] %><%= sortArray[i][1] %></span>:
+
+    </li>
+<%
+  }%>
+</ol>
+
