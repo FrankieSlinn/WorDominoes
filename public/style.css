@@ -345,4 +345,9 @@ flex-direction: column;
   #score{
     display: none;
   }
+  .hallOfFame{
+
+    margin-top: -9rem;
+    z-index: 1;
+  }
 

@@ -2,22 +2,53 @@
 
 <p>Hall of Fame</p>
 <% 
-sortArray = []
+sortArray = [];
+numbers = []
+newestScore = 0;
+minimum = 0;
+
 
 for(var i = 1; i < quotes.length; i++) { 
-  sortArray.push([quotes[i].lname, parseInt(quotes[i].score)]) };
+  sortArray.push([quotes[i].lname, parseInt(quotes[i].score)]) 
+  numbers.push(parseInt(quotes[i].score)) };
+
+  function sortScores(){
   sortArray.sort((a, b) => b[1]-a[1]);
-  sortArray.splice(20, sortArray.length-20); %>
+  numbers.sort((a, b) => b-a);
+  sortArray.splice(20, sortArray.length-20);
+  numbers.splice(20, numbers.length-20);
 
+  let minimum = Math.min(...numbers); 
+  
+}
+ 
+  if(newestScore>=minimum&&Number.isInteger(newestScore)){
+    sortArray.push(newestScore);
+    sortScores();}
+ %>
+ <script>
+  var n = <%-JSON.stringify(minimum)%>;
+  console.log("minimum test in EJS", n);
 
+  localStorage.setItem("minimum", JSON.stringify(n));
+ </script>
   <ol class = "HOF"><%
   for(var i = 0; i < sortArray.length; i++){%>
     <li class="HOFentry">
       <!-- Output name from the iterated quote object -->
-      <span><%= sortArray[i][0] %><%= sortArray[i][1] %></span>:
+      <span><%= sortArray[i][0] %>: <%= sortArray[i][1] %></span>
 
     </li>
 <%
   }%>
 </ol>
+
+<br>
+<br>
+<p><a href = />Go Back to Game</a></p>
+
+
+
+<script src="../control.js"></script>
+
 

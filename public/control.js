@@ -328,11 +328,11 @@ console.log("dominoes length", dominoes.length);
 
 //Set up score so compatible with backend. Test value
 
-score = document.getElementById("score");
-score.value = parseInt(50);3+
-console.log("score value", score.value);
+//score = document.getElementById("score");
+//score.value = parseInt(50);3+
+//console.log("score value", score.value);
 
-document.querySelector(".textSubmit").style["display"] = "none";
+//document.querySelector(".textSubmit").style["display"] = "none";
 
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length - 1)));
@@ -1299,18 +1299,53 @@ function resetNextTurn() {
   //selDomValue();
 }
 document.querySelector(".giveUp").addEventListener("click", function () {
+  document.querySelector(".textSubmit").style["z-index"] = "-1";
+  document.querySelector(".textSubmit").style["display"] = "none";
   let score = 0;
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
-  score.value = score;
+  console.log("score after calculated", score);
+  console.log("score from min", Number(JSON.parse(localStorage.getItem("minimum"))))
+
+  if(score >=Number(JSON.parse(localStorage.getItem("minimum")))){
+    console.log("hall of fame displayed")
+   document.querySelector(".hallOfFame").style["display"] = "inline-block";
+  }
+  let scoreForm = document.getElementById("score");
+  scoreForm.value = score;
+  console.log("score.value", scoreForm.value);
   localStorage.setItem("score", JSON.stringify(score));
+
 
   document.querySelector(
     ".presentLet"
   ).innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".presentLet").style["font-size"] = "1.5rem";
 });
+/*
+$('#submit').click(function() {
+  $.ajax({
+      url: 'send_email.php',
+      type: 'POST',
+      data: {
+          email: 'email@example.com',
+          message: 'hello world!'
+      },
+      success: function(msg) {
+          alert('Email Sent');
+      }               
+  });
+});*/
+/*
+document.querySelector(".submitHOF").style["display"] = "inline-block";
+var scoreData = new 
+FormData(document.querySelector(".submitHOF"));
+var xhrScore = new XMLHttpRequest();
+xhrScore.open("POST", "SERVER-SCRIPT");
+xhrScore.send(scoreData);*/
+//var minScore = Number(JSON.parse(document.getElemen
+//console.log("minimum test in brower.js", n)
+console.log("minimum test at source", JSON.parse(localStorage.getItem("minimum")))
 
-//

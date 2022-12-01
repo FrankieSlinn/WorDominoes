@@ -87,6 +87,11 @@ app.get('/example', (req, res) => {
   })
 })
 
+app.get('"/minVal"', (req, res) => {
+console.log("min", min)
+  res.render('index.ejs', {min: min})
+})
+
 
 /*
   app.post('/example', (req, res) => {

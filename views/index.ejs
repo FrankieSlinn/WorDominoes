@@ -119,7 +119,22 @@
  
   </div>
   </div>
- 
+  <div class = "hallOfFame" hidden>
+
+    <p class = "hallOfFameMessage">Congratulations, you made it into the Hall of Fame! Enter a Handle and See How You Have Done Against the Others.</p>
+    <br>
+    <br>
+  
+    <!-- Need iframe so that page doesn't refresh after form submitted-->
+    <iframe name="myiframe" src = "" style="display:none;"></iframe>
+       <form action="/example" id = "submitHOF" method="POST" target="myiframe">
+      Handle: <input type="text" name="lname" id = "lname"><br>
+      <input type="number" name="score" id = "score"><br>     
+     <button class = "submitHOF" type="submit">Get into Hall of Fame</button>
+    </form>
+    <br>
+    <p class = "seeHOF"><a href = /hallOfFame>Visit Hall Of Fame</a></p>
+  </div> 
   <div class = "giveUpContainer">
     <p class = scoreMessage></p>
    <button class = "giveUp">Give Up</button>
@@ -130,24 +145,7 @@
 
 
 
-    <div class = "hallOfFame" hidden>
-
-      <p class = "hallOfFameMessage">Congratulations, you made it into the Hall of Fame! Enter a Handle and See How You Have Done Against the Others.</p>
-      <br>
-      <br>
-      <form action="/example" method="POST">
-        Handle: <input type="text" name="lname" id = "lname"><br>
-        <input type="number" name="score" id = "score"><br>     
-       <button type="submit">Get into Hall of Fame</button>
-      </form>
-  
-
-     </div>
- 
-</div>
-
-     
-                
+              
  
 <footer>
           <div class = "coffee">🖤 WorDominoes? <a href = "https://ko-fi.com/fkissling">Buy Me A Coffee</a>!</div>
