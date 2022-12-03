@@ -115,6 +115,7 @@ button:active {
   width: 85%;
   margin-left: 2rem;
   margin-right: 2rem;
+  animation: 2s slide-right;
 }
 .gridContainer{
   justify-content: center;
@@ -350,4 +351,27 @@ flex-direction: column;
     margin-top: -9rem;
     z-index: 1;
   }
+  .HOFMessage{
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .submitHOF{
+
+    padding: 0.25rem;
+  }
+  .submitHOFBut{
+    font-size: 1.25rem;
+  }
+  label{
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  input{
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 0.25rem;
+    color: #1f5124;
+    border-radius: 10px;
+  }
+
 

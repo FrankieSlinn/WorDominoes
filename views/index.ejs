@@ -127,11 +127,16 @@
   
     <!-- Need iframe so that page doesn't refresh after form submitted-->
     <iframe name="myiframe" src = "" style="display:none;"></iframe>
+
        <form action="/example" id = "submitHOF" method="POST" target="myiframe">
-      Handle: <input type="text" name="lname" id = "lname"><br>
+        <label for="lname">Handle:</label> 
+        <input type="text" name="lname" id = "lname"><br>
       <input type="number" name="score" id = "score"><br>     
-     <button class = "submitHOF" type="submit">Get into Hall of Fame</button>
+     <button id = "submitHOFBut" type="submit">Get into Hall of Fame</button>
     </form>
+    <br>
+    <p class = "HOFMessage" hidden>You are now in the Hall of Fame!</p>
+    <br>
     <br>
     <p class = "seeHOF"><a href = /hallOfFame>Visit Hall Of Fame</a></p>
   </div> 

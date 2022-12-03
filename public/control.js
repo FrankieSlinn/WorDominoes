@@ -326,6 +326,11 @@ let score = 0;
 console.log(letters.length);
 console.log("dominoes length", dominoes.length);
 
+//To Do
+//Resolve min score
+//Format HOF
+//Delete DB Items
+
 //Set up score so compatible with backend. Test value
 
 //score = document.getElementById("score");
@@ -402,7 +407,7 @@ for (let i = 0; i < dominoHand.length; i++) {
     domHandKeys[i] +
     '.png  style="width:30px;height:60px;">';
 
-  document.querySelector(doms[i]).innerHTML = pngName;
+  if(document.querySelector(doms[i]))document.querySelector(doms[i]).innerHTML = pngName;
   console.log("doms[i].innerHTML before queryselector", doms[i].value);
   // pngNames.push(pngName);
   console.log("pngName", pngName);
@@ -412,11 +417,12 @@ for (let i = 0; i < dominoHand.length; i++) {
 
 //get selectedDominoValue/
 let selDomValue = function () {
-  if (selectedDomino == false) {
+  
     for (let j = 0; j < dominoHand.length; j++) {
       console.log("selDomValue running");
       console.log("dominoHand before selection", dominoHand);
-      document.querySelector(doms[j]).addEventListener("click", function () {
+      if(document.querySelector(doms[j]))document.querySelector(doms[j]).addEventListener("click", function () {
+        if (selectedDomino == false) {
         //ensure not rotated
         secondWordValid = false;
         document.querySelector(".textSubmit").style["display"] = "inline-block";
@@ -477,7 +483,7 @@ let selDomValue = function () {
         document.querySelector(".chosenDom").style["display"] = "inline-block";
         document.querySelector(".handLetters").style["display"] =
           "inline-block";
-        document.querySelector(doms[j]).innerHTML = "";
+        document.querySelector(doms[j]).style["display"] = "none";
         //doms.splice(j,1);
         //dominoHand.splice(indexOf(j,1));
         document.querySelector(
@@ -498,12 +504,13 @@ let selDomValue = function () {
         document.querySelector(".presentLet").innerHTML = "";
 
         selectedDomino = true;
+        }
       });
     }
     chosenValues.push(chosen1);
     chosenValues.push(chosen2);
   }
-};
+
 
 console.log("chosenValues", chosenValues);
 selDomValue();
@@ -553,7 +560,7 @@ function makeFirstWord() {
   console.log("wordNumber in 1 first line", wordNumber);
 
   for (let i = 0; i < 15; i++) {
-    document.querySelector(tiles[i]).addEventListener("click", function () {
+    if(document.querySelector(tiles[i]))document.querySelector(tiles[i]).addEventListener("click", function () {
       if (wordNumber == 1) {
         console.log("tile clicked");
 
@@ -579,7 +586,7 @@ redo1();
 //redo first word
 function redo1() {
   console.log("redo1 running");
-  document.querySelector(".redo1").addEventListener("click", function () {
+  if(document.querySelector(".redo1"))document.querySelector(".redo1").addEventListener("click", function () {
     document.querySelector(".wordText1").innerHTML = "";
     lettersUsed1.forEach(
       (item) =>
@@ -595,7 +602,7 @@ function redo1() {
 console.log("wordNumber in function two", wordNumber);
 wordText2 = "";
 for (let i = 0; i < 15; i++) {
-  document.querySelector(tiles[i]).addEventListener("click", function () {
+  if(document.querySelector(tiles[i]))document.querySelector(tiles[i]).addEventListener("click", function () {
     if (wordNumber == 2) {
       wordText2 += letterHand[i];
       lettersUsed2.push(tiles[i]);
@@ -613,7 +620,7 @@ for (let i = 0; i < 15; i++) {
 
 redo2();
 function redo2() {
-  document.querySelector(".redo2").addEventListener("click", function () {
+  if(document.querySelector(".redo2"))document.querySelector(".redo2").addEventListener("click", function () {
     document.querySelector(".wordText2").innerHTML = "";
     console.log("lettersused2 in function for it", lettersUsed2);
     wordText2 = "";
@@ -700,7 +707,7 @@ xhr.addEventListener("readystatechange", function () {
 
 console.log("firstWord", firstWord);
 
-document.querySelector(".submit1").addEventListener("click", function () {
+if(document.querySelector(".submit1"))document.querySelector(".submit1").addEventListener("click", function () {
   firstWord = document.querySelector(".wordText1").value;
   console.log("firstWord after 1st defined", firstWord);
   console.log("submit1 clicked");
@@ -819,7 +826,7 @@ xhr2.addEventListener("readystatechange", function () {
   }
 });
 console.log("secondWord", secondWord);
-document.querySelector(".submit2").addEventListener("click", function () {
+if(document.querySelector(".submit2"))document.querySelector(".submit2").addEventListener("click", function () {
   //document.querySelector(".submit2").innerHTML = "Do word again"
   secondWord = document.querySelector(".wordText2").value;
 
@@ -844,7 +851,7 @@ document.querySelector(".submit2").addEventListener("click", function () {
 //selectDomGrid();
 
 for (let i = 0; i < gridTiles.length; i++) {
-  document.querySelector(gridTiles[i]).addEventListener("click", function () {
+  if(document.querySelector(gridTiles[i]))document.querySelector(gridTiles[i]).addEventListener("click", function () {
     console.log("selectDomGrid running");
     console.log("tilePlaced", tilePlaced);
     if (tilePlaced == false) {
@@ -856,7 +863,7 @@ for (let i = 0; i < gridTiles.length; i++) {
   });
 }
 
-document.querySelector(".chosenDom").addEventListener("click", function () {
+if(document.querySelector(".chosenDom"))document.querySelector(".chosenDom").addEventListener("click", function () {
   if (secondWordValid == true) {
     console.log("rotated ==false", rotated == false);
     if (rotated == false) {
@@ -1298,7 +1305,7 @@ function resetNextTurn() {
 
   //selDomValue();
 }
-document.querySelector(".giveUp").addEventListener("click", function () {
+if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventListener("click", function () {
   document.querySelector(".textSubmit").style["z-index"] = "-1";
   document.querySelector(".textSubmit").style["display"] = "none";
   let score = 0;

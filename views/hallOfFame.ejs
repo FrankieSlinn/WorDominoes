@@ -5,32 +5,37 @@
 sortArray = [];
 numbers = []
 newestScore = 0;
-minimum = 0;
+let minimum = 0;
+
 
 
 for(var i = 1; i < quotes.length; i++) { 
+  if(Number.isInteger(parseInt(quotes[i].score))){
   sortArray.push([quotes[i].lname, parseInt(quotes[i].score)]) 
-  numbers.push(parseInt(quotes[i].score)) };
+  
+  numbers.push(parseInt(quotes[i].score)) }};
 
-  function sortScores(){
+   newestScore = sortArray[sortArray.length-1][1]
+
   sortArray.sort((a, b) => b[1]-a[1]);
   numbers.sort((a, b) => b-a);
   sortArray.splice(20, sortArray.length-20);
   numbers.splice(20, numbers.length-20);
+  minimum = Math.min(...numbers); 
+  %>
 
-  let minimum = Math.min(...numbers); 
-  
-}
- 
-  if(newestScore>=minimum&&Number.isInteger(newestScore)){
-    sortArray.push(newestScore);
-    sortScores();}
- %>
+
  <script>
-  var n = <%-JSON.stringify(minimum)%>;
+  var n = <%-JSON.stringify(minimum)%>
   console.log("minimum test in EJS", n);
-
   localStorage.setItem("minimum", JSON.stringify(n));
+
+  var m = <%-JSON.stringify(newestScore)%>
+  console.log("newestScore in EJS", m);
+  localStorage.setItem("newestScore", JSON.stringify(m));
+  
+
+  
  </script>
   <ol class = "HOF"><%
   for(var i = 0; i < sortArray.length; i++){%>
