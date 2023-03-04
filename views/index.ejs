@@ -40,8 +40,9 @@
         <h2>About WorDominoes</h2>
         </div>
         </div>
+        <div class = "instruction">To place a domino you need to create a word with as many letters as there are dots for each side.</div>
     <div class = "overallContainer">
-      <div class = "instruction">To place a domino you need to create a word with as many letters as there are dots for each side.</div>
+      
        <br>
      
       <div class = "domGridContainer">
@@ -71,7 +72,7 @@
           <button class = "dom4 dom"></button>
         </div>
         <div class = "presentLetContainer">
-        <p class = "presentLet">Choose a domino above. You'll create 2 words for this tile: each word needs to be the length of its  side of the domino</p>
+        <p class = "presentLet">Choose a domino above.<br> You'll create 2 words for this tile: each word needs to be the length of its  side of the domino</p>
         </div>
         <br>
         <br>
@@ -79,24 +80,28 @@
           <div class = "chosenDom"></div>
         </div>
 
+
         <div class = "textSubmit">
         <div class = "feedback1"></div>
         
         <div class = "word1Instruct wordInstruct"></div>
-        <div class = "wordText1 wordText" placeholder = "Select tiles below to make a word"></div>
-        <div class = "buttons1" hidden>
+
+        <div class = "wordText1 wordText">Select letter tiles below to make the word</div>
+
+        <div class = "buttons1 buttons" hidden>
         <button class = "redo1 redo">Redo First Word</button>
         <button class = "submit1 submit">Submit First Word</button>
         </div>
         <div class = "feedback2"></div>
    
-        <div class = "word2Instruct wordInstruct" hidden>Select Tiles Below to Make the second Word</div>
-        <div class = "wordText2 wordText"></div>
-        <div class = "buttons2" hidden>
+        <div class = "word2Instruct wordInstruct" hidden></div>
+        <div class = "wordText2 wordText hidden">Select letter tiles below to make the second word</div>
+        <div class = "buttons2 buttons" hidden>
         <button class = "redo2 redo">Redo Second Word</button>
         <button class = "submit2 submit">Submit Second Word</button>
           </div> 
         </div>
+     
         <div class = "handLetters" hidden>
           <div class = "tile1 tile"></div>
           <div class = "tile2 tile"></div>
@@ -112,37 +117,40 @@
           <div class = "tile12 tile"></div>
           <div class = "tile13 tile"></div>
           <div class = "tile14 tile"></div>
-          <div class = "tile15 tile"><div>
+          <div class = "tile15 tile"></div>
             
   </div>
-        
- 
-  </div>
-  </div>
   <div class = "hallOfFame" hidden>
+    <br>
+    <br>
+        <p class = "hallOfFameMessage">You made it into the Hall of Fame! Enter a Handle and See How You Have Done Against the Others.</p>
+        <br>
+        <br>
+      
+        <!-- Need iframe so that page doesn't refresh after form submitted-->
+        <iframe name="myiframe" src = "" style="display:none"></iframe>
+    
+           <form action="/example" id = "submitHOF" method="POST" target="myiframe">
+            <label for="lname">Handle:</label> 
+            <input  type="text" name="lname" id = "lname"><br>
+          <input type="number" name="score" id = "score"><br>     
+         <button class = "submitHOFBut" type="submit">Get into Hall of Fame</button>
+        </form>
+        <br>
+        <p class = "HOFMessage" hidden>You are now in the Hall of Fame!</p>
+        <br>
+        <br>
+    
+  </div>  
+  <div class="HOFLink">
+  <p class = "seeHOF"><a href = /hallOfFame>Visit Hall Of Fame</a></p>   
+  </div>
+ </div>
+ </div>
 
-    <p class = "hallOfFameMessage">Congratulations, you made it into the Hall of Fame! Enter a Handle and See How You Have Done Against the Others.</p>
-    <br>
-    <br>
-  
-    <!-- Need iframe so that page doesn't refresh after form submitted-->
-    <iframe name="myiframe" src = "" style="display:none;"></iframe>
-
-       <form action="/example" id = "submitHOF" method="POST" target="myiframe">
-        <label for="lname">Handle:</label> 
-        <input type="text" name="lname" id = "lname"><br>
-      <input type="number" name="score" id = "score"><br>     
-     <button id = "submitHOFBut" type="submit">Get into Hall of Fame</button>
-    </form>
-    <br>
-    <p class = "HOFMessage" hidden>You are now in the Hall of Fame!</p>
-    <br>
-    <br>
-    <p class = "seeHOF"><a href = /hallOfFame>Visit Hall Of Fame</a></p>
-  </div> 
   <div class = "giveUpContainer">
     <p class = scoreMessage></p>
-   <button class = "giveUp">Give Up</button>
+   <button class = "giveUp" hidden>Give Up</button>
   </div>
   <br>
   <br>      

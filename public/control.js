@@ -278,10 +278,8 @@ let tiles = [
 ];
 let gridTilesi = "";
 let gridValuesi = [];
-let wordText = "";
+//let wordText = "";
 let wordNumber = 1;
-let wordText1 = "";
-let wordText2 = "";
 let firstProg = false;
 let lettersUsed1 = [];
 let lettersUsed2 = [];
@@ -314,7 +312,8 @@ let gridTiles = [
 ];
 
 let firstGo = true;
-let tilePlaced = false;
+//indicates if a new tile can be placed
+let blockPlaceTile = true;
 let turns = 1;
 let dominoesPlaced = 0;
 let rotated = false;
@@ -322,9 +321,23 @@ let chosen1Temp = 0;
 let chosen2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
+let hallOfFame = document.querySelector(".hallOfFame");
+let hallOfFameMessage = document.querySelector(".hallOfFameMessage");
+let submitHOFBut = document.querySelector(".submitHOFBut");
+let textSubmit = document.querySelector(".textSubmit"); 
+let wordText = document.querySelector(".wordText");
+let wordText1 = document.querySelector(".wordText1");
+let wordText2 = document.querySelector(".wordText2");
+let buttons1 = document.querySelector(".buttons1");
+let buttons2 = document.querySelector(".buttons1");
+let giveUp = document.querySelector(".giveUp");
+
+console.log("wordText2", wordText2)
+
 //Initial domino allocation 5
 console.log(letters.length);
 console.log("dominoes length", dominoes.length);
+
 
 //To Do
 //Resolve min score
@@ -337,7 +350,21 @@ console.log("dominoes length", dominoes.length);
 //score.value = parseInt(50);3+
 //console.log("score value", score.value);
 
-//document.querySelector(".textSubmit").style["display"] = "none";
+//display at beginning
+
+hallOfFame.style["display"] = "none";
+textSubmit.style["display"] = "none";
+document.querySelectorAll(".wordText").forEach(item=>{item.style["display"] = "none"});
+document.querySelector(".wordText1").classList.add("placeholder");
+document.querySelector(".wordText2").classList.add("placeholder");
+buttons1.style["display"]="none";
+buttons2.style["display"]="none"
+
+//Ensures focus on top of the screen after refresh
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+}
+document.querySelector('html').style.scrollBehavior = ''; 
 
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length - 1)));
@@ -423,9 +450,18 @@ let selDomValue = function () {
       console.log("dominoHand before selection", dominoHand);
       if(document.querySelector(doms[j]))document.querySelector(doms[j]).addEventListener("click", function () {
         if (selectedDomino == false) {
+        //remove rows from grid
+        textSubmit.style["grid-template-rows"] = "1.5rem 3rem";
+        textSubmit.style["grid-template-columns"] = "20rem 20rem";
+        console.log("wordText2 in function", wordText2)
+        
+        //textSubmit.style["margin-bottom"] = "0.5rem";
+
         //ensure not rotated
         secondWordValid = false;
         document.querySelector(".textSubmit").style["display"] = "inline-block";
+        document.querySelector(".wordText2").style["display"] = "none";
+        document.querySelector(".instruction").style["display"] = "none";
         chosenDomIndex = j;
         domHandValues.push(...Object.values(dominoHand[j]));
         chosenKey.push(...Object.keys(dominoHand[j]));
@@ -460,6 +496,7 @@ let selDomValue = function () {
         document.querySelector(
           ".word1Instruct"
         ).innerHTML = `Make a Word With ${chosen1} Letters`;
+
         document.querySelector(".wordText1").style["display"] = "inline-block";
         document.querySelector(".word2Instruct").style["display"] = "none";
         document.querySelector(".wordText2").style["display"] = "none";
@@ -566,10 +603,12 @@ function makeFirstWord() {
 
         console.log("wordNumber in 1", wordNumber);
         console.log("firts word letterHand1[i]", letterHand[i]);
+        document.querySelector(".wordText1").classList.remove("placeholder");
         wordText1 += letterHand[i];
         lettersUsed1.push(tiles[i]);
         document.querySelector(".wordText1").innerHTML = wordText1;
         document.querySelector(".buttons1").style["display"] = "inline-block";
+        
         console.log(
           "wordText1 after created",
           document.querySelector(".wordText1").innerHTML
@@ -605,6 +644,7 @@ for (let i = 0; i < 15; i++) {
   if(document.querySelector(tiles[i]))document.querySelector(tiles[i]).addEventListener("click", function () {
     if (wordNumber == 2) {
       wordText2 += letterHand[i];
+      document.querySelector(".wordText2").classList.remove("placeholder");
       lettersUsed2.push(tiles[i]);
       console.log("lettersUsed2");
       document.querySelector(".wordText2").innerHTML = wordText2;
@@ -658,6 +698,8 @@ xhr.addEventListener("readystatechange", function () {
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
       document.querySelector(".buttons1").style["display"] = "none";
+      document.querySelector(".wordText2").style["display"] = "inline-block";
+      document.querySelector(".wordText2").style["visibility"] = "visible";
       console.log("lettersUsed1", lettersUsed1);
       console.log("firstWordValid", firstWordValid, wordText1);
       console.log("letterhand before remove", letterHand);
@@ -760,7 +802,7 @@ xhr2.addEventListener("readystatechange", function () {
         "Congratulations, you completed a tile!";
 
       document.querySelector(".presentLet").innerHTML =
-        "<strong>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br>To rotate, click on the domino below.</strong>";
+        "<strong>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
       document.querySelector(".handLetters").style["display"] = "none";
@@ -786,7 +828,7 @@ xhr2.addEventListener("readystatechange", function () {
       //reset for user to be able to place 1st tile
       wordNumber = 1;
       //flag to ensure domino can't be placed twice
-      tilePlaced = false;
+      blockPlaceTile = false;
     } else if (
       document.querySelector(".wordText2").innerHTML.length !== Number(chosen2)
     ) {
@@ -853,8 +895,8 @@ if(document.querySelector(".submit2"))document.querySelector(".submit2").addEven
 for (let i = 0; i < gridTiles.length; i++) {
   if(document.querySelector(gridTiles[i]))document.querySelector(gridTiles[i]).addEventListener("click", function () {
     console.log("selectDomGrid running");
-    console.log("tilePlaced", tilePlaced);
-    if (tilePlaced == false) {
+    console.log("blockPlaceTile", blockPlaceTile);
+    if (blockPlaceTile == false) {
       currentGridValue = i;
       console.log("in in selectDomGrid", i);
       console.log("pngName", pngName);
@@ -899,50 +941,7 @@ if(document.querySelector(".chosenDom"))document.querySelector(".chosenDom").add
   }
 });
 
-/*
-function rotation(){
-  if(secondWordValid == true){
-  console.log("rotation running");
-  document.querySelector(".chosenDom").addEventListener("click", function(){
-    if(secondWordValid == true){
-    console.log("rotation clicked");
-    console.log("rotated ==false", rotated ==false);
-    if(rotated ==false){
-     
-      
-     
-      console.log("rotated is true.chosendom html should change")
-    document.querySelector(".chosenDom").innerHTML = "<img src = Images/" +
-    domKey +
-    '.png style="width:60px;height:120px;transform:rotate(180deg)">';
-    document.querySelector(".chosenDom").style["display"] = "inline-block";
-    chosen1Temp = chosen1;
-    chosen2Temp = chosen2;
-    chosen1 = chosen2Temp;
-    chosen2 = chosen1Temp
-    rotated = true;
-    console.log("rotated", rotated);
-    
-  }
-    else if(rotated==true){
 
-      console.log("rotated was true")
-      
-      if(chosen1 = chosen2Temp){
-     document.querySelector(".chosenDom").innerHTML =  "<img src = Images/" +
-        domKey +
-        '.png style="width:60px;height:120px;">';
-        chosen1 = chosen1Temp;
-        chosen2 = chosen2Temp;
-        rotated = false;
-      }
-    
-  }}
-  });
-
-}
-}*/
-//rotation();
 
 function pushGridValues(i) {
   currentGridValue = i;
@@ -1068,8 +1067,11 @@ function evaluateGrid(i) {
       gridValueCompare[2] == gridValueCompare[3])
   ) {
     console.log("tile successfully placed");
+    document.querySelector(".instruction").style["display"] =
+    "inline-block";
     document.querySelector(".instruction").innerHTML =
       "Congratulations, you placed a tile!";
+      giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
     //To stop rotation
     secondWordValid = false;
@@ -1120,7 +1122,7 @@ function evaluateGrid(i) {
 //Doesn't contain other functions
 
 function displayTile(i) {
-  if (firstGo == false && tilePlaced == false) {
+  if (firstGo == false && blockPlaceTile == false) {
     console.log("currentGridValue in display tile", currentGridValue);
 
     console.log("in in selectDomGrid", currentGridValue);
@@ -1169,7 +1171,7 @@ function displayTile(i) {
     newTilesDominoes();
     refillLetters();
     dominoesPlaced += 1;
-    tilePlaced = true;
+    blockPlaceTile = true;
     domKey = "";
     rotated = false;
     chosen1 = chosen1;
@@ -1181,6 +1183,7 @@ function displayTile(i) {
 function newTilesDominoes() {
   if (firstGo == false) {
     console.log("new Tiles Dominoes running");
+    document.querySelector(".wordText").classList.add("placeholder");
 
     let rand1 = randomNumberDom();
 
@@ -1239,11 +1242,12 @@ function newTilesDominoes() {
         document.querySelector(doms[chosenDomIndex]).innerHTML
       );
       document.querySelector(".presentLet").innerHTML =
-        "Now select another domino that will fit in the grid";
+        "Now select another domino above that will fit in the grid";
       document.querySelector(".wordText").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "none";
+      document.querySelector(".textSubmit").style["display"] = "none";
     }
-    tilePlaced = true;
+    blockPlaceTile = true;
   }
 }
 function refillLetters() {
@@ -1308,6 +1312,15 @@ function resetNextTurn() {
 if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventListener("click", function () {
   document.querySelector(".textSubmit").style["z-index"] = "-1";
   document.querySelector(".textSubmit").style["display"] = "none";
+  document.querySelector(".textSubmit").style["opacity"] = "none";
+  document.querySelector(".handLetters").style["display"] = "none";
+  document.querySelector(".wordText").style["display"] = "none";
+  document.querySelector(".wordText1").style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".wordInstruct").style["display"] = "none";
+  document.querySelector(".buttons").style["display"] = "none";
+  document.querySelector(".domHand").style["display"] = "none";
+  giveUp.style["display"] = "none";
   let score = 0;
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
@@ -1316,7 +1329,7 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   console.log("score after calculated", score);
   console.log("score from min", Number(JSON.parse(localStorage.getItem("minimum"))))
 
-  if(score >=Number(JSON.parse(localStorage.getItem("minimum")))){
+  if(score >=Number(JSON.parse(localStorage.getItem("minimum")))&&score>0){
     console.log("hall of fame displayed")
    document.querySelector(".hallOfFame").style["display"] = "inline-block";
   }
@@ -1331,6 +1344,12 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   ).innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".presentLet").style["font-size"] = "1.5rem";
 });
+//Make HOF Form section disappear after button clicked.
+submitHOFBut.addEventListener("click", function(){
+  console.log("submitHOFBut clicked");
+  textSubmit.style["display"] = "none";
+  hallOfFame.style["display"] = "none";
+})
 /*
 $('#submit').click(function() {
   $.ajax({
@@ -1355,4 +1374,3 @@ xhrScore.send(scoreData);*/
 //var minScore = Number(JSON.parse(document.getElemen
 //console.log("minimum test in brower.js", n)
 console.log("minimum test at source", JSON.parse(localStorage.getItem("minimum")))
-

@@ -1,0 +1,100 @@
+* {
+    margin: 0px;
+    padding: 0px;
+   
+  }
+
+  body{
+    font-family: Arial,Helvetica,sans-serif; 
+    color: #555;
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-right:1rem;
+   line-height: 1.5rem;
+  }
+
+  h1{
+
+    letter-spacing: 0.05rem;
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 3rem;
+    
+  }
+.gridContainer{
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+}
+.scoreContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-self: center;
+  text-align: center;
+  width: 50%;
+}
+
+
+ li{
+  list-style-type: none;
+
+
+  justify-content: space-between;
+  gap: 2rem;
+
+ 
+    font-family: Arial,Helvetica,sans-serif; 
+    color: #555;
+    font-weight: 700;
+   
+    margin-left: 1rem;
+    margin-right:1rem;
+    text-align: centre;
+
+    width: 90%;
+  }
+
+  .rank{
+    grid-column: 1;
+  }
+.scores{
+  grid-column: 3;
+}
+
+  .name{
+    
+    grid-column: 2;
+
+  }
+  .name-list{
+    grid-column: 2;
+  }
+
+  .score{
+    grid-column: 3;
+text-align:center;
+
+  }
+  .position{
+
+    margin-top: 2rem;
+  }
+
+.heading-score{
+  grid-column: 3;
+}
+.heading-name{
+  grid-column: 2;
+}
+.names{
+  grid-column: 2;
+}
+.rank-name{
+  grid-column: 1;
+}
+.return{
+  text-align:center;
+}
+.game{
+  font-weight: 700;
+}

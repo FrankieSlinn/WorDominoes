@@ -27,21 +27,30 @@ app.use(express.static(__dirname + '/public'));
 MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mongodb.net/star-wars-quotes', (err, database) => {
  if (err) return console.log(err)
     db = database.db('star-wars-quotes')
-
+    
     }
   )
+  
   app.get('/', (req,res)=>{
     res.render('index.ejs')
   })
 
 //test
+
 app.get('/hallOfFame', (req,res)=>{
   db.collection('quotes').find().sort({score:1})
   db.collection('quotes').find().toArray()
+ // db.collection('quotes').deleteOne({score:0})
     .then(results => {
       res.render('hallOfFame.ejs', { quotes: results })
     })
+    //delete if over 20
+  
 })
+
+
+
+
 
 
  //This worked
@@ -66,18 +75,34 @@ app.get('/hallOfFame', (req,res)=>{
 //MongoClient.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true });
 //const db = mongoose.connection;
 //db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
 app.post('/example', (req, res) => {
+ //db.collection('quotes').deleteOne({name:"Moi!"}) 
+
   db.collection('quotes').insertOne(req.body, (err, result) => 
   {
       if (err) return console.log(err)
       
       console.log('saved to database')
    
-      res.redirect('/')
-
-   
+      res.redirect('/') 
   })
 })
+
+app.post('/exampleOne', (req, res) => {
+db.collection('quotes').deleteOne({score: "0"}) ,function(err, obj) {
+  if (err) throw err;
+  console.log("1 document deleted");
+  db.close();
+};
+});
+
+
+
+
+
+
+
 
 
 app.get('/example', (req, res) => {
@@ -87,10 +112,12 @@ app.get('/example', (req, res) => {
   })
 })
 
+
+/*
 app.get('"/minVal"', (req, res) => {
 console.log("min", min)
   res.render('index.ejs', {min: min})
-})
+})*/
 
 
 /*

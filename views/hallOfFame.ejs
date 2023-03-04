@@ -1,31 +1,237 @@
-
-
-<p>Hall of Fame</p>
-<% 
-sortArray = [];
-numbers = []
-newestScore = 0;
-let minimum = 0;
-
-
-
-for(var i = 1; i < quotes.length; i++) { 
-  if(Number.isInteger(parseInt(quotes[i].score))){
-  sortArray.push([quotes[i].lname, parseInt(quotes[i].score)]) 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../HOFStyle.css" type="text/css">
+    <title>Hall Of Fame</title>
+   
+</head>
+<body>
   
-  numbers.push(parseInt(quotes[i].score)) }};
+
+<h1>Hall of Fame</h1>
+
+<% 
+
+let sortArray = []
+numbers = []
+newestScore = 0
+let minimum = 0
+let numRec = 20
+let namesWinners = []
+let DBdel = ""
+ 
+
+
+
+
+for(var i = 0; i < quotes.length; i++) { 
+  
+  if(Number.isInteger(parseInt(quotes[i].score))){
+    console.log("quotes[i]", quotes[i])
+  sortArray.push([JSON.stringify(quotes[i].lname), parseInt(quotes[i].score)]) 
+  namesWinners.push(JSON.stringify(quotes[i].lname))
+  numbers.push(parseInt(quotes[i].score)) }}
 
    newestScore = sortArray[sortArray.length-1][1]
 
-  sortArray.sort((a, b) => b[1]-a[1]);
-  numbers.sort((a, b) => b-a);
-  sortArray.splice(20, sortArray.length-20);
-  numbers.splice(20, numbers.length-20);
-  minimum = Math.min(...numbers); 
+  sortArray.sort((a, b) => b[1]-a[1])
+  numbers.sort((a, b) => b-a)
+
+  let placeholder = "name";
+console.log("sortArrayb4 trim", sortArray, sortArray.length)
+
+//get array of items for deletion
+if(sortArray.length>3){
+  DBdel = sortArray.slice(3);
+}
+console.log("DBdel", DBdel[0][0]);
+
+
+  sortArray.splice(numRec, sortArray.length-numRec)
+  console.log("sortArray after splice", sortArray, sortArray.length)
+  numbers.splice(numRec, numbers.length-numRec)
+  console.log("sortarray.length not 20",  sortArray.length!==20)
+
+  minimum = Math.min(...numbers, 0)
+ 
+
   %>
 
 
- <script>
+
+
+  
+    <!-- Output name from the iterated quote object -->
+    <div class = "gridContainer">
+    <div class = "scoreContainer">
+    <br>
+    <br>
+
+  <h2 class = 'rank-name'>Rank</h2>
+  <h2 class= 'heading-name'>Name</h2>
+  <h2 class = "heading-score">Score</h2>
+ <br>
+  <div class = 'rank rank1'>1</div>
+  <span class = 'name name1'></span>
+  <span class = "score score1"></span>
+  <div class = 'rank rank2'>2</div>
+  <div class = 'name2 name'></div>
+  <span class = "score score2"></span>
+    <div class = 'rank rank3'>3</div>
+    <div class = 'name3 name'></div>
+    <span class = "score score3"></span>
+    <div class = 'rank rank4'>4</div>
+    <span class = 'name4 name'></span>
+    <span class = "score score4"></span>
+   <div class = 'rank rank5'>5</div>
+   <span class = 'name5 name'></span>
+   <span class = "score score5"></span>
+  <div class = 'rank rank6'>6</div>
+  <span class = 'name6 name'></span>
+  <span class = "score score6"></span>
+   <div class = 'rank rank7'>7</div>
+   <span class = 'name7 name'></span>
+   <span class = "score score7"></span>
+   <div class = 'rank rank8'>8</div>
+   <span class = 'name8 name'></span>
+   <span class = "score score8"></span>
+   <div class = 'rank rank9'>9</div>
+   <span class = 'name9 name'></span>
+   <span class = "score score9"></span>
+   <div class = 'rank rank10'>10</div>
+   <span class = 'name10 name'></span>
+   <span class = " score score10"></span>
+   <div class = 'rank rank11'>11</div>
+   <span class = 'name11  name'></span>
+   <span class = "score score11"></span>
+  <div class = 'rank rank12'>12</div>
+  <span class = 'name12 name'></span>
+  <span class = " score score12"></span>
+   <div class = 'rank rank13'>13</div>
+   <span class = 'name13 name'></span>
+   <span class = "score score13"></span>
+   <div class = 'rank rank14'>14</div>
+   <span class = 'name14 name'></span>
+   <span class = "score score14"></span>
+   <div class = 'rank rank15'>15</div>
+   <span class = 'name15 name'></span>
+   <span class = "score score15"></span>
+   <div class = 'rank rank16'>16</div>
+   <span class = 'name16 name'></span>
+   <span class = "score score16"></span>
+   <div class = 'rank rank17'>17</div>
+   <span class = 'name17 name'></span>
+   <span class = "score score17"></span>
+   <div class = 'rank rank18'>18</div>
+   <span class = 'name18 name'></span>
+   <span class = "score score18"></span>
+   <div class = 'rank rank19'>19</div>
+   <span class = 'name19 name'></span>
+   <span class = "score score19"></span>
+   <div class = 'rank rank20'>20</div>
+   <span class = 'name20 name'></span>
+   <span class = "score score20"></span>
+</div>
+
+</div></body>
+    <script>
+    //document.querySelectorAll(".colon").forEach((item)=>item.innerHTML = ":");
+var sortArray = [<%- sortArray %>];
+var scoresjs = [<%- numbers %>]
+var namesjs = [<%- namesWinners %>];
+var numRec = <%- numRec %>;
+var DBdel = [<%- DBdel %>];
+
+console.log("DBdel", DBdel);
+
+//let submitHOFBut = document.querySelector(".submitHOFBut");
+
+/*
+if (DBdel.length>0){
+fetch('/quotes', {
+    method: 'delete',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      DBdel
+    })
+  })
+    .then(res => {
+      if (res.ok) return res.json()
+    })
+    .then(data => {
+      window.location.reload()
+    })
+    DBdel = [];
+    console.log("DBdel length", DBdel.length)
+  };
+  
+//var DBdel = <%- DBdel %>;
+console.log("namejs.length", namesjs.length)
+console.log("numRec", numRec)
+while(namesjs.length < numRec){
+    console.log("yes")
+    console.log("namesjs length", namesjs.length)
+    namesjs.push("---");
+    scoresjs.push("---");
+    console.log("namesjs in while", namesjs)
+  }*/
+
+let names = [".name1", ".name2", ".name3", ".name4", ".name5", ".name6", ".name7", ".name8", ".name9", ".name10"
+, ".name11", ".name12", ".name13", ".name14", ".name15", ".name16", ".name17", ".name18", ".name19", ".name20"]
+let scores = [".score1", ".score2", ".score3", ".score4", ".score5", ".score6", ".score7", ".score8", ".score9", ".score10"
+, ".score11", ".score12", ".score13", ".score14", ".score15", ".score16", ".score17", ".score18", ".score19", ".score20"]
+
+console.log("namesjs", namesjs)
+
+let numTemp = [];
+let nameTemp= [];
+console.log("sortArray", sortArray)
+  for(var i = 0; i < sortArray.length; i++){
+    //document.querySelector(rank[i]).innerHTML = scoresjs[i]; 
+   
+   // console.log("scores.js", scoresjs)
+    console.log("Sortarray[i]", sortArray[i])
+    if(typeof sortArray[i]=== "number"){
+      console.log("yessss", sortArray[i]);
+      numTemp.push(sortArray[i])}
+    //document.querySelector(scores[i]).innerHTML = sortArray[i]}
+    else if(typeof sortArray[i] == "string"){
+      nameTemp.push(sortArray[i])}}
+console.log("name temp num temp", nameTemp, numTemp)
+
+  for(var i = 0; i < numTemp.length; i++){
+    //document.querySelector(rank[i]).innerHTML = scoresjs[i];
+    document.querySelector(scores[i]).innerHTML = numTemp[i];
+    document.querySelector(names[i]).innerHTML = nameTemp[i];
+
+
+  }
+    //document.querySelector(names[i]).innerHTML = sortArray[i]}
+    console.log("namesjs with new name", document.querySelector(names[i]).innerHTML, i)
+   
+   // document.querySelector(score[i]).innerHTML = "ye";
+
+
+
+  
+ </script>
+  
+  
+
+<br>
+<br>
+<p class = "return"><a  class = "game" href = />Go Back to Game</a></p>
+</div>
+
+<form action="/exampleOne" id = "delete" method="POST">
+<input type="hidden" name="lastEntryName" id = "lastEntryName"><br>  
+<input type="hidden" name="lastEntryScore" id = "lastEntryScore"><br>   
+
+</form>
+<script>
   var n = <%-JSON.stringify(minimum)%>
   console.log("minimum test in EJS", n);
   localStorage.setItem("minimum", JSON.stringify(n));
@@ -37,23 +243,9 @@ for(var i = 1; i < quotes.length; i++) {
 
   
  </script>
-  <ol class = "HOF"><%
-  for(var i = 0; i < sortArray.length; i++){%>
-    <li class="HOFentry">
-      <!-- Output name from the iterated quote object -->
-      <span><%= sortArray[i][0] %>: <%= sortArray[i][1] %></span>
-
-    </li>
-<%
-  }%>
-</ol>
-
-<br>
-<br>
-<p><a href = />Go Back to Game</a></p>
-
-
 
 <script src="../control.js"></script>
+</body>
+</html>
 
 

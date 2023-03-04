@@ -4,10 +4,15 @@
   }
   body{
     font-family: Arial,Helvetica,sans-serif; 
-    color: #333;
+    color: #444;
     font-size: 1rem;
     margin-left: 1rem;
     margin-right:1rem;
+    text-align: center;
+    width: 50%;
+    left: 50%;
+    transform: translate(+50%, 0);
+    line-height: 1.5rem;
   }
   .overallContainer{
     text-align: center;
@@ -95,7 +100,7 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.8rem;
-  margin-top: 1rem;
+
 }
 
 button:hover,
@@ -109,13 +114,19 @@ button:active {
   text-align: center;
 }
 .presentLet{
+  color: #191970;
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: -2.5rem;
   width: 85%;
   margin-left: 2rem;
   margin-right: 2rem;
+ 
   animation: 2s slide-right;
+}
+.presentLet p{
+  
+
 }
 .gridContainer{
   justify-content: center;
@@ -146,7 +157,8 @@ color: #333;
 }
 .domGrid1, .domGrid2, .domGrid3, .domGrid4, .domGrid5, .domGrid6, .domGrid7, .domGrid8, .domGrid9, .domGrid10, .domGrid11, .domGrid12{
   border: 2px solid #333;
-  background-color: #ababab;
+  background-color: #eae6e6;
+  border-radius: 5px;
 }
 .domGrid1{
   grid-column: 1/3;
@@ -201,6 +213,7 @@ color: #333;
 .chosenDomContainer{
   text-align: center;
   justify-content: center;
+  margin: -1rem;
 }
 .chosenDom{
   display: inline-block;
@@ -213,22 +226,25 @@ margin-bottom: -5rem;
 
 .textSubmit{
   display: inline-grid !important;
-  grid-auto-columns: minmax(150px, 1fr);
+  grid-template-columns: auto auto;
   grid-template-rows: 1.5rem 3rem 3rem 3rem;
   grid-row-gap: 1rem;
   grid-column-gap: 2rem;
  text-align: center;
  margin-top: 0rem;
- margin-bottom: -2rem;
+ margin-bottom: 0rem;
  margin-left: 2rem;
  margin-right: 2rem;
 
 
  padding: 0rem;
   align-items: center;
+  vertical-align: center;
   width: 85%;
 }
-
+.instruction{
+  text-align: center;
+}
 
 .word1Instruct{
   grid-column: 1;
@@ -245,49 +261,64 @@ margin-bottom: -5rem;
   
 }
 .wordText{
-  
+  display: inline-block;
+  text-align: center;
+  vertical-align: center;
   border-radius: 5px;
-  height: 2rem; 
+
   color: #333;
+  background-color: #eae6e6  !important;
+
   font-weight: 700;
-  padding: 0.25rem;
+  padding: 0.5rem;
   font-size: 1.25rem;
 
 }
 .wordText1{
   grid-column: 1;
   grid-row: 2;
-
-
+  text-align: center;
 }
 .wordText2{
+  visibility: hidden;
   grid-column:2;
   grid-row: 2;
 
 }
-.submit{
-  display: inline;
-  margin-top: 1rem;
+.placeholder{
+  color: #777;
+  font-size: 0.75rem;
 }
+
+
 .buttons1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   grid-column: 1;
   grid-row: 3;
+  margin: 0 auto;
+  padding: auto;
 }
 
 .buttons2{
+  text-align: center;
   grid-column: 2;
   grid-row: 3;
+  margin: auto 0;
 }
-/*.handLetters{
+.handLetters{
 
   padding-top: 1rem;
     align-items: center;
+    text-align: center;
     height: 8rem;
     width: 100%;
     margin: auto;
   
 
-  }*/
+  }
 .tile{
 
 display: inline-block;
@@ -296,14 +327,14 @@ flex-direction: column;
 
   height: auto; 
   width: auto;
-  background-color: #ABABAB;
+  background-color: #eae6e6;
   border-radius: 5px;
   font-size: 1.2rem;
   font-weight: 700;
   padding: 1rem;
   margin: auto;
   border: #333 solid 2px; 
-  margin: 0.2rem;
+  margin-top: 0.25rem;
 
 }
 .giveUpContainer{
@@ -318,11 +349,17 @@ flex-direction: column;
   margin-top: 4rem;
 }
 .hallOfFame{
-  margin-top: 3rem;
+  margin-top: 8rem;
+  
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
 }
 .hallOfFameMessage{
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
+  margin-top: 1.5rem;
 
 }
 .footer{
@@ -355,23 +392,38 @@ flex-direction: column;
     font-size: 1.25rem;
     font-weight: 700;
   }
-  .submitHOF{
-
+  #submitHOF{
+    text-align: center;
     padding: 0.25rem;
   }
   .submitHOFBut{
-    font-size: 1.25rem;
+    display: inline;
+    font-size: 1rem;
+    text-align: center;
   }
+  .seeHOF{font-weight: 700;
+  text-align: center}
+  .HOFLink{
+    text-align: center;
+  }
+
   label{
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 700;
   }
   input{
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     padding: 0.25rem;
     color: #1f5124;
     border-radius: 10px;
   }
+  /*
+  li{
+    text-align: center;
+  }*/
+
+
+
 
 
