@@ -331,7 +331,18 @@ let wordText2 = document.querySelector(".wordText2");
 let buttons1 = document.querySelector(".buttons1");
 let buttons2 = document.querySelector(".buttons1");
 let giveUp = document.querySelector(".giveUp");
+let submit = document.querySelector(".submit");
+let submit1 = document.querySelector(".submit1");
+let submit2 = document.querySelector(".submit2");
+let redo = document.querySelector(".redo");
+let redo1But = document.querySelector(".redo1But");
+let redo2But = document.querySelector(".redo2But");
+let wordInstruct = document.querySelector(".word1Instruct");
+let word1Instruct = document.querySelector(".word1Instruct");
+let word2Instruct = document.querySelector(".word2Instruct");
+let placeDomInstruct = "Select letter tiles below to make the word";
 
+console.log("placeDomInstruct", placeDomInstruct);
 console.log("wordText2", wordText2)
 
 //Initial domino allocation 5
@@ -455,12 +466,19 @@ let selDomValue = function () {
         textSubmit.style["grid-template-columns"] = "20rem 20rem";
         console.log("wordText2 in function", wordText2)
         
-        //textSubmit.style["margin-bottom"] = "0.5rem";
+
 
         //ensure not rotated
         secondWordValid = false;
-        document.querySelector(".textSubmit").style["display"] = "inline-block";
+        //document.querySelector(".text1Submit").style["display"] = "inline-block";
+       document.querySelector(".wordText1").style["display"] = "inline-block";
+       redo1But.style["display"] = "inline-block";
+       document.querySelector(".buttons1").style["display"] = "inline-block";
+       word1Instruct.style["display"] = "inline-block";
+        document.querySelector(".wordText1").innerHTML = placeDomInstruct;
         document.querySelector(".wordText2").style["display"] = "none";
+        document.querySelector(".wordText2").style["backgroundColor"] = "none";
+        document.querySelector(".wordText2").style["visibility"] = "hidden";
         document.querySelector(".instruction").style["display"] = "none";
         chosenDomIndex = j;
         domHandValues.push(...Object.values(dominoHand[j]));
@@ -527,14 +545,17 @@ let selDomValue = function () {
           ".word1Instruct"
         ).innerHTML = `Make a word with ${chosen1} letters`;
         document.querySelector(".wordText2").style["display"] = "none";
+        document.querySelector(".submit1").style["display"] = "inline-block";
         document.querySelector(
           ".word2Instruct"
         ).innerHTML = `Make a word with ${chosen2} letters`;
-        //document.querySelector(".wordText2").style["display"] =  "inline-block";
+        document.querySelector(".wordText2").innerHTML=  "Select letter tiles below to make the word";
+        document.querySelector(".wordText2").classList.add("placeholder");
+
         showLetters();
         //function printChosenOne(){
         //  return chosen1};
-        document.querySelector(".wordText2").style["display"] = "inline-block";
+       // document.querySelector(".wordText2").style["display"] = "inline-block";
         document.querySelector(".wordText").style["background-color"] =
           "#ABABAB";
         showLetters();
@@ -608,6 +629,8 @@ function makeFirstWord() {
         lettersUsed1.push(tiles[i]);
         document.querySelector(".wordText1").innerHTML = wordText1;
         document.querySelector(".buttons1").style["display"] = "inline-block";
+        document.querySelector(".textSubmit").style["display"] = "inline-block";                     
+
         
         console.log(
           "wordText1 after created",
@@ -622,11 +645,15 @@ function makeFirstWord() {
   }
 }
 redo1();
+
 //redo first word
 function redo1() {
   console.log("redo1 running");
-  if(document.querySelector(".redo1"))document.querySelector(".redo1").addEventListener("click", function () {
-    document.querySelector(".wordText1").innerHTML = "";
+  document.querySelector(".redo1But").addEventListener("click", function () {
+    console.log("redo clicked")
+    document.querySelector(".wordText1").classList.add("placeholder")
+    document.querySelector(".wordText1").innerHTML = "Select letter tiles below to make the word";
+    
     lettersUsed1.forEach(
       (item) =>
         (document.querySelector(`${item}`).style["display"] = "inline-block")
@@ -660,14 +687,17 @@ for (let i = 0; i < 15; i++) {
 
 redo2();
 function redo2() {
-  if(document.querySelector(".redo2"))document.querySelector(".redo2").addEventListener("click", function () {
-    document.querySelector(".wordText2").innerHTML = "";
+ document.querySelector(".redo2But").addEventListener("click", function () {
+    document.querySelector(".wordText2").classList.add("placeholder")
+    document.querySelector(".wordText2").innerHTML = "Select letter tiles below to make the word";
+   
     console.log("lettersused2 in function for it", lettersUsed2);
-    wordText2 = "";
+    //wordText2 = "";
 
     lettersUsed2.forEach(
       (item) => (document.querySelector(item).style["display"] = "inline-block")
     );
+    wordText2 = "";
     lettersUsed2 = [];
     wordNumber = 2;
   });
@@ -700,6 +730,7 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".buttons1").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "inline-block";
       document.querySelector(".wordText2").style["visibility"] = "visible";
+      document.querySelector(".wordText2").classList.add("placeholder");
       console.log("lettersUsed1", lettersUsed1);
       console.log("firstWordValid", firstWordValid, wordText1);
       console.log("letterhand before remove", letterHand);
@@ -734,6 +765,9 @@ xhr.addEventListener("readystatechange", function () {
       firstWordValid = false;
       document.querySelector(".word1Instruct").innerHTML =
         "Not a Valid Word. Try Again.";
+      wordText1.innerHTML = "Select letter tiles below to make the word";
+      document.querySelector(".wordText1").classList.add(".placeholder");
+  
       document.querySelector(".wordText1").innerHTML = "";
       lettersUsed1.forEach(
         (item) =>
@@ -798,11 +832,20 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").innerHTML.length == chosen2
     ) {
       secondWordValid = true;
-      document.querySelector(".word2Instruct").innerHTML =
+      //document.querySelector(".word2Instruct").innerHTML =
         "Congratulations, you completed a tile!";
+        document.querySelector(".word1Instruct").style["display"] = "none";
+        document.querySelector(".redo").style["display"] = "none";
+        document.querySelector(".submit").style["display"] = "none";
+        wordText.style["display"] = "none";
+        document.querySelector(".wordText2").style["display"] = "none";
+        word2Instruct.style["display"] = "none";
+        //wordText2.style["display"] = "none";
+        textSubmit.style["display"] = "none";
+
 
       document.querySelector(".presentLet").innerHTML =
-        "<strong>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
+        "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
       document.querySelector(".handLetters").style["display"] = "none";
@@ -1071,6 +1114,7 @@ function evaluateGrid(i) {
     "inline-block";
     document.querySelector(".instruction").innerHTML =
       "Congratulations, you placed a tile!";
+
       giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
     //To stop rotation
@@ -1184,6 +1228,9 @@ function newTilesDominoes() {
   if (firstGo == false) {
     console.log("new Tiles Dominoes running");
     document.querySelector(".wordText").classList.add("placeholder");
+    wordText1.innerHTML = "Select letter tiles below to make the word";
+    document.querySelector(".wordText2").style["display"] = "none";
+    
 
     let rand1 = randomNumberDom();
 
@@ -1292,6 +1339,7 @@ function resetNextTurn() {
   wordText2 = "";
   document.querySelector(".word1Instruct").innerHTML = "";
   document.querySelector(".word2Instruct").innerHTML = "";
+  wordText.classList.add("placeholder");
   //document.querySelector(".rotate").style['display']= "none";
 
   ///make sure not too many letters get removed
@@ -1304,10 +1352,7 @@ function resetNextTurn() {
   wordNumber = 1;
   //only compare latest letters
   gridValueCompare = [];
-  //chosen1 = 0;
-  //chosen2 = 0;
 
-  //selDomValue();
 }
 if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventListener("click", function () {
   document.querySelector(".textSubmit").style["z-index"] = "-1";
@@ -1350,27 +1395,5 @@ submitHOFBut.addEventListener("click", function(){
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 })
-/*
-$('#submit').click(function() {
-  $.ajax({
-      url: 'send_email.php',
-      type: 'POST',
-      data: {
-          email: 'email@example.com',
-          message: 'hello world!'
-      },
-      success: function(msg) {
-          alert('Email Sent');
-      }               
-  });
-});*/
-/*
-document.querySelector(".submitHOF").style["display"] = "inline-block";
-var scoreData = new 
-FormData(document.querySelector(".submitHOF"));
-var xhrScore = new XMLHttpRequest();
-xhrScore.open("POST", "SERVER-SCRIPT");
-xhrScore.send(scoreData);*/
-//var minScore = Number(JSON.parse(document.getElemen
-//console.log("minimum test in brower.js", n)
+
 console.log("minimum test at source", JSON.parse(localStorage.getItem("minimum")))
