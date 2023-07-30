@@ -1,52 +1,63 @@
 const express = require('express');
 const ejs = require('ejs');
-const path = require('path'); 
+const path = require('path');
 const bodyParser= require('body-parser');
 const app = express();
+const mongoose = require('mongoose');
+const indexRouter = require('./routes/index')
+const scoresRouter=require('./routes/halloffame')
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.json())
+app.use(express.static('./'));
+app.use(express.static(__dirname + '/public'));
+const mdb = mongoose.connection;
 const MongoClient = require('mongodb').MongoClient;
 var qs = require('querystring');
 const port = process.env.PORT || 3000; app.listen (port, () => {console.log (`Listening on port $ {port}...`)});
-//const control = require("./control.js") 
-//const quotes1 = "Variables work"
-//console.log(typeof PORT);
-var db;
+
+const dbConfig = require('./config/db')
+mongoose.connect(dbConfig);
+mdb.on('error', (error) => console.log(`ERROR: ${error.message}`))
+mdb.on('connected', () => console.log(`MongoDB Connected: ${dbConfig}`))
+mdb.on('disconnected', () => console.log('MongoDB Disconnected'))
+//var db;
+
+db = ('star-wars-quotes')
 
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
-app.use(bodyParser.urlencoded({extended: true}))
-
-app.use(express.static(__dirname + '/public'));
-//app.engine('html', require('ejs').renderFile);
 
 
 
-//app.post('/quotes', (req, res) => {  console.log('Hellooooooooooooooooo!')});
 
-MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mongodb.net/star-wars-quotes', (err, database) => {
- if (err) return console.log(err)
-    db = database.db('star-wars-quotes')
+
+//MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mongodb.net/star-wars-quotes', (err, database) => {
+ //if (err) return console.log(err)
+   // db = database.db('star-wars-quotes')
     
-    }
-  )
+   // }
+  //)
   
-  app.get('/', (req,res)=>{
-    res.render('index.ejs')
-  })
+  app.get('/', (req, res) => {
+    res.render('index.ejs');
+  });
 
 //test
 
-app.get('/hallOfFame', (req,res)=>{
-  db.collection('quotes').find().sort({score:1})
-  db.collection('quotes').find().toArray()
- // db.collection('quotes').deleteOne({score:0})
-    .then(results => {
-      res.render('hallOfFame.ejs', { quotes: results })
-    })
-    //delete if over 20
+// app.get('/hallOfFame', (req,res)=>{
+//   db.collection('scores').find().sort({score:1})
+//   db.collection('scores').find().toArray()
+//  // db.collection('scores').deleteOne({score:0})
+//     .then(results => {
+//       res.render('hallOfFame.ejs', { scores: results })
+//     })
+//     //delete if over 20
   
-})
+// })
+app.use(indexRouter)
+app.use(scoresRouter)
 
 
 
@@ -76,28 +87,26 @@ app.get('/hallOfFame', (req,res)=>{
 //const db = mongoose.connection;
 //db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.post('/example', (req, res) => {
- //db.collection('quotes').deleteOne({name:"Moi!"}) 
+// app.post('/example', (req, res) => {
+//  //db.collection('quotes').deleteOne({name:"Moi!"}) 
 
-  db.collection('quotes').insertOne(req.body, (err, result) => 
-  {
-      if (err) return console.log(err)
+//   db.collection('quotes').insertOne(req.body, (err, result) => 
+//   {
+//       if (err) return console.log(err)
       
-      console.log('saved to database')
+//       console.log('saved to database')
    
-      res.redirect('/') 
-  })
-})
+//       res.redirect('/') 
+//   })
+// })
 
-app.post('/exampleOne', (req, res) => {
-db.collection('quotes').deleteOne({score: "0"}) ,function(err, obj) {
-  if (err) throw err;
-  console.log("1 document deleted");
-  db.close();
-};
-});
-
-
+// app.post('/exampleOne', (req, res) => {
+// db.collection('quotes').deleteOne({score: "0"}) ,function(err, obj) {
+//   if (err) throw err;
+//   console.log("1 document deleted");
+//   db.close();
+// };
+// });
 
 
 
@@ -105,30 +114,14 @@ db.collection('quotes').deleteOne({score: "0"}) ,function(err, obj) {
 
 
 
-app.get('/example', (req, res) => {
-  db.collection('quotes').find().toArray((err, result) => {
-    if (err) return console.log(err)
-    res.render('index.ejs', {quotes: result})
-  })
-})
 
 
-/*
-app.get('"/minVal"', (req, res) => {
-console.log("min", min)
-  res.render('index.ejs', {min: min})
-})*/
+// app.get('/example', (req, res) => {
+//   db.collection('quotes').find().toArray((err, result) => {
+//     if (err) return console.log(err)
+//     res.render('index.ejs', {quotes: result})
+//   })
+// })
 
 
-/*
-  app.post('/example', (req, res) => {
-    
-    res.send(`Full name is:${req.body.score} ${req.body.lname}`);
 
-  });*/
-  
-
-  /*
-  app.listen(port, () => {
-    console.log(`Server running on port${port}`);
-  });*/
