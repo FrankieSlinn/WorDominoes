@@ -13,7 +13,8 @@
 
 <h1>Hall of Fame</h1>
 
-<% 
+
+<%
 
 let sortArray = []
 numbers = []
@@ -21,33 +22,30 @@ newestScore = 0
 let minimum = 0
 let numRec = 20
 let namesWinners = []
-let DBdel = ""
+let DBdel = []
  
 
 
-
-
-for(var i = 0; i < quotes.length; i++) { 
+for(let i = 0; i < scores.length; i++) { 
   
-  if(Number.isInteger(parseInt(quotes[i].score))){
-    console.log("quotes[i]", quotes[i])
-  sortArray.push([JSON.stringify(quotes[i].lname), parseInt(quotes[i].score)]) 
-  namesWinners.push(JSON.stringify(quotes[i].lname))
-  numbers.push(parseInt(quotes[i].score)) }}
+  if(parseInt(scores[i].score)){
+    console.log("scores[i]iii", scores[i])
+  sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score)]) 
+  namesWinners.push(JSON.stringify(scores[i].lname))
+  numbers.push(parseInt(scores[i].score)) 
+console.log("sortArray", sortArray, "numbers", numbers)}}
 
    newestScore = sortArray[sortArray.length-1][1]
+   console.log("newestscore", newestScore);
 
   sortArray.sort((a, b) => b[1]-a[1])
   numbers.sort((a, b) => b-a)
+  console.log("sorted sortArray", sortArray, " sorted numbers", numbers)
 
   let placeholder = "name";
 console.log("sortArrayb4 trim", sortArray, sortArray.length)
 
-//get array of items for deletion
-if(sortArray.length>3){
-  DBdel = sortArray.slice(3);
-}
-console.log("DBdel", DBdel[0][0]);
+
 
 
   sortArray.splice(numRec, sortArray.length-numRec)
@@ -59,6 +57,12 @@ console.log("DBdel", DBdel[0][0]);
  
 
   %>
+
+
+
+
+
+  
 
 
 
@@ -151,7 +155,7 @@ console.log("DBdel", DBdel);
 
 /*
 if (DBdel.length>0){
-fetch('/quotes', {
+fetch('/scores', {
     method: 'delete',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

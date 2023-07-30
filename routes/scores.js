@@ -6,7 +6,7 @@ const Score = require('../models/score')
 //Instantiate a Router
 const router = express.Router()
 
-router.get('/halloffame', (req, res)=>{
+router.get('/scores', (req, res)=>{
     Score.find()
     .then((allScores)=>{
         res.json({scores: allScores})
@@ -17,7 +17,7 @@ router.get('/halloffame', (req, res)=>{
     })
 })
 
-router.post('/halloffame', async (req, res) => {
+router.post('/scores', async (req, res) => {
     try {
       // Get the data from the request body
       const { lname, score } = req.body;
@@ -36,7 +36,7 @@ router.post('/halloffame', async (req, res) => {
     }
   });
 
-  router.delete("/halloffame/:id", (req, res) => {
+  router.delete("/scores/:id", (req, res) => {
     Score.findByIdAndRemove(req.params.id)
       .then((deletedScore) => res.json(deletedScore))
       .catch((error) => {

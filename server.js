@@ -4,8 +4,9 @@ const path = require('path');
 const bodyParser= require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
+
 const indexRouter = require('./routes/index')
-const scoresRouter=require('./routes/halloffame')
+const scoresRouter=require('./routes/scores')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static('./'));
@@ -16,13 +17,17 @@ var qs = require('querystring');
 const port = process.env.PORT || 3000; app.listen (port, () => {console.log (`Listening on port $ {port}...`)});
 
 const dbConfig = require('./config/db')
-mongoose.connect(dbConfig);
+
+mongoose.connect(dbConfig, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mdb.on('error', (error) => console.log(`ERROR: ${error.message}`))
 mdb.on('connected', () => console.log(`MongoDB Connected: ${dbConfig}`))
 mdb.on('disconnected', () => console.log('MongoDB Disconnected'))
 //var db;
 
-db = ('star-wars-quotes')
+// let db = ('star-wars-quotes')
 
 
 app.set('view engine', 'ejs')
@@ -44,18 +49,17 @@ app.set('views', __dirname + '/views');
     res.render('index.ejs');
   });
 
-//test
-
-// app.get('/hallOfFame', (req,res)=>{
-//   db.collection('scores').find().sort({score:1})
-//   db.collection('scores').find().toArray()
-//  // db.collection('scores').deleteOne({score:0})
-//     .then(results => {
-//       res.render('hallOfFame.ejs', { scores: results })
-//     })
-//     //delete if over 20
-  
-// })
+  const Score = require('./models/score'); // Adjust the path to your score model file
+  app.get('/scores', (req, res) => {
+    Score.find().sort({ score: -1 })
+      .then(results => {
+        res.render('scores.ejs', { scores: results });
+      })
+      .catch(err => {
+        console.error('Error fetching scores from database:', err);
+        res.status(500).send('Error fetching scores from database.');
+      });
+  });
 app.use(indexRouter)
 app.use(scoresRouter)
 
@@ -100,13 +104,6 @@ app.use(scoresRouter)
 //   })
 // })
 
-// app.post('/exampleOne', (req, res) => {
-// db.collection('quotes').deleteOne({score: "0"}) ,function(err, obj) {
-//   if (err) throw err;
-//   console.log("1 document deleted");
-//   db.close();
-// };
-// });
 
 
 
@@ -116,12 +113,6 @@ app.use(scoresRouter)
 
 
 
-// app.get('/example', (req, res) => {
-//   db.collection('quotes').find().toArray((err, result) => {
-//     if (err) return console.log(err)
-//     res.render('index.ejs', {quotes: result})
-//   })
-// })
 
 
 
