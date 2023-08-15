@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../HOFStyle.css" type="text/css">
+    <script defer src="HOF.js"></script>
     <title>Hall Of Fame</title>
    
 </head>
@@ -13,14 +14,13 @@
 
 <h1>Hall of Fame</h1>
 
-
-<%
+ <%
 
 let sortArray = []
 numbers = []
 newestScore = 0
 let minimum = 0
-let numRec = 2
+let numRec = 20
 let namesWinners = []
 let DBdel = []
  
@@ -28,43 +28,46 @@ let DBdel = []
 
 for(let i = 0; i < scores.length; i++) { 
   
-  if(parseInt(scores[i].score)){
+  if(parseInt(scores[i].score) && sortArray.length<= 20){
     console.log("scores[i]iii", scores[i])
-  sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]) 
+  sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), JSON.stringify(scores[i].id)])
   namesWinners.push(JSON.stringify(scores[i].lname))
   numbers.push(parseInt(scores[i].score)) 
-}}
+console.log("sortArray", sortArray, "numbers", numbers)}}
+
 
    newestScore = sortArray[sortArray.length-1][1]
- 
+   console.log("newestscore", newestScore);
 
   sortArray.sort((a, b) => b[1]-a[1])
   numbers.sort((a, b) => b-a)
   console.log("sorted sortArray", sortArray, " sorted numbers", numbers)
 
+
   let placeholder = "name";
-console.log("sortArrayb4 trim", sortArray, sortArray.length )
+console.log("sortArrayb4 trim", sortArray, sortArray.length)
 
 
 
 
-  let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
-  let DBDel = []
-  for(i=0; i< DBDelArray.length; i++){
-    DBDel.push(JSON.stringify(DBDelArray[i][DBDelArray[i].length-1]))
-  }
-  for(i=0; i< sortArray.length; i++){
-    sortArray[i].pop();
-  }
-  console.log("sortArray after splice", sortArray, sortArray.length, "DBDel", DBDel, typeof DBDel[0])
+
+
+  let splicedSortArray = sortArray.splice(numRec, sortArray.length-numRec);
+  console.log("spliced sortArray", splicedSortArray);
+  console.log("sortArray after splice", sortArray, sortArray.length)
   numbers.splice(numRec, numbers.length-numRec)
   console.log("sortarray.length not 20",  sortArray.length!==20)
 
   minimum = Math.min(...numbers, 0)
+  <!-- console.log("split sortarray", sortArray.join("]", "[")) -->
+
+
  
 
-  %>
+  %> 
 
+
+    <!-- Output name from the iterated quote object -->
     <div class = "gridContainer">
     <div class = "scoreContainer">
     <br>
@@ -136,107 +139,13 @@ console.log("sortArrayb4 trim", sortArray, sortArray.length )
    <span class = "score score20">-</span>
 </div>
 
-</div>
-    <script>
-      console.log("testing script");
-    //document.querySelectorAll(".colon").forEach((item)=>item.innerHTML = ":");
-    console.log("backend sortarray in js", <%- sortArray%>)
-var sortArray = [<%- sortArray %>];
-var DBDel = [<%- DBDel %>];
-var scoresjs = [<%- numbers %>]
-var namesjs = [<%- namesWinners %>];
-var numRec = <%- numRec %>;
+</div></body>
 
-
-
-console.log("DBdel", DBDel);
-for(i=0; i<DBDel.length; i++) {
-  let id= DBDel[i]
-  fetch(`http://localhost:3000/scores/${id}`, {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((data) => data.json())
-      .then((scores) => console.log(scores));
-
-
-}
-
-
-
-//let submitHOFBut = document.querySelector(".submitHOFBut");
-
-/*
-if (DBdel.length>0){
-fetch('/scores', {
-    method: 'delete',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      DBdel
-    })
-  })
-    .then(res => {
-      if (res.ok) return res.json()
-    })
-    .then(data => {
-      window.location.reload()
-    })
-    DBdel = [];
-    console.log("DBdel length", DBdel.length)
-  };
-  
-//var DBdel = <%- DBdel %>;
-console.log("namejs.length", namesjs.length)
-console.log("numRec", numRec)
-while(namesjs.length < numRec){
-    console.log("yes")
-    console.log("namesjs length", namesjs.length)
-    namesjs.push("---");
-    scoresjs.push("---");
-    console.log("namesjs in while", namesjs)
-  }*/
-
-let names = [".name1", ".name2", ".name3", ".name4", ".name5", ".name6", ".name7", ".name8", ".name9", ".name10"
-, ".name11", ".name12", ".name13", ".name14", ".name15", ".name16", ".name17", ".name18", ".name19", ".name20"]
-let scores = [".score1", ".score2", ".score3", ".score4", ".score5", ".score6", ".score7", ".score8", ".score9", ".score10"
-, ".score11", ".score12", ".score13", ".score14", ".score15", ".score16", ".score17", ".score18", ".score19", ".score20"]
-
-console.log("namesjs", namesjs)
-
-let numTemp = [];
-let nameTemp= [];
-console.log("sortArray", sortArray)
-  for(var i = 0; i < sortArray.length; i++){
-    //document.querySelector(rank[i]).innerHTML = scoresjs[i]; 
-   
-   // console.log("scores.js", scoresjs)
-    console.log("Sortarray[i]", sortArray[i])
-    if(typeof sortArray[i]=== "number"){
-      console.log("yessss", sortArray[i]);
-      numTemp.push(sortArray[i])}
-    //document.querySelector(scores[i]).innerHTML = sortArray[i]}
-    else if(typeof sortArray[i] == "string"){
-      nameTemp.push(sortArray[i])}}
-console.log("name temp num temp", nameTemp, numTemp)
-
-  for(var i = 0; i < numTemp.length; i++){
-    //document.querySelector(rank[i]).innerHTML = scoresjs[i];
-    document.querySelector(scores[i]).innerHTML = numTemp[i];
-    document.querySelector(names[i]).innerHTML = nameTemp[i];
-
-
-  }
-    //document.querySelector(names[i]).innerHTML = sortArray[i]}
-    console.log("namesjs with new name", document.querySelector(names[i]).innerHTML, i)
-   
-   // document.querySelector(score[i]).innerHTML = "ye";
 
 
 
   
- </script>
+
   
   
 
@@ -250,20 +159,14 @@ console.log("name temp num temp", nameTemp, numTemp)
 <input type="hidden" name="lastEntryScore" id = "lastEntryScore"><br>   
 
 </form>
-<script>
-  var n = <%-JSON.stringify(minimum)%>
-  console.log("minimum test in EJS", n);
-  localStorage.setItem("minimum", JSON.stringify(n));
 
-  var m = <%-JSON.stringify(newestScore)%>
-  console.log("newestScore in EJS", m);
-  localStorage.setItem("newestScore", JSON.stringify(m));
+
   
 
   
- </script>
 
-<script src="../control.js"></script>
+
+<!-- <script src="../control.js"></script> -->
 </body>
 </html>
 
