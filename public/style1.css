@@ -1,99 +1,112 @@
 * {
-    margin: 0px;
-    padding: 0px;
-  }
-  body{
-    font-family: Arial,Helvetica,sans-serif; 
-    color: #444;
-    font-size: 1rem;
-    margin-left: 1rem;
-    margin-right:1rem;
-    text-align: center;
-    width: 50%;
-    left: 50%;
-    transform: translate(+50%, 0);
-    line-height: 1.5rem;
-  }
-  .overallContainer{
-    text-align: center;
-  }
+  margin: 0px;
+  padding: 0px;
+}
 
-  h1{
-    letter-spacing: 0.05rem;
-    text-align: center;
-    font-size: 2rem;
-  }
-  .D{
-   font-size:2.25rem;
-   font-weight: 700;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #444;
+  font-size: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  text-align: center;
+  line-height: 1.5rem;
+}
 
-  }
+.overallContainer {
+  text-align: center;
+}
 
-  h2{
-    font-size: 1.5rem;
-  }
+h1 {
+  letter-spacing: 0.05rem;
+  text-align: center;
+  font-size: 2rem;
+}
 
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    background-color: #fff;
-    margin-top: 1rem;
-    padding: 2rem;
-    width: auto
-  }
-  .overallContainer{
-    margin: 0 1rem;
-    text-align: center;
-    justify-content: center;
-  }
+.D {
+  font-size: 2.25rem;
+  font-weight: 700;
 
-  .nav-link {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-  }
-  .nav-link:hover, .nav-link:active{
-    color: #777;
-  }
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 2rem;
+  background-color: #fff;
+  margin-top: 1rem;
+  padding: 2rem;
+  width: auto
+}
+
+.overallContainer {
+  margin: 0 1rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.nav-link {
+  display: block;
+  /* using min-width and min-height prevents the icons from getting smaller with a smaller screen size */
+  min-width: 1.5em;
+  min-height: 1.5em;
+}
+
+.nav-link:hover,
+.nav-link:active {
+  color: #777;
+}
 
 
-  .statsContent, .helpContent{
-    width: 100vw;
-   
-  }
-  .statsText, .helpText{
-    text-align: center;
-    margin-top: -5.5rem;
-    margin-right: 3.5rem;
-    margin-left: 1.5rem;
-    padding: 0.5rem;
-  }
-  .close{
-    text-align: right;
-    
-    
-  }
-  .closeButtonHelp, .closeButtonStats{
-   font-weight: 700;
-   background-color: white;
-   border: none;
-   font-size: 1.75rem;
-   padding: 3rem;
-   margin: 0rem;
-   color: #333;
-  }
+.statsContent,
+.helpContent {
+  width: 100vw;
 
-  .closeButtonHelp:hover, .closeButtonStats:hover,
-  .closeButtonHelp:active, .closeButtonStats:active{
-    color: #777;
-    background-color: white;;
-    font-size: 1.75rem;
-    padding: 3rem;
-  }
-  
+}
+
+.statsText,
+.helpText {
+  text-align: center;
+  margin-top: -5.5rem;
+  margin-right: 3.5rem;
+  margin-left: 1.5rem;
+  padding: 0.5rem;
+}
+
+.close {
+  text-align: right;
+
+
+}
+
+.closeButtonHelp,
+.closeButtonStats {
+  font-weight: 700;
+  background-color: white;
+  border: none;
+  font-size: 1.75rem;
+  padding: 3rem;
+  margin: 0rem;
+  color: #333;
+}
+
+.closeButtonHelp:hover,
+.closeButtonStats:hover,
+.closeButtonHelp:active,
+.closeButtonStats:active {
+  color: #777;
+  background-color: white;
+  ;
+  font-size: 1.75rem;
+  padding: 3rem;
+}
+
 button {
-  color: #ffffff ;
+  color: #ffffff;
   background-color: #1f5124;
   cursor: pointer;
   border-color: #1f5124;
@@ -110,188 +123,233 @@ button:active {
   border-color: #2e7b36;
   cursor: pointer;
 }
-.presentLetContainer{
+
+.presentLetContainer {
   text-align: center;
 }
-.presentLet{
-  color: #191970;
+
+.presentLet {
+
+
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: -2.5rem;
   width: 85%;
   margin-left: 2rem;
   margin-right: 2rem;
- 
   animation: 2s slide-right;
+  border: 2px #333 solid;
+  border-radius: 15px;
 }
-.presentLet p{
-  
+.instruct{
+  border: 2px #333 solid;
+  border-radius: 15px;
+  color: #191970;
+  background: #eae6e6;
+}
 
-}
-.gridContainer{
+.presentLet p {}
+
+.gridContainer {
   justify-content: center;
   text-align: center;
 }
-.dom{
+
+.dom {
   cursor: pointer;
   padding: 0;
   margin: 0;
 }
-.dom:hover, .dom:active{
+
+.dom:hover,
+.dom:active {
   background-color: #777;
   cursor: pointer;
   padding: 0;
 }
-.domGridContainer{
-  text-align: center; 
+
+.domGridContainer {
+  text-align: center;
   justify-content: center;
   height: 200px;
 }
 
-.domGrid{
-display: inline-grid; 
-grid-template-columns: 30px 30px 60px 60px 30px 30px;
-grid-template-rows: 30px 60px 60px 30px;
+.domGrid {
+  display: inline-grid;
+  grid-template-columns: 30px 30px 60px 60px 30px 30px;
+  grid-template-rows: 30px 60px 60px 30px;
 
-color: #333;
+  color: #333;
 }
-.domGrid1, .domGrid2, .domGrid3, .domGrid4, .domGrid5, .domGrid6, .domGrid7, .domGrid8, .domGrid9, .domGrid10, .domGrid11, .domGrid12{
+
+.domGrid1,
+.domGrid2,
+.domGrid3,
+.domGrid4,
+.domGrid5,
+.domGrid6,
+.domGrid7,
+.domGrid8,
+.domGrid9,
+.domGrid10,
+.domGrid11,
+.domGrid12 {
   border: 2px solid #333;
   background-color: #eae6e6;
   border-radius: 5px;
 }
-.domGrid1{
+
+.domGrid1 {
   grid-column: 1/3;
   grid-row: 1;
 }
-.domGrid2{
-  grid-column:3;
+
+.domGrid2 {
+  grid-column: 3;
   grid-row: 1;
 }
-.domGrid3{
-  grid-column:4;
+
+.domGrid3 {
+  grid-column: 4;
   grid-row: 1;
 }
-.domGrid4{
-  grid-column:5/-1;
+
+.domGrid4 {
+  grid-column: 5/-1;
   grid-row: 1;
 }
-.domGrid5{
-  grid-column:6;
+
+.domGrid5 {
+  grid-column: 6;
   grid-row: 2;
 }
-.domGrid6{
+
+.domGrid6 {
   grid-column: 6;
   grid-row: 3;
 }
-.domGrid7{
+
+.domGrid7 {
   grid-column: 5/-1;
   grid-row: 4;
 }
-.domGrid8{
-  grid-column:4;
-  grid-row:4;
-}
-.domGrid9{
-  grid-column:3;
+
+.domGrid8 {
+  grid-column: 4;
   grid-row: 4;
 }
-.domGrid10{
-  grid-column:1/3;
+
+.domGrid9 {
+  grid-column: 3;
   grid-row: 4;
 }
-.domGrid11{
-  grid-column:1;
+
+.domGrid10 {
+  grid-column: 1/3;
+  grid-row: 4;
+}
+
+.domGrid11 {
+  grid-column: 1;
   grid-row: 3;
 }
-.domGrid12{
-  grid-column:1;
+
+.domGrid12 {
+  grid-column: 1;
   grid-row: 2;
 }
 
 
-.chosenDomContainer{
+.chosenDomContainer {
   text-align: center;
   justify-content: center;
   margin: -1rem;
 }
-.chosenDom{
+
+.chosenDom {
   display: inline-block;
 
   width: 100px;
 
- transform: rotate(270deg);
-margin-bottom: -5rem;
+  transform: rotate(270deg);
+  margin-bottom: -5rem;
 }
 
-.textSubmit{
+.textSubmit {
   display: inline-grid !important;
   grid-template-columns: auto auto;
   grid-template-rows: 1.5rem 3rem 3rem 3rem;
   grid-row-gap: 1rem;
   grid-column-gap: 2rem;
- text-align: center;
- margin-top: 0rem;
- margin-bottom: 0rem;
- margin-left: 2rem;
- margin-right: 2rem;
+  text-align: center;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 
 
- padding: 0rem;
+  padding: 0rem;
   align-items: center;
   vertical-align: center;
   width: 85%;
 }
-.instruction{
+
+.instruction {
   text-align: center;
 }
 
-.word1Instruct{
+.word1Instruct {
   grid-column: 1;
   grid-row: 1;
 
 }
-.word2Instruct{
-  grid-column:2;
+
+.word2Instruct {
+  grid-column: 2;
   grid-row: 1;
 
 }
-.wordInstruct{
+
+.wordInstruct {
   font-weight: 700;
-  
+
 }
-.wordText{
+
+.wordText {
   display: inline-block;
   text-align: center;
   vertical-align: center;
   border-radius: 5px;
 
   color: #333;
-  background-color: #eae6e6  !important;
+  background-color: #eae6e6 !important;
 
   font-weight: 700;
   padding: 0.5rem;
   font-size: 1.25rem;
 
 }
-.wordText1{
+
+.wordText1 {
   grid-column: 1;
   grid-row: 2;
   text-align: center;
 }
-.wordText2{
+
+.wordText2 {
   visibility: hidden;
-  grid-column:2;
+  grid-column: 2;
   grid-row: 2;
 
 }
-.placeholder{
+
+.placeholder {
   color: #777;
   font-size: 0.75rem;
 }
 
 
-.buttons1{
+.buttons1 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -302,30 +360,32 @@ margin-bottom: -5rem;
   padding: auto;
 }
 
-.buttons2{
+.buttons2 {
   text-align: center;
   grid-column: 2;
   grid-row: 3;
   margin: auto 0;
 }
-.handLetters{
+
+.handLetters {
 
   padding-top: 1rem;
-    align-items: center;
-    text-align: center;
-    height: 8rem;
-    width: 100%;
-    margin: auto;
-  
+  align-items: center;
+  text-align: center;
+  height: 8rem;
+  width: 100%;
+  margin: auto;
 
-  }
-.tile{
 
-display: inline-block;
-flex-direction: column;
+}
+
+.tile {
+
+  display: inline-block;
+  flex-direction: column;
   text-align: center;
 
-  height: auto; 
+  height: auto;
   width: auto;
   background-color: #eae6e6;
   border-radius: 5px;
@@ -333,97 +393,108 @@ flex-direction: column;
   font-weight: 700;
   padding: 1rem;
   margin: auto;
-  border: #333 solid 2px; 
+  border: #333 solid 2px;
   margin-top: 0.25rem;
 
 }
-.giveUpContainer{
+
+.giveUpContainer {
   text-align: center;
   justify-content: center;
 }
-.giveUp{
+
+.giveUp {
   font-weight: 700;
   background-color: #f26419;
   color: #000;
   border-color: #f26419;
   margin-top: 4rem;
 }
-.hallOfFame{
+
+.hallOfFame {
   margin-top: 8rem;
-  
-  display: flex; 
-  flex-direction: column; 
+
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.hallOfFameMessage{
+
+.hallOfFameMessage {
   font-size: 1rem;
   font-weight: 700;
   margin-top: 1.5rem;
 
 }
-.footer{
+
+.footer {
   text-align: center;
   display: inline-block;
 }
 
-  .coffee{    
-    text-align: center;
-    padding: 1.5rem;
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-  }
- 
+.coffee {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
 
-  .copyright {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.75rem;
-  }
-  #score{
-    display: none;
-  }
-  .hallOfFame{
 
-    margin-top: -9rem;
-    z-index: 1;
-  }
-  .HOFMessage{
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-  #submitHOF{
-    text-align: center;
-    padding: 0.25rem;
-  }
-  .submitHOFBut{
-    display: inline;
-    font-size: 1rem;
-    text-align: center;
-  }
-  .seeHOF{font-weight: 700;
-  text-align: center}
-  .HOFLink{
-    text-align: center;
-  }
+.copyright {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+}
 
-  label{
-    font-size: 1rem;
-    font-weight: 700;
-  }
-  input{
-    font-size: 1.2rem;
-    font-weight: 700;
-    padding: 0.25rem;
-    color: #1f5124;
-    border-radius: 10px;
-  }
-  /*
+#score {
+  display: none;
+}
+
+.hallOfFame {
+
+  margin-top: -9rem;
+  z-index: 1;
+}
+
+.HOFMessage {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+#submitHOF {
+  text-align: center;
+  padding: 0.25rem;
+}
+
+.submitHOFBut {
+  display: inline;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.seeHOF {
+  font-weight: 700;
+  text-align: center
+}
+
+.HOFLink {
+  text-align: center;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+input {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.25rem;
+  color: #1f5124;
+  border-radius: 10px;
+}
+
+/*
   li{
     text-align: center;
   }*/
-
-
-
-
-
