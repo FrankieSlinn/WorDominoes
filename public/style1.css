@@ -130,16 +130,17 @@ button:active {
 
 .presentLet {
 
-
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: -2.5rem;
   width: 85%;
   margin-left: 2rem;
   margin-right: 2rem;
+  padding: 1rem;
   animation: 2s slide-right;
   border: 2px #333 solid;
-  border-radius: 15px;
+  border-radius: 10px;
+  
 }
 .instruct{
   border: 2px #333 solid;
@@ -493,7 +494,12 @@ input {
   border-radius: 10px;
 }
 
-/*
-  li{
-    text-align: center;
-  }*/
+@media (max-width: 872px) {
+  .redo{
+    margin-bottom: 0.5rem;
+  }
+  .seeHOF{
+    margin-top: 2rem;
+  }
+
+}

@@ -342,26 +342,9 @@ let word1Instruct = document.querySelector(".word1Instruct");
 let word2Instruct = document.querySelector(".word2Instruct");
 let placeDomInstruct = "Select letter tiles below to make the word";
 
-console.log("placeDomInstruct", placeDomInstruct);
-console.log("wordText2", wordText2)
-
-//Initial domino allocation 5
-console.log(letters.length);
-console.log("dominoes length", dominoes.length);
 
 
-//To Do
-//Resolve min score
-//Format HOF
-//Delete DB Items
 
-//Set up score so compatible with backend. Test value
-
-//score = document.getElementById("score");
-//score.value = parseInt(50);3+
-//console.log("score value", score.value);
-
-//display at beginning
 
 hallOfFame.style["display"] = "none";
 textSubmit.style["display"] = "none";
@@ -393,39 +376,21 @@ if (firstGo == true) {
   dominoes.splice(dominoes.indexOf(rand1), 1);
   dominoesUsed.push(rand1);
 
-  console.log("dominohand after rand1", dominoHand);
-  console.log("dominoes after rand1", dominoes);
-  console.log("after rand1", dominoes.length);
   let rand2 = dominoes[randomNumberDom()];
-  console.log("rand2", rand2);
+
   dominoHand.push(rand2);
   dominoes.splice(dominoes.indexOf(rand2), 1);
 
-  console.log("after rand2", dominoes.length);
+
   let rand3 = dominoes[randomNumberDom()];
-  console.log("rand3", rand3);
+
   dominoHand.push(rand3);
   dominoes.splice(dominoes.indexOf(rand3), 1);
 
-  console.log("after rand3", dominoes.lengh);
   let rand4 = dominoes[randomNumberDom()];
   dominoHand.push(rand4);
   dominoes.splice(dominoes.indexOf(rand4), 1);
 
-  //dominoesUsed.forEach((item)=>dominoes.splice(dominoesUsed.indexOf(item), 1));
-  console.log;
-
-  console.log("after rand4", dominoes.length);
-
-  console.log("dominoHand", dominoHand);
-
-  //
-
-  console.log("dominoes", dominoes);
-  console.log("dominoes.length after first splice", dominoes.length);
-  //console.log("dominoesrandomnumber", dominoes[rand]);
-
-  console.log("dominoHand after first generated", dominoHand);
   firstGo = false;
 }
 
@@ -514,6 +479,7 @@ let selDomValue = function () {
         document.querySelector(
           ".word1Instruct"
         ).innerHTML = `Make a Word With ${chosen1} Letters`;
+        
 
         document.querySelector(".wordText1").style["display"] = "inline-block";
         document.querySelector(".word2Instruct").style["display"] = "none";
@@ -559,7 +525,7 @@ let selDomValue = function () {
         document.querySelector(".wordText").style["background-color"] =
           "#ABABAB";
         showLetters();
-        document.querySelector(".presentLet").innerHTML = "";
+        document.querySelector(".presentLet").innerHTML = "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
         selectedDomino = true;
         }
