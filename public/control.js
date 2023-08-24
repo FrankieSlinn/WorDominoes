@@ -463,7 +463,7 @@ let selDomValue = function () {
         if (selectedDomino == false) {
         //remove rows from grid
         textSubmit.style["grid-template-rows"] = "1.5rem 3rem";
-        textSubmit.style["grid-template-columns"] = "20rem 20rem";
+        textSubmit.style["grid-template-columns"] = "1fr 1fr";
         console.log("wordText2 in function", wordText2)
         
 

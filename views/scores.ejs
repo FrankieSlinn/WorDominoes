@@ -18,12 +18,17 @@ let minimum = 0
 let numRec = 20
 //array of IDs to be deleted
 let DBdel = []
+//to find minimum score
+let numbers =[]
 console.log("scores", scores)
  //populate array with names, scores and ids from scores array with objects
 for(let i = 0; i < scores.length; i++) { 
   if(parseInt(scores[i].score)){
-  sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]) 
+  sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
+  numbers.push(parseInt(scores[i].score));
 }}
+//get minimum score for comparison with newest score to see if qualifies for HoF
+minimum=Math.min(...numbers)
    newestScore = sortArray[sortArray.length-1][1]
 //Remove excess records(too low) form the sortArray so they can be deleted from the database
   let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)

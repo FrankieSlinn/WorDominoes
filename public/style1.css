@@ -173,12 +173,11 @@ button:active {
   justify-content: center;
   height: 200px;
 }
-
+/* Grid where dominoes are placed.  */
 .domGrid {
   display: inline-grid;
   grid-template-columns: 30px 30px 60px 60px 30px 30px;
   grid-template-rows: 30px 60px 60px 30px;
-
   color: #333;
 }
 
@@ -278,7 +277,7 @@ button:active {
 .textSubmit {
   display: inline-grid !important;
   grid-template-columns: auto auto;
-  grid-template-rows: 1.5rem 3rem 3rem 3rem;
+  grid-template-rows: 1fr 2fr 2fr 2fr;
   grid-row-gap: 1rem;
   grid-column-gap: 2rem;
   text-align: center;
