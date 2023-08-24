@@ -129,11 +129,11 @@ button:active {
 }
 
 .presentLet {
-
+  display: inline-block;
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: -2.5rem;
-  width: 85%;
+  width: auto;
   margin-left: 2rem;
   margin-right: 2rem;
   padding: 1rem;
