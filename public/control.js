@@ -337,10 +337,11 @@ let submit2 = document.querySelector(".submit2");
 let redo = document.querySelector(".redo");
 let redo1But = document.querySelector(".redo1But");
 let redo2But = document.querySelector(".redo2But");
-let wordInstruct = document.querySelector(".word1Instruct");
+let wordInstruct = document.querySelector(".wordInstruct");
 let word1Instruct = document.querySelector(".word1Instruct");
 let word2Instruct = document.querySelector(".word2Instruct");
 let placeDomInstruct = "Select letter tiles below to make the word";
+let chosenDom=document.querySelector(".chosenDom")
 
 
 
@@ -1333,6 +1334,8 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   document.querySelector(".wordText1").style["display"] = "none";
   document.querySelector(".wordText2").style["display"] = "none";
   document.querySelector(".wordInstruct").style["display"] = "none";
+  word2Instruct.style["display"] = "none";
+  chosenDom.style["display"] = "none";
   document.querySelector(".buttons").style["display"] = "none";
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
@@ -1341,6 +1344,13 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
+  // word2Instruct.innerHTML="";
+
+  document.querySelector(
+    ".presentLet"
+  ).innerHTML = `You Have Scored ${score} Points`;
+  document.querySelector(".presentLet").style["font-size"] = "1rem";
+});
   console.log("score after calculated", score);
   console.log("score from min", Number(JSON.parse(localStorage.getItem("minimum"))))
 
@@ -1354,11 +1364,7 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   localStorage.setItem("score", JSON.stringify(score));
 
 
-  document.querySelector(
-    ".presentLet"
-  ).innerHTML = `You Have Scored ${score} Points`;
-  document.querySelector(".presentLet").style["font-size"] = "1.5rem";
-});
+
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function(){
   console.log("submitHOFBut clicked");
