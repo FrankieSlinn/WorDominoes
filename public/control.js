@@ -621,6 +621,9 @@ function redo1() {
     console.log("redo clicked")
     document.querySelector(".wordText1").classList.add("placeholder")
     document.querySelector(".wordText1").innerHTML = "Select letter tiles below to make the word";
+    document.querySelector(
+      ".word1Instruct"
+    ).innerHTML = `Make a word with ${chosen1} letters`;
     
     lettersUsed1.forEach(
       (item) =>
@@ -656,6 +659,9 @@ for (let i = 0; i < 15; i++) {
 redo2();
 function redo2() {
  document.querySelector(".redo2But").addEventListener("click", function () {
+  document.querySelector(
+    ".word2Instruct"
+  ).innerHTML = `Make a word with ${chosen2} letters`;
     document.querySelector(".wordText2").classList.add("placeholder")
     document.querySelector(".wordText2").innerHTML = "Select letter tiles below to make the word";
    
@@ -702,12 +708,7 @@ xhr.addEventListener("readystatechange", function () {
       console.log("lettersUsed1", lettersUsed1);
       console.log("firstWordValid", firstWordValid, wordText1);
       console.log("letterhand before remove", letterHand);
-      //for(let i =0; i<lettersUsed1.length; i++){
-
-      //letters.splice((letters.indexOf(document.querySelector(lettersUsed1[i]).innerHTML)),1);
-
-      // console.log("text.indexof(lettersUsed1[i])", text.indexof(lettersUsed1[i]))
-      //};
+  
       wordNumber = 2;
     } else if (
       document.querySelector(".wordText1").innerHTML.length !== Number(chosen1)
