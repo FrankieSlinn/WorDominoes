@@ -316,6 +316,7 @@ button:active {
 }
 
 .wordText {
+  line-height: 1rem;
   display: inline-block;
   text-align: center;
   vertical-align: center;
@@ -502,4 +503,34 @@ input {
     margin-top: 2rem;
   }
 
+}
+@media (max-width: 617px) {
+  .wordInstruct{
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 500px) {
+  .wordInstruct{
+    margin-bottom: 2rem;
+  }
+  .wordText{
+    line-height: 1rem;
+  }
+  .textSubmit{
+    margin-bottom: -0.5rem;
+  }
+
+}
+@media (max-width: 465px) {
+  .wordInstruct{
+    margin-bottom: 2.5rem;
+  }
+  .textSubmit{
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .wordText{
+
+    padding: 0.25rem;
+  }
 }

@@ -354,6 +354,28 @@ document.querySelector(".wordText2").classList.add("placeholder");
 buttons1.style["display"]="none";
 buttons2.style["display"]="none"
 
+//Navigate user to top of screen 
+// This function scrolls the user to the top of the page
+function scrollToTop() {
+  console.log("Scroll to top working");
+  window.scrollTo({
+    
+      top: 25,
+      behavior: 'smooth' // You can also use 'auto' or 'instant'
+  });
+}
+
+//Scroll to just past first third of page
+function scrollToMiddleThird() {
+  const screenHeight = window.innerHeight;
+  const scrollToPosition = screenHeight / 2; // Scroll to a position between 1/3 and 2/3 of the screen
+
+  window.scrollTo({
+      top: scrollToPosition,
+      behavior: 'smooth'
+  });
+}
+
 //Ensures focus on top of the screen after refresh
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
@@ -519,12 +541,12 @@ let selDomValue = function () {
         document.querySelector(".wordText2").classList.add("placeholder");
 
         showLetters();
-        //function printChosenOne(){
-        //  return chosen1};
-       // document.querySelector(".wordText2").style["display"] = "inline-block";
+        
+
         document.querySelector(".wordText").style["background-color"] =
           "#ABABAB";
-        showLetters();
+          scrollToMiddleThird()
+ 
         document.querySelector(".presentLet").innerHTML = "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
         selectedDomino = true;
@@ -536,23 +558,8 @@ let selDomValue = function () {
   }
 
 
-console.log("chosenValues", chosenValues);
 selDomValue();
-//selectDomino();
-console.log("dominoHand outside function", dominoHand);
-console.log(
-  "dominovalues outside function, chosenvalue",
-  chosenNums[0],
-  chosenValue
-);
-console.log("chosen1 outside function", chosen1);
-//console.log("printChosenOne", printChosenOne());
-console.log("domHandValuesnew", domHandValues);
-console.log("domHandValuestostring"), String(domHandValues[0]);
 
-console.log("selecteddom", selectedDomino);
-
-console.log("selecteddom after function", selectedDomino);
 
 //generate first letter hand
 function randomNumberLet() {
@@ -581,15 +588,10 @@ makeFirstWord();
 function makeFirstWord() {
   wordText1 = "";
 
-  console.log("wordNumber in 1 first line", wordNumber);
-
   for (let i = 0; i < 15; i++) {
     if(document.querySelector(tiles[i]))document.querySelector(tiles[i]).addEventListener("click", function () {
       if (wordNumber == 1) {
-        console.log("tile clicked");
 
-        console.log("wordNumber in 1", wordNumber);
-        console.log("firts word letterHand1[i]", letterHand[i]);
         document.querySelector(".wordText1").classList.remove("placeholder");
         wordText1 += letterHand[i];
         lettersUsed1.push(tiles[i]);
@@ -798,8 +800,8 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").innerHTML.length == chosen2
     ) {
       secondWordValid = true;
-      //document.querySelector(".word2Instruct").innerHTML =
-        "Congratulations, you completed a tile!";
+      scrollToTop();
+
         document.querySelector(".word1Instruct").style["display"] = "none";
         document.querySelector(".redo").style["display"] = "none";
         document.querySelector(".submit").style["display"] = "none";
@@ -812,6 +814,7 @@ xhr2.addEventListener("readystatechange", function () {
 
       document.querySelector(".presentLet").innerHTML =
         "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
+
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
       document.querySelector(".handLetters").style["display"] = "none";
