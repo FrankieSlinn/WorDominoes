@@ -29,25 +29,13 @@ mongoose.connect(dbConfig, {
 mdb.on('error', (error) => console.log(`ERROR: ${error.message}`))
 mdb.on('connected', () => console.log(`MongoDB Connected: ${dbConfig}`))
 mdb.on('disconnected', () => console.log('MongoDB Disconnected'))
-//var db;
 
-// let db = ('star-wars-quotes')
 
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
 
 
-
-
-
-
-//MongoClient.connect('mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mongodb.net/star-wars-quotes', (err, database) => {
- //if (err) return console.log(err)
-   // db = database.db('star-wars-quotes')
-    
-   // }
-  //)
   
   app.get('/', (req, res) => {
     res.render('index.ejs');
@@ -64,14 +52,6 @@ app.set('views', __dirname + '/views');
         res.status(500).send('Error fetching scores from database.');
       });
   });
-
-  
-  
-  
-  
-
-  
-  
   
 app.use(indexRouter)
 app.use(scoresRouter)
@@ -79,43 +59,6 @@ app.use(scoresRouter)
 
 
 
-
-
- //This worked
- /*
- app.get('/', (req,res)=>{
-  // render method takes two parameters
-  // first parameter should be the .ejs file
-  // second parameter should be an object
-  // which is accessible in the .ejs file  
-  // this .ejs file should be in views folder 
-  // in the root directory.
-  res.render('index.ejs', {firstName: "Geeks,", 
-                           lastName: "A Computer Science Portal"});
-})*/
-
-// Start the server
-
-
-
-//const mongoose = require("mongoose");
-//const mongoDB = "mongodb+srv://FranKissling:Franziska1@cluster0.imr1g2z.mongodb.net/?retryWrites=true&w=majority";
-//MongoClient.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true });
-//const db = mongoose.connection;
-//db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
-// app.post('/example', (req, res) => {
-//  //db.collection('quotes').deleteOne({name:"Moi!"}) 
-
-//   db.collection('quotes').insertOne(req.body, (err, result) => 
-//   {
-//       if (err) return console.log(err)
-      
-//       console.log('saved to database')
-   
-//       res.redirect('/') 
-//   })
-// })
 
 
 

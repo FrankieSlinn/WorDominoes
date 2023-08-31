@@ -27,8 +27,17 @@ for(let i = 0; i < scores.length; i++) {
   sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
   numbers.push(parseInt(scores[i].score));
 }}
+console.log("sortArray", sortArray)
 //get minimum score for comparison with newest score to see if qualifies for HoF
-minimum=Math.min(...numbers)
+  //define minimum value so that on the game it can be determined if the user has made it into the hall of fame
+ if(sortArray.length<numRec) {minimum = Math.min(...numbers, 0)}
+ else{
+  minimum=Math.min(...numbers);
+ }
+ console.log("numbers", numbers)
+ console.log("min numbers", Math.min(...numbers))
+ console.log("minimum", minimum)
+
    newestScore = sortArray[sortArray.length-1][1]
 //Remove excess records(too low) form the sortArray so they can be deleted from the database
   let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
@@ -36,12 +45,14 @@ minimum=Math.min(...numbers)
   //populate array with data of users with scores too low for the HoF
   for(i=0; i< DBDelArray.length; i++){
     DBDel.push(JSON.stringify(DBDelArray[i][DBDelArray[i].length-1]))
-  }
+  } 
+  //get rid of last element in sortArray for each record
   for(i=0; i< sortArray.length; i++){
     sortArray[i].pop();
   }
-  //define minimum value so that on the game it can be determined if the user has made it into the hall of fame
-  minimum = Math.min(...numbers, 0)
+  //sort sortArray by score
+  sortArray.sort((a, b) => b[1] - a[1]);
+
   %>
 <div class="gridContainer">
   <div class="scoreContainer">
@@ -63,6 +74,8 @@ minimum=Math.min(...numbers)
     //assign variables on the servrer side to the client side
     var sortArray = [<%- sortArray %>];
     var DBDel = [<%- DBDel %>];
+    var minimum= <%- minimum %>;
+    
     var numRec = <%- numRec %>;
 //delete items from database if score too low to be displayed in teh hall of fame
     for (i = 0; i < DBDel.length; i++) {
@@ -107,9 +120,11 @@ minimum=Math.min(...numbers)
   <script>
     //pass minimum score in hall of fame to game page so that message appears if the user has made it into the HoF
     var n = <%-JSON.stringify(minimum)%>
+    console.log("n", n)
     localStorage.setItem("minimum", JSON.stringify(n));
     var m = <%-JSON.stringify(newestScore)%>
     localStorage.setItem("newestScore", JSON.stringify(m));
+
   </script>
   <script src="../control.js"></script>
 </body>

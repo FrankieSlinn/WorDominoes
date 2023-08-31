@@ -72,13 +72,13 @@
       <button class="dom3 dom"></button>
       <button class="dom4 dom"></button>
     </div>
+    <div class="reverseOrder">
     <div class="presentLetContainer">
       <p class="presentLet instruct">Choose a domino above.<br> You'll create 2 words for this tile: the word length is the number of dots on its side of the domino.</p>
     </div>
-    <br>
-    <br>
     <div class="chosenDomContainer">
       <div class="chosenDom"></div>
+    </div>
     </div>
 
 
@@ -131,12 +131,46 @@
       <!-- Need iframe so that page doesn't refresh after form submitted-->
       <iframe name="myiframe" src="" style="display:none"></iframe>
 
-      <form action="/example" id="submitHOF" method="POST" target="myiframe">
+      <form action="/router/scores" id="submitHOF" method="POST" target="myiframe">
         <label for="lname">Handle:</label>
         <input type="text" name="lname" id="lname"><br>
         <input type="number" name="score" id="score"><br>
         <button class="submitHOFBut" type="submit">Get into Hall of Fame</button>
       </form>
+      <script>
+        document.querySelector('.submitHOFBut')
+            .addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('submitHOF clicked; this is JS');
+    
+                const lname = document.getElementById('lname').value;
+                const score = document.getElementById('score').value;
+    
+                fetch('/scores', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        lname,
+                        score,
+                    }),
+                })
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log('Received data:', data);
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                });
+            });
+    </script>
       <br>
       <p class="HOFMessage" hidden>You are now in the Hall of Fame!</p>
       <br>

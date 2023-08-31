@@ -265,8 +265,15 @@ button:active {
   width: 100px;
 
   transform: rotate(270deg);
-  margin-top: -1.5rem;
+  margin-top: 1.5rem;
   margin-bottom: -5rem;
+}
+
+.reverseOrder{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
 }
 
 .textSubmit {

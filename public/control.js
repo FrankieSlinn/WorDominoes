@@ -341,7 +341,8 @@ let wordInstruct = document.querySelector(".wordInstruct");
 let word1Instruct = document.querySelector(".word1Instruct");
 let word2Instruct = document.querySelector(".word2Instruct");
 let placeDomInstruct = "Select letter tiles below to make the word";
-let chosenDom=document.querySelector(".chosenDom")
+let chosenDom=document.querySelector(".chosenDom");
+let reverseOrder=document.querySelector(".reverseOrder");
 
 
 
@@ -816,6 +817,10 @@ xhr2.addEventListener("readystatechange", function () {
 
       document.querySelector(".presentLet").innerHTML =
         "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
+      reverseOrder.style["flex-direction"] = "column-reverse";
+      reverseOrder.style["margin-top"] = "-0.8rem";
+      chosenDom.style["margin-bottom"] = "-1.5rem";
+
 
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
@@ -1248,11 +1253,7 @@ function newTilesDominoes() {
       console.log("doms[i], i", doms[i], i);
       document.querySelector(doms[i]).innerHTML = pngName;
       document.querySelector(doms[i]).style["display"] = "inline-block";
-      // console.log("html in each domino in hand after new dom allocated", document.querySelector(`${doms[i]}`).innerHTML)}
 
-      // console.log("doms.length", doms.length)
-      //console.log("dominoesrandomnumber", dominoes[rand1]);
-      //  console.log("dominoHand in new tiles after splice", dominoHand);
       console.log("domHandKeys1", domHandKeys1);
 
       console.log(
@@ -1261,6 +1262,10 @@ function newTilesDominoes() {
       );
       document.querySelector(".presentLet").innerHTML =
         "Now select another domino above that will fit in the grid";
+        //change the order of selected domino and instruction back
+      reverseOrder.style['flex-direction'] = 'column';
+      reverseOrder.style["margin-top"] = "0";
+      chosenDom.style["margin-bottom"]= "-5rem";
       document.querySelector(".wordText").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "none";
       document.querySelector(".textSubmit").style["display"] = "none";
@@ -1282,10 +1287,7 @@ function refillLetters() {
     letterHand.push(letters[randLetter1]);
     // console.log("letterHand after refill", letterHand);
     letters.splice(randLetter1, 1);
-    // console.log("letters length after refill", letters.length)
-    // console.log("letterHand after first turn", letterHand);
-    // console.log("i in refillletters",i)
-    //reset rotation
+
     secondWordValid = false;
   }
   for (let j = 0; j < tiles.length; j++) {
@@ -1326,6 +1328,7 @@ function resetNextTurn() {
 
 }
 if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventListener("click", function () {
+  console.log("giveup button clicked")
   document.querySelector(".textSubmit").style["z-index"] = "-1";
   document.querySelector(".textSubmit").style["display"] = "none";
   document.querySelector(".textSubmit").style["opacity"] = "none";
@@ -1344,15 +1347,15 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
+  console.log("final score", score);
   // word2Instruct.innerHTML="";
 
   document.querySelector(
     ".presentLet"
   ).innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".presentLet").style["font-size"] = "1rem";
-});
-  console.log("score after calculated", score);
-  console.log("score from min", Number(JSON.parse(localStorage.getItem("minimum"))))
+
+
 
   if(score >=Number(JSON.parse(localStorage.getItem("minimum")))&&score>0){
     console.log("hall of fame displayed")
@@ -1362,6 +1365,7 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   scoreForm.value = score;
   console.log("score.value", scoreForm.value);
   localStorage.setItem("score", JSON.stringify(score));
+});
 
 
 
