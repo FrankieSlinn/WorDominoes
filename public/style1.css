@@ -47,6 +47,7 @@ nav {
   justify-content: center;
 }
 .instructLi{
+  text-align: left;
   margin-bottom: 0.5rem;
 }
 
@@ -67,6 +68,11 @@ nav {
 .nav-link:active {
   color: #777;
 }
+.statsContainer{
+  display: flex; 
+  justify-content: center;
+}
+
 
 .statsContent,
 .helpContent {
@@ -75,11 +81,20 @@ nav {
   border: 2px solid black;
   border-radius: 5px;
 }
+.statsContent{
+  min-height: 15rem;
+}
+.statsText{
+  margin-top: -3.5rem;;
+
+}
+.helpText{
+  margin-top: -7.5rem;
+}
 
 .statsText,
 .helpText {
   text-align: center;
-  margin-top: -7.5rem;
   margin-right: 3.5rem;
   margin-left: 1.5rem;
   padding: 0.5rem;
@@ -525,6 +540,10 @@ input {
   }
 }
 @media (max-width: 465px) {
+  .about{
+    line-height: 2rem;
+    margin-bottom: -0.3rem;
+  }
   .wordInstruct {
     margin-bottom: 1rem;
   }
