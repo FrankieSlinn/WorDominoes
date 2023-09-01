@@ -64,12 +64,14 @@ nav {
 .statsContent,
 .helpContent {
   width: 100vw;
+  background-color: #eae6e6;
+  border: 2px solid black;
 }
 
 .statsText,
 .helpText {
   text-align: center;
-  margin-top: -5.5rem;
+  margin-top: -7.5rem;
   margin-right: 3.5rem;
   margin-left: 1.5rem;
   padding: 0.5rem;
@@ -82,12 +84,13 @@ nav {
 .closeButtonHelp,
 .closeButtonStats {
   font-weight: 700;
-  background-color: white;
+  background-color: #eae6e6;
   border: none;
   font-size: 1.75rem;
   padding: 3rem;
   margin: 0rem;
   color: #333;
+
 }
 
 .closeButtonHelp:hover,
@@ -273,6 +276,7 @@ button:active {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-bottom: 0.5rem;
 
 }
 
@@ -295,6 +299,7 @@ button:active {
 }
 
 .instruction {
+  margin-top: -1rem;
   text-align: center;
 }
 
@@ -312,6 +317,7 @@ button:active {
   font-size: 0.8rem;
   line-height: 1rem;
   font-weight: 700;
+
 }
 
 .wordText {
@@ -441,7 +447,7 @@ button:active {
 }
 
 .hallOfFame {
-  margin-top: -9rem;
+  margin-top: -6rem;
   z-index: 1;
 }
 

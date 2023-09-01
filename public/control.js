@@ -343,6 +343,25 @@ let word2Instruct = document.querySelector(".word2Instruct");
 let placeDomInstruct = "Select letter tiles below to make the word";
 let chosenDom=document.querySelector(".chosenDom");
 let reverseOrder=document.querySelector(".reverseOrder");
+let instruction=document.querySelector(".instruction");
+
+//set scores in beginning
+let averageScore = 0;
+//temp holding place
+let longScores = [];
+let gamesPlayed = JSON.parse(localStorage.getItem("longGameScores")) != null
+? JSON.parse(localStorage.getItem("longGameScores")).length
+: 0;
+let gameScore = 0;
+//let gameScores = [];
+//let statsScore = 0;
+let longGames =[];
+let longGameScores = [];
+console.log("JSON.parse(localStorage.getItem(gameScore))==null)", localStorage.setItem("gameScore", JSON.stringify(0))) ;
+
+if(JSON.parse(localStorage.getItem("gameScore"))==null){
+  localStorage.setItem("gameScore", JSON.stringify(0));
+}
 
 
 
@@ -356,7 +375,7 @@ document.querySelector(".wordText2").classList.add("placeholder");
 buttons1.style["display"]="none";
 buttons2.style["display"]="none"
 
-//Navigate user to top of screen 
+//***SCROLLING BEHAVIOURS***//
 // This function scrolls the user to the top of the page
 function scrollToTop() {
   console.log("Scroll to top working");
@@ -383,6 +402,42 @@ window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 }
 document.querySelector('html').style.scrollBehavior = ''; 
+
+//***SCORES LOGIC IN Beginning***//
+console.log("json.pase localstorage is not null", JSON.parse(localStorage.getItem("longGameScores")) != null)
+  if(JSON.parse(localStorage.getItem("longGameScores"))!=null){averageScore = JSON.parse(localStorage.getItem("longGameScores")).length != 0?
+  JSON.parse(localStorage.getItem("longGameScores")).reduce((numa, numb) => numa + numb, 0) / JSON.parse(localStorage.getItem("longGameScores")).length
+    .toFixed(0):0;}
+    console.log("averageScore", averageScore);
+    console.log("longGameScores", JSON.parse(localStorage.getItem("longGameScores")));
+    window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
+console.log("JSON.parse(localStorage.getItem(longgamescores)!=null", JSON.parse(localStorage.getItem("longGameScores")) != null);
+    /*JSON.parse(localStorage.getItem("longGameScores")) != null?localStorage.setItem(("gameScore"), JSON.parse(localStorage.getItem("longGameScores"))[
+      JSON.parse(localStorage.getItem("longGameScores")).length - 1]): localStorage.setItem("gameScore", JSON.stringify(0));
+*/
+      console.log("gameScore in beginning", JSON.parse(localStorage.getItem("gameScore")));
+
+//***NAVIGATION REGION BUTTONS***//
+document.querySelector(".scores").innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(localStorage.getItem("gameScore"))}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`
+
+//Show Popup Content - Stats
+document.querySelector(".stats").addEventListener("click", function () {
+  console.log("stats clicked");
+  document.querySelector(".helpContent").style["display"] = "none";
+  document.querySelector(".overallContainer").style["display"] = "none";
+  document.querySelector(".overallContainer").style["z-index"] = "-1";
+  document.querySelector(".statsContent").style["display"] = "inline-block";
+});
+
+//Close Button - Stats
+document
+  .querySelector(".closeButtonStats")
+  .addEventListener("click", function () {
+    document.querySelector(".overallContainer").style["display"] = "inline";
+    document.querySelector(".overallContainer").style["z-index"] = "1";
+    document.querySelector(".statsContent").style["display"] = "none";
+    //document.querySelector(".scores").innerHTML = `WorDominoes Game Score: ${gameScore}%<br><br>Games Played:${JSON.parse(localStorage.getItem("longGameScores")).length}<br><br>`
+  });
 
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length - 1)));
@@ -862,11 +917,12 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".word2Instruct").style["display"] =
         "inline-block";
       document.querySelector(".wordText2").innerHTML = "";
+
       lettersUsed2.forEach(
         (item) =>
           (document.querySelector(`${item}`).style["display"] = "inline-block")
       );
-      wordText1 = "";
+      wordText2 = "";
       lettersUsed2 = [];
       wordNumber = 2;
     } else {
@@ -1243,9 +1299,7 @@ function newTilesDominoes() {
         "key in pngNam New Dom Tiles",
         String(Object.keys(dominoHand[i]))
       );
-      // console.log("dominoHandlength", dominoHand.length);
-      // console.log("dominoHand", dominoHand);
-      // console.log("doms[i]", doms[i]);
+ 
       let pngName =
         "<img src = Images/" +
         String(Object.keys(dominoHand[i])) +
@@ -1342,20 +1396,43 @@ if(document.querySelector(".giveUp"))document.querySelector(".giveUp").addEventL
   document.querySelector(".buttons").style["display"] = "none";
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
+  instruction.innerText="You are now in the Hall of Fame. Click the Visit Hall of Fame Button to see you you compare to the other players"
   let score = 0;
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
   console.log("final score", score);
+  localStorage.setItem("gameScore", JSON.stringify(score))
+  updateScores();
   // word2Instruct.innerHTML="";
 
   document.querySelector(
     ".presentLet"
   ).innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".presentLet").style["font-size"] = "1rem";
-
-
+//update statistics
+  function updateScores(){
+    longGames.push(JSON.parse(localStorage.getItem("gameScore")));
+    console.log("gameScore after set", longGames);
+   console.log("longScores when being calculated(pushed)", longGames);
+  console.log("longGameScores = []", JSON.parse(localStorage.getItem("longGameScores")) == []);
+  
+  longGameScores =
+  JSON.parse(localStorage.getItem("longGameScores")) == null
+    ? longGames
+    : JSON.parse(localStorage.getItem("longGameScores")).concat(JSON.parse(localStorage.getItem("gameScore")));
+  console.log("longGameScores after concat", longGameScores);
+  longGames = []; 
+  console.log("longGameScores after concat", longGameScores);
+  
+  localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
+  //define averageScore after change
+  averageScore = JSON.parse(localStorage.getItem("longGameScores")).length != 0?
+  JSON.parse(localStorage.getItem("longGameScores")).reduce((numa, numb) => numa + numb, 0) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0):0;
+  //amend stats message after score change
+  document.querySelector(".scores").innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(localStorage.getItem("gameScore"))}</strong><br><br>Games Played: <strong>${JSON.parse(localStorage.getItem("longGameScores")).length}</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`
+  }
 
   if(score >=Number(JSON.parse(localStorage.getItem("minimum")))&&score>0){
     console.log("hall of fame displayed")
