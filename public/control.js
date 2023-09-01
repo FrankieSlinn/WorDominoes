@@ -345,7 +345,7 @@ let chosenDom=document.querySelector(".chosenDom");
 let reverseOrder=document.querySelector(".reverseOrder");
 let instruction=document.querySelector(".instruction");
 
-//set scores in beginning
+//***SET SCORES IN THE BEGINNING***//
 let averageScore = 0;
 //temp holding place
 let longScores = [];
@@ -353,8 +353,6 @@ let gamesPlayed = JSON.parse(localStorage.getItem("longGameScores")) != null
 ? JSON.parse(localStorage.getItem("longGameScores")).length
 : 0;
 let gameScore = 0;
-//let gameScores = [];
-//let statsScore = 0;
 let longGames =[];
 let longGameScores = [];
 console.log("JSON.parse(localStorage.getItem(gameScore))==null)", localStorage.setItem("gameScore", JSON.stringify(0))) ;
@@ -364,8 +362,7 @@ if(JSON.parse(localStorage.getItem("gameScore"))==null){
 }
 
 
-
-
+//***SET DISPLAY IN THE BEGINNING***//
 
 hallOfFame.style["display"] = "none";
 textSubmit.style["display"] = "none";
@@ -408,13 +405,9 @@ console.log("json.pase localstorage is not null", JSON.parse(localStorage.getIte
   if(JSON.parse(localStorage.getItem("longGameScores"))!=null){averageScore = JSON.parse(localStorage.getItem("longGameScores")).length != 0?
   JSON.parse(localStorage.getItem("longGameScores")).reduce((numa, numb) => numa + numb, 0) / JSON.parse(localStorage.getItem("longGameScores")).length
     .toFixed(0):0;}
-    console.log("averageScore", averageScore);
-    console.log("longGameScores", JSON.parse(localStorage.getItem("longGameScores")));
+
     window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
-console.log("JSON.parse(localStorage.getItem(longgamescores)!=null", JSON.parse(localStorage.getItem("longGameScores")) != null);
-    /*JSON.parse(localStorage.getItem("longGameScores")) != null?localStorage.setItem(("gameScore"), JSON.parse(localStorage.getItem("longGameScores"))[
-      JSON.parse(localStorage.getItem("longGameScores")).length - 1]): localStorage.setItem("gameScore", JSON.stringify(0));
-*/
+
       console.log("gameScore in beginning", JSON.parse(localStorage.getItem("gameScore")));
 
 //***NAVIGATION REGION BUTTONS***//
@@ -439,6 +432,25 @@ document
     //document.querySelector(".scores").innerHTML = `WorDominoes Game Score: ${gameScore}%<br><br>Games Played:${JSON.parse(localStorage.getItem("longGameScores")).length}<br><br>`
   });
 
+  //Show Popup Content - Help
+document.querySelector(".help").addEventListener("click", function () {
+  console.log("help clicked");
+  document.querySelector(".statsContent").style["display"] = "none";
+  document.querySelector(".overallContainer").style["display"] = "none";
+  document.querySelector(".overallContainer").style["z-index"] = "-1";
+  document.querySelector(".helpContent").style["display"] = "inline-block";
+});
+
+//Close Button - Help
+document
+  .querySelector(".closeButtonHelp")
+  .addEventListener("click", function () {
+    document.querySelector(".overallContainer").style["display"] = "inline";
+    document.querySelector(".overallContainer").style["z-index"] = "1";
+    document.querySelector(".helpContent").style["display"] = "none";
+  });
+
+//Generate a Random Number within the range of the dominoes available
 function randomNumberDom() {
   return Math.abs(Math.floor(Math.random() * (dominoes.length - 1)));
 }
