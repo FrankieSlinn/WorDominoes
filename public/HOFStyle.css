@@ -32,7 +32,8 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-self: center;
   text-align: center;
-  width: 50%;
+  width: 50%; 
+
 }
 
 
@@ -99,3 +100,8 @@ text-align:center;
 .game{
   font-weight: 700;
 }
+@media (max-width: 409px) {
+  .scoreContainer{
+    width:100%;
+  }
+  }

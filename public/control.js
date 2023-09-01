@@ -1384,6 +1384,9 @@ if (document.querySelector(".giveUp"))
     document.querySelector(".wordText1").style["display"] = "none";
     document.querySelector(".wordText2").style["display"] = "none";
     document.querySelector(".wordInstruct").style["display"] = "none";
+    document.querySelector(".redo").style["display"] = "none";
+    document.querySelector(".submit").style["display"] = "none";
+
     word2Instruct.style["display"] = "none";
     chosenDom.style["display"] = "none";
     document.querySelector(".buttons").style["display"] = "none";

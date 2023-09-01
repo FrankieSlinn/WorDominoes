@@ -77,7 +77,7 @@ nav {
 .statsContent,
 .helpContent {
 
-  width: 100vw;
+width: 100vw;
   background-color: #eae6e6;
   border: 2px solid black;
   border-radius: 5px;
@@ -115,7 +115,7 @@ nav {
   font-weight: 700;
   background-color: #eae6e6;
   border: none;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   padding: 1.5rem;
   margin: 0rem;
   color: #333;
@@ -128,7 +128,7 @@ nav {
 .closeButtonStats:active {
   color: #777;
   background-color: rgba(255, 0, 0, 0);
-  font-size: 1.75rem;
+
   padding: 1.5rem;
 }
 
@@ -328,7 +328,6 @@ button:active {
 }
 
 .instruction {
-  margin-top: -1rem;
   text-align: center;
 }
 
@@ -435,7 +434,8 @@ button:active {
   background-color: #f26419;
   color: #000;
   border-color: #f26419;
-  margin-top: 4rem;
+  margin-top: -1.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .hallOfFame {
@@ -519,11 +519,14 @@ input {
 }
 
 @media (max-width: 872px) {
+  .giveUp{
+    margin-top: 3rem;
+  }
   .redo {
     margin-bottom: 0.5rem;
   }
   .seeHOF {
-    margin-top: 2rem;
+    margin-top: -0.75rem;
   }
 }
 @media (max-width: 617px) {
@@ -531,7 +534,10 @@ input {
     margin-bottom: 0.5rem;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 507px) {
+  .giveUp{
+    margin-top: 4.25rem;
+  }
   .wordInstruct {
     margin-bottom: 2rem;
   }
@@ -557,4 +563,9 @@ input {
   .wordText {
     padding: 0.5rem;
   }
+}
+@media (max-width: 409px) {
+.about{
+  font-size: 1.8rem;
+}
 }
