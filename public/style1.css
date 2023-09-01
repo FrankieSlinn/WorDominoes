@@ -42,6 +42,13 @@ nav {
   padding: 2rem;
   width: auto;
 }
+.helpContainer{
+  display: flex;
+  justify-content: center;
+}
+.instructLi{
+  margin-bottom: 0.5rem;
+}
 
 .overallContainer {
   margin: 0 1rem;
@@ -66,6 +73,7 @@ nav {
   width: 100vw;
   background-color: #eae6e6;
   border: 2px solid black;
+  border-radius: 5px;
 }
 
 .statsText,
@@ -75,6 +83,9 @@ nav {
   margin-right: 3.5rem;
   margin-left: 1.5rem;
   padding: 0.5rem;
+}
+.about{
+  margin-top: 3.5rem;
 }
 
 .close {
@@ -87,7 +98,7 @@ nav {
   background-color: #eae6e6;
   border: none;
   font-size: 1.75rem;
-  padding: 3rem;
+  padding: 1.5rem;
   margin: 0rem;
   color: #333;
 
@@ -98,9 +109,9 @@ nav {
 .closeButtonHelp:active,
 .closeButtonStats:active {
   color: #777;
-  background-color: white;
+  background-color: rgba(255, 0, 0, 0);
   font-size: 1.75rem;
-  padding: 3rem;
+  padding: 1.5rem;
 }
 
 button {
