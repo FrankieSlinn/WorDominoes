@@ -866,7 +866,7 @@ xhr2.addEventListener("readystatechange", function () {
       textSubmit.style["display"] = "none";
 
       document.querySelector(".presentLet").innerHTML =
-        "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino below.</p></strong>";
+        "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
       reverseOrder.style["flex-direction"] = "column-reverse";
       reverseOrder.style["margin-top"] = "-0.8rem";
       chosenDom.style["margin-bottom"] = "-1.5rem";
