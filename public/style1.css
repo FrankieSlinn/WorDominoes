@@ -529,14 +529,14 @@ input {
   .seeHOF {
     margin-top: -0.75rem;
   }
-.chosenDomContainer{
+/* .chosenDomContainer{
   margin-bottom: -1.25rem;
-}
+} */
 }
 @media (max-width: 617px) {
-  .wordInstruct {
+  /* .wordInstruct {
     margin-bottom: 0.5rem;
-  }
+  } */
 
 }
 @media (max-width: 507px) {
@@ -544,11 +544,11 @@ input {
     margin-top: 4.25rem;
   }
   .wordInstruct {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
-  .wordText {
-    line-height: 1.5rem;
-  }
+  /* .wordText {
+    line-height: 1rem;
+  } */
   .textSubmit {
     margin-bottom: -0.5rem;
   }
