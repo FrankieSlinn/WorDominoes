@@ -1139,7 +1139,9 @@ function evaluateGrid(i) {
     console.log("tile successfully placed");
     document.querySelector(".instruction").style["display"] = "inline-block";
     document.querySelector(".instruction").innerHTML =
-      "Congratulations, you placed a tile!";
+      `Congratulations, you placed a tile!`;
+    instruction.style['margin-bottom']='1.5rem';
+      
 
     giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
@@ -1392,8 +1394,7 @@ if (document.querySelector(".giveUp"))
     document.querySelector(".buttons").style["display"] = "none";
     document.querySelector(".domHand").style["display"] = "none";
     giveUp.style["display"] = "none";
-    instruction.innerText =
-      "Congratulations!";
+
     let score = 0;
     for (let i = 0; i < gridValues.length; i++) {
       score += gridValues[i][0];
