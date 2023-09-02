@@ -77,7 +77,7 @@ nav {
 .statsContent,
 .helpContent {
 
-width: 100vw;
+width: 50%;
   background-color: #eae6e6;
   border: 2px solid black;
   border-radius: 5px;
@@ -529,14 +529,16 @@ input {
   .seeHOF {
     margin-top: -0.75rem;
   }
+  .statsContent,
+  .helpContent{
+    width: 100vw;
+  }
 /* .chosenDomContainer{
   margin-bottom: -1.25rem;
 } */
 }
 @media (max-width: 617px) {
-  /* .wordInstruct {
-    margin-bottom: 0.5rem;
-  } */
+
 
 }
 @media (max-width: 507px) {
@@ -552,6 +554,7 @@ input {
   .textSubmit {
     margin-bottom: -0.5rem;
   }
+
 }
 @media (max-width: 465px) {
   .about{
