@@ -100,7 +100,7 @@ text-align:center;
 .game{
   font-weight: 700;
 }
-@media (max-width: 409px) {
+@media (max-width: 500px) {
   .scoreContainer{
     width:100%;
   }

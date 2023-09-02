@@ -1466,7 +1466,7 @@ if (document.querySelector(".giveUp"))
 
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function () {
-  instruction.innerText = "You are now in the Hall of Fame!"
+  instruction.innerHTML = "You are now in the Hall of Fame!"
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });

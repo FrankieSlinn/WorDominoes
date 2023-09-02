@@ -519,7 +519,7 @@ input {
   border-radius: 10px;
 }
 
-@media (max-width: 872px) {
+@media (max-width: 922px) {
   .giveUp{
     margin-top: 3rem;
   }
