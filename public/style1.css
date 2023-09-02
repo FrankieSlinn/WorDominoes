@@ -528,6 +528,9 @@ input {
   .seeHOF {
     margin-top: -0.75rem;
   }
+.chosenDomContainer{
+  margin-bottom: -1.75rem;
+}
 }
 @media (max-width: 617px) {
   .wordInstruct {
@@ -542,7 +545,7 @@ input {
     margin-bottom: 2rem;
   }
   .wordText {
-    line-height: 1rem;
+    line-height: 1.5rem;
   }
   .textSubmit {
     margin-bottom: -0.5rem;

@@ -1393,7 +1393,7 @@ if (document.querySelector(".giveUp"))
     document.querySelector(".domHand").style["display"] = "none";
     giveUp.style["display"] = "none";
     instruction.innerText =
-      "You are now in the Hall of Fame. Click the Visit Hall of Fame Button to see you you compare to the other players";
+      "Congratulations!";
     let score = 0;
     for (let i = 0; i < gridValues.length; i++) {
       score += gridValues[i][0];
@@ -1402,7 +1402,7 @@ if (document.querySelector(".giveUp"))
     console.log("final score", score);
     localStorage.setItem("gameScore", JSON.stringify(score));
     updateScores();
-    // word2Instruct.innerHTML="";
+
 
     document.querySelector(
       ".presentLet"
@@ -1463,6 +1463,7 @@ if (document.querySelector(".giveUp"))
 
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function () {
+  instruction.innerText = "You are now in the Hall of Fame!"
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
