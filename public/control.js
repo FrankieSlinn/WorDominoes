@@ -310,6 +310,8 @@ let gridTiles = [
   ".domGrid12",
 ];
 
+let dictionary=["is", "be"];
+
 let firstGo = true;
 //indicates if a new tile can be placed
 let blockPlaceTile = true;
@@ -739,27 +741,30 @@ const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
 xhr.addEventListener("readystatechange", function () {
+
   if (this.readyState === this.DONE) {
-    //console.log(this.responseText);
-    console.log("xhr responsetext", xhr.responseText);
-    console.log("xhr responsetext", xhr.responseText[0]);
+
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     doc = parser.parseFromString(this.responseText, "text/xml");
+    console.log("this.responseText.length!=14",  this.responseText.length!== 14)
+
+
     if (
-      this.responseText.length !== 14 &&
+      (this.responseText.length != 14 || dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
       document.querySelector(".wordText1").innerHTML.length == chosen1
-    ) {
+  ){
+          console.log("wordText1", document.querySelector("wordText1"));
+    console.log("dictionary includes wordText1", dictionary.includes(wordText1))
+  console.log("wordText1 length", wordText1.length)
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
       document.querySelector(".buttons1").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "inline-block";
       document.querySelector(".wordText2").style["visibility"] = "visible";
       document.querySelector(".wordText2").classList.add("placeholder");
-      console.log("lettersUsed1", lettersUsed1);
-      console.log("firstWordValid", firstWordValid, wordText1);
-      console.log("letterhand before remove", letterHand);
+
 
       wordNumber = 2;
     } else if (
@@ -841,18 +846,16 @@ xhr2.withCredentials = true;
 
 xhr2.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
-    //console.log(this.responseText);
-    console.log("xhr responsetext", xhr.responseText);
-    //console.log("xhr responsetext", xhr.responseText[0]);
+
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     doc = parser.parseFromString(this.responseText, "text/xml");
-    console.log("this.responseText", this.responseText);
+
     if (
-      this.responseText.length !== 14 &&
+      (this.responseText.length != 14 || dictionary.includes(document.querySelector(".wordText2").innerHTML)) &&
       document.querySelector(".wordText2").innerHTML.length == chosen2
-    ) {
+  ){
       secondWordValid = true;
       scrollToTop();
 
