@@ -1103,6 +1103,7 @@ function pushGridValues(i) {
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
+  //Word Domination scenario - all tiles placed
   if (
     ((gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
       (gridValueCompare[0] == gridValueCompare[1] &&
@@ -1123,13 +1124,17 @@ function evaluateGrid(i) {
     score = score + 30;
     score.value = score;
     console.log("scorevalue", score.value);
-    localStorage.setItem("score", JSON.stringify(score));
+    updateScores();
+    localStorage.setItem("gameScore", JSON.stringify(score));
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
+    finishGameDisplay();
     document.querySelector(".chosenDom").style["display"] = "none";
     document.querySelector(".instruction").style["font-size"] = "2rem";
-  } else if (
+  }
+  //tile placed 
+  else if (
     (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
     (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
     (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
@@ -1192,6 +1197,27 @@ function evaluateGrid(i) {
 //issue too many dominoes spliced only happens with wrong tile placed
 
 //Doesn't contain other functions
+function finishGameDisplay(){
+  console.log("giveup button clicked");
+  document.querySelector(".textSubmit").style["z-index"] = "-1";
+  document.querySelector(".textSubmit").style["display"] = "none";
+  document.querySelector(".textSubmit").style["opacity"] = "none";
+  document.querySelector(".handLetters").style["display"] = "none";
+  document.querySelector(".wordText").style["display"] = "none";
+  document.querySelector(".wordText1").style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".wordInstruct").style["display"] = "none";
+  document.querySelector(".redo").style["display"] = "none";
+  document.querySelector(".submit").style["display"] = "none";
+  redo2But.style["display"] = "none";
+  submit2.style["display"] = "none";
+
+  word2Instruct.style["display"] = "none";
+  chosenDom.style["display"] = "none";
+  document.querySelector(".buttons").style["display"] = "none";
+  document.querySelector(".domHand").style["display"] = "none";
+  giveUp.style["display"] = "none";
+}
 
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
@@ -1377,25 +1403,7 @@ function resetNextTurn() {
 }
 if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
-    console.log("giveup button clicked");
-    document.querySelector(".textSubmit").style["z-index"] = "-1";
-    document.querySelector(".textSubmit").style["display"] = "none";
-    document.querySelector(".textSubmit").style["opacity"] = "none";
-    document.querySelector(".handLetters").style["display"] = "none";
-    document.querySelector(".wordText").style["display"] = "none";
-    document.querySelector(".wordText1").style["display"] = "none";
-    document.querySelector(".wordText2").style["display"] = "none";
-    document.querySelector(".wordInstruct").style["display"] = "none";
-    document.querySelector(".redo").style["display"] = "none";
-    document.querySelector(".submit").style["display"] = "none";
-    redo2But.style["display"] = "none";
-    submit2.style["display"] = "none";
-
-    word2Instruct.style["display"] = "none";
-    chosenDom.style["display"] = "none";
-    document.querySelector(".buttons").style["display"] = "none";
-    document.querySelector(".domHand").style["display"] = "none";
-    giveUp.style["display"] = "none";
+ finishGameDisplay();
 
     let score = 0;
     for (let i = 0; i < gridValues.length; i++) {
