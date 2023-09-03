@@ -421,7 +421,7 @@ button:active {
   font-weight: 700;
   padding: 1rem;
   margin: auto;
-  border: #333 solid 2px;
+  border: #333 solid 3px;
   margin-top: 0.25rem;
 }
 .inactive{
