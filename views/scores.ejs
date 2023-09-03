@@ -20,22 +20,15 @@ let numRec = 20
 let DBdel = []
 //to find minimum score
 let numbers =[]
-console.log("socres", scores)
-console.log("scores length", scores.length)
+
  //populate array with names, scores and ids from scores array with objects
 for(let i = 0; i < scores.length; i++) { 
   if(parseInt(scores[i].score)){
-    console.log("score lname", JSON.stringify(scores[i].lname))
   sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
   numbers.push(parseInt(scores[i].score));
 }}
-console.log("sortArray", sortArray)
-//get minimum score for comparison with newest score to see if qualifies for HoF
-  //define minimum value so that on the game it can be determined if the user has made it into the hall of fame
- if(sortArray.length<numRec) {minimum = Math.min(...numbers, 0)}
- else{
-  minimum=Math.min(...numbers);
- }
+
+
  console.log("numbers", numbers)
  console.log("min numbers", Math.min(...numbers))
  console.log("minimum", minimum)
@@ -49,7 +42,19 @@ console.log("sortArray", sortArray)
   console.log("sortarray after get rid of last element in record", sortArray)
   //sort sortArray by score
   sortArray.sort((a, b) => b[1] - a[1]);
-  console.log("sorted Sortarray", sortArray)
+  //sort numbers to find minimum value
+  numbers.sort((a, b) => b - a);
+  console.log("numbers sorted", numbers)
+
+  //get minimum score for comparison with newest score to see if qualifies for HoF
+  //define minimum value so that on the game it can be determined if the user has made it into the hall of fame
+  //if the amt of records is less than length of HoF minimum can be minimum number or zero
+ if(sortArray.length<numRec) {minimum = Math.min(...numbers, 0)}
+ //Otherwise it's the minimum of the first 20 values
+ else{
+  minimum=Math.min(...numbers.slice(0, 20));
+ }
+ console.log("minimum", minimum)
 
   // //Remove excess records(too low) form the sortArray so they can be deleted from the database
   // let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
