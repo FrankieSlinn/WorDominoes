@@ -629,6 +629,7 @@ console.log("letters after splice", letters);
 function showLetters() {
   for (let i = 0; i < letterHand.length; i++) {
     document.querySelector(tiles[i]).innerHTML = `${letterHand[i]}`;
+    document.querySelector(tiles[i]).classList.remove("inactive");
   }
 }
 
@@ -640,8 +641,11 @@ function makeFirstWord() {
   wordText1 = "";
 
   for (let i = 0; i < 15; i++) {
-    if (document.querySelector(tiles[i]))
+    if (document.querySelector(tiles[i]) )
+    console.log("doesn't contain inactive")
+
       document.querySelector(tiles[i]).addEventListener("click", function () {
+        if( !document.querySelector(tiles[i]).classList.contains("inactive")){
         if (wordNumber == 1) {
           document.querySelector(".wordText1").classList.remove("placeholder");
           wordText1 += letterHand[i];
@@ -658,10 +662,13 @@ function makeFirstWord() {
           document.querySelector(".presentLet").innerHTML =
             "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
-          document.querySelector(tiles[i]).style["display"] = "none";
+          // document.querySelector(tiles[i]).style["display"] = "none";
+          document.querySelector(tiles[i]).classList.add("inactive");
         }
+      }
       });
-  }
+  
+}
 }
 redo1();
 
@@ -679,7 +686,7 @@ function redo1() {
 
     lettersUsed1.forEach(
       (item) =>
-        (document.querySelector(`${item}`).style["display"] = "inline-block")
+        (document.querySelector(`${item}`).classList.remove("inactive"))
     );
     wordText1 = "";
     lettersUsed1 = [];
@@ -690,9 +697,11 @@ function redo1() {
 
 console.log("wordNumber in function two", wordNumber);
 wordText2 = "";
+
 for (let i = 0; i < 15; i++) {
   if (document.querySelector(tiles[i]))
     document.querySelector(tiles[i]).addEventListener("click", function () {
+      if( !document.querySelector(tiles[i]).classList.contains("inactive")){
       if (wordNumber == 2) {
         wordText2 += letterHand[i];
         document.querySelector(".wordText2").classList.remove("placeholder");
@@ -701,11 +710,12 @@ for (let i = 0; i < 15; i++) {
         document.querySelector(".wordText2").innerHTML = wordText2;
         document.querySelector(".buttons2").style["display"] = "inline-block";
 
-        document.querySelector(tiles[i]).style["display"] = "none";
+        document.querySelector(tiles[i]).classList.add("inactive");
         //if undo display all tiles, reset everything
 
         //check if answer 1 submitted
       }
+    }
     });
 }
 
@@ -723,7 +733,7 @@ function redo2() {
     //wordText2 = "";
 
     lettersUsed2.forEach(
-      (item) => (document.querySelector(item).style["display"] = "inline-block")
+      (item) => (document.querySelector(`${item}`).classList.remove("inactive"))
     );
     wordText2 = "";
     lettersUsed2 = [];
@@ -781,7 +791,7 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText1").innerHTML = "";
       lettersUsed1.forEach(
         (item) =>
-          (document.querySelector(`${item}`).style["display"] = "inline-block")
+          (document.querySelector(`${item}`).classList.remove("inactive"))
       );
       wordText1 = "";
       lettersUsed1 = [];
@@ -797,7 +807,7 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText1").innerHTML = "";
       lettersUsed1.forEach(
         (item) =>
-          (document.querySelector(`${item}`).style["display"] = "inline-block")
+          (document.querySelector(`${item}`).classList.remove("inactive"))
       );
       wordText1 = "";
       lettersUsed1 = [];
@@ -917,7 +927,7 @@ xhr2.addEventListener("readystatechange", function () {
 
       lettersUsed2.forEach(
         (item) =>
-          (document.querySelector(`${item}`).style["display"] = "inline-block")
+        (document.querySelector(`${item}`).classList.remove("inactive"))
       );
       wordText2 = "";
       lettersUsed2 = [];
@@ -932,7 +942,7 @@ xhr2.addEventListener("readystatechange", function () {
 
       lettersUsed2.forEach(
         (item) =>
-          (document.querySelector(item).style["display"] = "inline-block")
+        (document.querySelector(`${item}`).classList.remove("inactive"))
       );
       lettersUsed2 = [];
       wordNumber = 2;
@@ -1286,24 +1296,11 @@ function displayTile(i) {
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
-    console.log("new Tiles Dominoes running");
     document.querySelector(".wordText").classList.add("placeholder");
     wordText1.innerHTML = "Select letter tiles below to make the word";
     document.querySelector(".wordText2").style["display"] = "none";
 
     let rand1 = randomNumberDom();
-
-    //ranDomino = dominoes[rand1]-1;
-
-    //console.log("dominoes after spliced chosen dominoe", dominoes)
-    // console.log("chosenDomIndex", chosenDomIndex);
-    // console.log("dominoHand next turn before push",dominoHand);
-    console.log("rand1", rand1);
-    console.log(
-      "String(Object.keys(dominoes[rand1]))",
-      String(Object.keys(dominoes[rand1]))
-    );
-    // console.log("dominoes[rand1]", dominoes[rand1]);
     if (dominoHand.length < 4) {
       dominoHand.push(dominoes[rand1]);
     }
@@ -1372,9 +1369,6 @@ function refillLetters() {
     secondWordValid = false;
   }
   for (let j = 0; j < tiles.length; j++) {
-    //  console.log("j in innerhtml for letters", j);
-    //  console.log("letterhand j", letterHand[j]);
-    // console.log("tiles[j]", tiles[j]);
     document.querySelector(tiles[j]).innerHTML = `${letterHand[j]}`;
     document.querySelector(tiles[j]).style["display"] = "inline-block";
   }
