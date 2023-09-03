@@ -46,6 +46,7 @@ app.set('views', __dirname + '/views');
     Score.find().sort({ score: -1 })
       .then(results => {
         res.render('scores.ejs', { scores: results }); // Render HTML for browser requests
+
       })
       .catch(err => {
         console.error('Error fetching scores from database:', err);

@@ -20,10 +20,12 @@ let numRec = 20
 let DBdel = []
 //to find minimum score
 let numbers =[]
-console.log("scores", scores)
+console.log("socres", scores)
+console.log("scores length", scores.length)
  //populate array with names, scores and ids from scores array with objects
 for(let i = 0; i < scores.length; i++) { 
   if(parseInt(scores[i].score)){
+    console.log("score lname", JSON.stringify(scores[i].lname))
   sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
   numbers.push(parseInt(scores[i].score));
 }}
@@ -39,19 +41,23 @@ console.log("sortArray", sortArray)
  console.log("minimum", minimum)
 
    newestScore = sortArray[sortArray.length-1][1]
-//Remove excess records(too low) form the sortArray so they can be deleted from the database
-  let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
-  let DBDel = []
-  //populate array with data of users with scores too low for the HoF
-  for(i=0; i< DBDelArray.length; i++){
-    DBDel.push(JSON.stringify(DBDelArray[i][DBDelArray[i].length-1]))
-  } 
+
   //get rid of last element in sortArray for each record
   for(i=0; i< sortArray.length; i++){
     sortArray[i].pop();
   }
+  console.log("sortarray after get rid of last element in record", sortArray)
   //sort sortArray by score
   sortArray.sort((a, b) => b[1] - a[1]);
+  console.log("sorted Sortarray", sortArray)
+
+  // //Remove excess records(too low) form the sortArray so they can be deleted from the database
+  // let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
+  // let DBDel = []
+  // //populate array with data of users with scores too low for the HoF
+  // for(i=0; i< DBDelArray.length; i++){
+  //   DBDel.push(JSON.stringify(DBDelArray[i][DBDelArray[i].length-1]))
+  // } 
 
   %>
 <div class="gridContainer">
@@ -74,22 +80,22 @@ console.log("sortArray", sortArray)
   <script>
     //assign variables on the servrer side to the client side
     var sortArray = [<%- sortArray %>];
-    var DBDel = [<%- DBDel %>];
+
     var minimum= <%- minimum %>;
     
     var numRec = <%- numRec %>;
-//delete items from database if score too low to be displayed in teh hall of fame
-    for (i = 0; i < DBDel.length; i++) {
-      let id = DBDel[i]
-      fetch(`http://localhost:3000/scores/${id}`, {
-          method: "delete",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((data) => data.json())
-        .then((scores) => console.log(scores));
-    }
+// //delete items from database if score too low to be displayed in teh hall of fame
+//     for (i = 0; i < DBDel.length; i++) {
+//       let id = DBDel[i]
+//       fetch(`http://localhost:3000/scores/${id}`, {
+//           method: "delete",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//         })
+//         .then((data) => data.json())
+//         .then((scores) => console.log(scores));
+//     }
     //js classes for names and scores
     let names = [".name1", ".name2", ".name3", ".name4", ".name5", ".name6", ".name7", ".name8", ".name9", ".name10", ".name11", ".name12", ".name13", ".name14", ".name15", ".name16", ".name17", ".name18", ".name19", ".name20"]
     let scores = [".score1", ".score2", ".score3", ".score4", ".score5", ".score6", ".score7", ".score8", ".score9", ".score10", ".score11", ".score12", ".score13", ".score14", ".score15", ".score16", ".score17", ".score18", ".score19", ".score20"]

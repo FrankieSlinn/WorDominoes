@@ -533,9 +533,7 @@ input {
   .helpContent{
     width: 100vw;
   }
-/* .chosenDomContainer{
-  margin-bottom: -1.25rem;
-} */
+
 }
 @media (max-width: 617px) {
 
