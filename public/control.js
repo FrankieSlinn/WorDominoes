@@ -1142,6 +1142,7 @@ function evaluateGrid(i) {
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
+    document.querySelector(".hallOfFame").style["display"] = "inline-block";
     finishGameDisplay();
     document.querySelector(".chosenDom").style["display"] = "none";
     giveUp.style["display"] = "none";
