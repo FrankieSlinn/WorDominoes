@@ -1134,7 +1134,10 @@ function evaluateGrid(i) {
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
     finishGameDisplay();
     document.querySelector(".chosenDom").style["display"] = "none";
+    giveUp.style["display"] = "none";
     document.querySelector(".instruction").style["font-size"] = "2rem";
+    presentLet.innerText="WORD DOMINATION!!!"
+
   }
   //tile placed 
   else if (
@@ -1214,12 +1217,12 @@ function finishGameDisplay(){
   document.querySelector(".submit").style["display"] = "none";
   redo2But.style["display"] = "none";
   submit2.style["display"] = "none";
-
   word2Instruct.style["display"] = "none";
   chosenDom.style["display"] = "none";
   document.querySelector(".buttons").style["display"] = "none";
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
+  instruction.style["display"] = inline-block;
 }
 
 function displayTile(i) {
@@ -1404,9 +1407,11 @@ function resetNextTurn() {
   //only compare latest letters
   gridValueCompare = [];
 }
+
+//The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
- finishGameDisplay();
+
 
     let score = 0;
     for (let i = 0; i < gridValues.length; i++) {
@@ -1416,11 +1421,19 @@ if (document.querySelector(".giveUp"))
     console.log("final score", score);
     localStorage.setItem("gameScore", JSON.stringify(score));
     updateScores();
+    if(score < Number(JSON.parse(localStorage.getItem("minimum")))){
+      console.log("below HoF Threshold")
+      instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
+      instruction.style["display"] = "inline-block";
+
+      
+    }
 
 
     document.querySelector(
       ".presentLet"
     ).innerHTML = `You Have Scored ${score} Points`;
+    finishGameDisplay();
     document.querySelector(".presentLet").style["font-size"] = "1rem";
     //update statistics
     function updateScores() {
@@ -1463,6 +1476,9 @@ if (document.querySelector(".giveUp"))
         0
       )}</strong>`;
     }
+    console.log("test")
+    console.log("score giveUP", score)
+    console.log("Number(JSON.parse(localStorage.getItem(minimum)))", Number(JSON.parse(localStorage.getItem("minimum"))))
 
     if (
       score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
@@ -1470,6 +1486,7 @@ if (document.querySelector(".giveUp"))
     ) {
       document.querySelector(".hallOfFame").style["display"] = "inline-block";
     }
+
     let scoreForm = document.getElementById("score");
     scoreForm.value = score;
     localStorage.setItem("score", JSON.stringify(score));
