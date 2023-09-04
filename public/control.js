@@ -345,6 +345,9 @@ let placeDomInstruct = "Select letter tiles below to make the word";
 let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
+let presentLet = document.querySelector(".presentLet")
+
+
 
 //***SET SCORES IN THE BEGINNING***//
 let averageScore = 0;
@@ -1113,13 +1116,14 @@ function pushGridValues(i) {
 
   evaluateGrid(currentGridValue);
 }
+console.log("dominoes placed", dominoesPlaced)
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
   if (
 
-    dominoesPlaced == gridTiles.length
+  dominoesPlaced == gridTiles.length
   ) {
     //...(Object.values(gridValues[9])) is 0  NOTE: doesn't work with [0]
     console.log("WordDomination!!!!!");
@@ -1131,17 +1135,21 @@ function evaluateGrid(i) {
     score = score + 30;
     score.value = score;
     console.log("scorevalue", score.value);
-    updateScores();
-    localStorage.setItem("gameScore", JSON.stringify(score));
+    instruction.style['display'] = 'inline-block';
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
+    instruction.style['margin-bottom']='1.5rem';
+    presentLet.innerText="WORD DOMINATION!!!"
     document.querySelector(".hallOfFame").style["display"] = "inline-block";
+    updateScores();
+    localStorage.setItem("gameScore", JSON.stringify(score));
     finishGameDisplay();
     document.querySelector(".chosenDom").style["display"] = "none";
     giveUp.style["display"] = "none";
     document.querySelector(".instruction").style["font-size"] = "2rem";
-    presentLet.innerText="WORD DOMINATION!!!"
+    console.log("updates made?")
+  
 
   }
   //tile placed 
