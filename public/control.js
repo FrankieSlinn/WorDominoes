@@ -1118,13 +1118,7 @@ function evaluateGrid(i) {
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
   if (
-    ((gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-      (gridValueCompare[0] == gridValueCompare[1] &&
-        gridValueCompare[3] == 0) ||
-      (gridValueCompare[2] == gridValueCompare[3] &&
-        gridValueCompare[0] == 0) ||
-      (gridValueCompare[0] == gridValueCompare[1] &&
-        gridValueCompare[2] == gridValueCompare[3])) &&
+
     dominoesPlaced == gridTiles.length
   ) {
     //...(Object.values(gridValues[9])) is 0  NOTE: doesn't work with [0]
@@ -1426,6 +1420,7 @@ if (document.querySelector(".giveUp"))
     else if(score < Number(JSON.parse(localStorage.getItem("minimum")))){
       console.log("below HoF Threshold")
       instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
+      instruction.style['margin-bottom']='1.5rem';
       instruction.style["display"] = "inline-block";
 
       
