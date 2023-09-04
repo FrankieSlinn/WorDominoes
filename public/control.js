@@ -1413,8 +1413,23 @@ if (document.querySelector(".giveUp"))
       score += gridValues[i][0];
       score += gridValues[i][1];
     }
+    document.getElementById("score").value = score;
     console.log("final score", score);
+    console.log("score not below minimum?", score >= Number(JSON.parse(localStorage.getItem("minimum"))) )
     localStorage.setItem("gameScore", JSON.stringify(score));
+    if (
+      score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
+      score > 0
+    ) {
+      document.querySelector(".hallOfFame").style["display"] = "inline-block";
+    }
+    else if(score < Number(JSON.parse(localStorage.getItem("minimum")))){
+      console.log("below HoF Threshold")
+      instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
+      instruction.style["display"] = "inline-block";
+
+      
+    }
     updateScores();
 
 
@@ -1469,21 +1484,10 @@ if (document.querySelector(".giveUp"))
     console.log("score giveUP", score)
     console.log("Number(JSON.parse(localStorage.getItem(minimum)))", Number(JSON.parse(localStorage.getItem("minimum"))))
 
-    if (
-      score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
-      score > 0
-    ) {
-      document.querySelector(".hallOfFame").style["display"] = "inline-block";
-    }
-    else if(score < Number(JSON.parse(localStorage.getItem("minimum")))){
-      console.log("below HoF Threshold")
-      instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
-      instruction.style["display"] = "inline-block";
 
-      
-    }
 
     let scoreForm = document.getElementById("score");
+    console.log("scoreForm", scoreForm)
     scoreForm.value = score;
     localStorage.setItem("score", JSON.stringify(score));
   });

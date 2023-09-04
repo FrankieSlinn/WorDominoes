@@ -22,13 +22,17 @@ let DBdel = []
 let numbers =[]
 
  //populate array with names, scores and ids from scores array with objects
+ console.log("socres.length", scores.length)
 for(let i = 0; i < scores.length; i++) { 
+  console.log("socres[i]", scores[i])
   if(parseInt(scores[i].score)){
   sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
   numbers.push(parseInt(scores[i].score));
 }}
 
-
+console.log("sortArray", sortArray)
+console.log("sortArray length", sortArray.length)
+console.log("numbers length", numbers.length)
  console.log("numbers", numbers)
  console.log("min numbers", Math.min(...numbers))
  console.log("minimum", minimum)
