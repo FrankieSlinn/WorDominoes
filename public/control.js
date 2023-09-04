@@ -1133,6 +1133,7 @@ function evaluateGrid(i) {
       score += gridValues[i][1];
     }
     score = score + 30;
+    document.getElementById("score").value = score;
     score.value = score;
     console.log("scorevalue", score.value);
     instruction.style['display'] = 'inline-block';
@@ -1415,6 +1416,7 @@ if (document.querySelector(".giveUp"))
       score += gridValues[i][0];
       score += gridValues[i][1];
     }
+    //important for getting score registered / in the HoF
     document.getElementById("score").value = score;
     console.log("final score", score);
     console.log("score not below minimum?", score >= Number(JSON.parse(localStorage.getItem("minimum"))) )
