@@ -310,7 +310,7 @@ let gridTiles = [
   ".domGrid12",
 ];
 
-let dictionary=["is", "be"];
+let dictionary = ["is", "be"];
 
 let firstGo = true;
 //indicates if a new tile can be placed
@@ -345,9 +345,7 @@ let placeDomInstruct = "Select letter tiles below to make the word";
 let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
-let presentLet = document.querySelector(".presentLet")
-
-
+let presentLet = document.querySelector(".presentLet");
 
 //***SET SCORES IN THE BEGINNING***//
 let averageScore = 0;
@@ -412,9 +410,11 @@ document.querySelector("html").style.scrollBehavior = "";
 //***SCORES LOGIC IN Beginning***//
 console.log(
   "json.pase localstorage is not null",
+  //check if any games played
   JSON.parse(localStorage.getItem("longGameScores")) != null
 );
 if (JSON.parse(localStorage.getItem("longGameScores")) != null) {
+  //calculate average score if any games played
   averageScore =
     JSON.parse(localStorage.getItem("longGameScores")).length != 0
       ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
@@ -427,7 +427,7 @@ if (JSON.parse(localStorage.getItem("longGameScores")) != null) {
 window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
 
 //Update Scores when givUp Button selected
-function calcScore(gridValues){
+function calcScore(gridValues) {
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
     score += gridValues[i][1];
@@ -435,7 +435,10 @@ function calcScore(gridValues){
   //important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   console.log("final score", score);
-  console.log("score not below minimum?", score >= Number(JSON.parse(localStorage.getItem("minimum"))) )
+  console.log(
+    "score not below minimum?",
+    score >= Number(JSON.parse(localStorage.getItem("minimum")))
+  );
   localStorage.setItem("gameScore", JSON.stringify(score));
 }
 
@@ -466,8 +469,7 @@ function updateScores() {
       ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
           (numa, numb) => numa + numb,
           0
-        ) /
-        JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
+        ) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
       : 0;
   //amend stats message after score change
   document.querySelector(
@@ -476,9 +478,7 @@ function updateScores() {
     localStorage.getItem("gameScore")
   )}</strong><br><br>Games Played: <strong>${
     JSON.parse(localStorage.getItem("longGameScores")).length
-  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
-    0
-  )}</strong>`;
+  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
 
 //***NAVIGATION REGION BUTTONS***//
@@ -699,11 +699,11 @@ function makeFirstWord() {
   wordText1 = "";
 
   for (let i = 0; i < 15; i++) {
-    if (document.querySelector(tiles[i]) )
-    console.log("doesn't contain inactive")
+    if (document.querySelector(tiles[i]))
+      console.log("doesn't contain inactive");
 
-      document.querySelector(tiles[i]).addEventListener("click", function () {
-        if( !document.querySelector(tiles[i]).classList.contains("inactive")){
+    document.querySelector(tiles[i]).addEventListener("click", function () {
+      if (!document.querySelector(tiles[i]).classList.contains("inactive")) {
         if (wordNumber == 1) {
           document.querySelector(".wordText1").classList.remove("placeholder");
           wordText1 += letterHand[i];
@@ -724,9 +724,8 @@ function makeFirstWord() {
           document.querySelector(tiles[i]).classList.add("inactive");
         }
       }
-      });
-  
-}
+    });
+  }
 }
 redo1();
 
@@ -742,9 +741,8 @@ function redo1() {
       ".word1Instruct"
     ).innerHTML = `Make a word with ${chosen1} letters`;
 
-    lettersUsed1.forEach(
-      (item) =>
-        (document.querySelector(`${item}`).classList.remove("inactive"))
+    lettersUsed1.forEach((item) =>
+      document.querySelector(`${item}`).classList.remove("inactive")
     );
     wordText1 = "";
     lettersUsed1 = [];
@@ -759,21 +757,21 @@ wordText2 = "";
 for (let i = 0; i < 15; i++) {
   if (document.querySelector(tiles[i]))
     document.querySelector(tiles[i]).addEventListener("click", function () {
-      if( !document.querySelector(tiles[i]).classList.contains("inactive")){
-      if (wordNumber == 2) {
-        wordText2 += letterHand[i];
-        document.querySelector(".wordText2").classList.remove("placeholder");
-        lettersUsed2.push(tiles[i]);
-        console.log("lettersUsed2");
-        document.querySelector(".wordText2").innerHTML = wordText2;
-        document.querySelector(".buttons2").style["display"] = "inline-block";
+      if (!document.querySelector(tiles[i]).classList.contains("inactive")) {
+        if (wordNumber == 2) {
+          wordText2 += letterHand[i];
+          document.querySelector(".wordText2").classList.remove("placeholder");
+          lettersUsed2.push(tiles[i]);
+          console.log("lettersUsed2");
+          document.querySelector(".wordText2").innerHTML = wordText2;
+          document.querySelector(".buttons2").style["display"] = "inline-block";
 
-        document.querySelector(tiles[i]).classList.add("inactive");
-        //if undo display all tiles, reset everything
+          document.querySelector(tiles[i]).classList.add("inactive");
+          //if undo display all tiles, reset everything
 
-        //check if answer 1 submitted
+          //check if answer 1 submitted
+        }
       }
-    }
     });
 }
 
@@ -790,8 +788,8 @@ function redo2() {
     console.log("lettersused2 in function for it", lettersUsed2);
     //wordText2 = "";
 
-    lettersUsed2.forEach(
-      (item) => (document.querySelector(`${item}`).classList.remove("inactive"))
+    lettersUsed2.forEach((item) =>
+      document.querySelector(`${item}`).classList.remove("inactive")
     );
     wordText2 = "";
     lettersUsed2 = [];
@@ -809,30 +807,33 @@ const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
 xhr.addEventListener("readystatechange", function () {
-
   if (this.readyState === this.DONE) {
-
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     doc = parser.parseFromString(this.responseText, "text/xml");
-    console.log("this.responseText.length!=14",  this.responseText.length!== 14)
-
+    console.log(
+      "this.responseText.length!=14",
+      this.responseText.length !== 14
+    );
 
     if (
-      (this.responseText.length != 14 || dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
+      (this.responseText.length != 14 ||
+        dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
       document.querySelector(".wordText1").innerHTML.length == chosen1
-  ){
-          console.log("wordText1", document.querySelector("wordText1"));
-    console.log("dictionary includes wordText1", dictionary.includes(wordText1))
-  console.log("wordText1 length", wordText1.length)
+    ) {
+      console.log("wordText1", document.querySelector("wordText1"));
+      console.log(
+        "dictionary includes wordText1",
+        dictionary.includes(wordText1)
+      );
+      console.log("wordText1 length", wordText1.length);
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
       document.querySelector(".buttons1").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "inline-block";
       document.querySelector(".wordText2").style["visibility"] = "visible";
       document.querySelector(".wordText2").classList.add("placeholder");
-
 
       wordNumber = 2;
     } else if (
@@ -847,9 +848,8 @@ xhr.addEventListener("readystatechange", function () {
         ".word1Instruct"
       ).innerHTML = `The word doesn't have the right amount of letters. It needs ${chosen1} letters. Try Again.`;
       document.querySelector(".wordText1").innerHTML = "";
-      lettersUsed1.forEach(
-        (item) =>
-          (document.querySelector(`${item}`).classList.remove("inactive"))
+      lettersUsed1.forEach((item) =>
+        document.querySelector(`${item}`).classList.remove("inactive")
       );
       wordText1 = "";
       lettersUsed1 = [];
@@ -863,9 +863,8 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText1").classList.add(".placeholder");
 
       document.querySelector(".wordText1").innerHTML = "";
-      lettersUsed1.forEach(
-        (item) =>
-          (document.querySelector(`${item}`).classList.remove("inactive"))
+      lettersUsed1.forEach((item) =>
+        document.querySelector(`${item}`).classList.remove("inactive")
       );
       wordText1 = "";
       lettersUsed1 = [];
@@ -914,16 +913,16 @@ xhr2.withCredentials = true;
 
 xhr2.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
-
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     if (
-      (this.responseText.length != 14 || dictionary.includes(document.querySelector(".wordText2").innerHTML)) &&
+      (this.responseText.length != 14 ||
+        dictionary.includes(document.querySelector(".wordText2").innerHTML)) &&
       document.querySelector(".wordText2").innerHTML.length == chosen2
-  ){
+    ) {
       secondWordValid = true;
       scrollToTop();
 
@@ -983,9 +982,8 @@ xhr2.addEventListener("readystatechange", function () {
         "inline-block";
       document.querySelector(".wordText2").innerHTML = "";
 
-      lettersUsed2.forEach(
-        (item) =>
-        (document.querySelector(`${item}`).classList.remove("inactive"))
+      lettersUsed2.forEach((item) =>
+        document.querySelector(`${item}`).classList.remove("inactive")
       );
       wordText2 = "";
       lettersUsed2 = [];
@@ -998,9 +996,8 @@ xhr2.addEventListener("readystatechange", function () {
       console.log("lettersused2 in function for it", lettersUsed2);
       wordText2 = "";
 
-      lettersUsed2.forEach(
-        (item) =>
-        (document.querySelector(`${item}`).classList.remove("inactive"))
+      lettersUsed2.forEach((item) =>
+        document.querySelector(`${item}`).classList.remove("inactive")
       );
       lettersUsed2 = [];
       wordNumber = 2;
@@ -1171,15 +1168,12 @@ function pushGridValues(i) {
 
   evaluateGrid(currentGridValue);
 }
-console.log("dominoes placed", dominoesPlaced)
+console.log("dominoes placed", dominoesPlaced);
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
-  if (
-
-  dominoesPlaced == gridTiles.length
-  ) {
+  if (dominoesPlaced == gridTiles.length) {
     //...(Object.values(gridValues[9])) is 0  NOTE: doesn't work with [0]
     console.log("WordDomination!!!!!");
     let score = 0;
@@ -1191,12 +1185,12 @@ function evaluateGrid(i) {
     document.getElementById("score").value = score;
     score.value = score;
     console.log("scorevalue", score.value);
-    instruction.style['display'] = 'inline-block';
+    instruction.style["display"] = "inline-block";
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
-    instruction.style['margin-bottom']='1.5rem';
-    presentLet.innerText="WORD DOMINATION!!!"
+    instruction.style["margin-bottom"] = "1.5rem";
+    presentLet.innerText = "WORD DOMINATION!!!";
     document.querySelector(".hallOfFame").style["display"] = "inline-block";
     updateScores();
     localStorage.setItem("gameScore", JSON.stringify(score));
@@ -1204,11 +1198,9 @@ function evaluateGrid(i) {
     document.querySelector(".chosenDom").style["display"] = "none";
     giveUp.style["display"] = "none";
     document.querySelector(".instruction").style["font-size"] = "2rem";
-    console.log("updates made?")
-  
-
+    console.log("updates made?");
   }
-  //tile placed 
+  //tile placed
   else if (
     (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
     (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
@@ -1218,10 +1210,10 @@ function evaluateGrid(i) {
   ) {
     console.log("tile successfully placed");
     document.querySelector(".instruction").style["display"] = "inline-block";
-    document.querySelector(".instruction").innerHTML =
-      `Congratulations, you placed a tile!`;
-    instruction.style['margin-bottom']='1.5rem';
-      
+    document.querySelector(
+      ".instruction"
+    ).innerHTML = `Congratulations, you placed a tile!`;
+    instruction.style["margin-bottom"] = "1.5rem";
 
     giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
@@ -1272,7 +1264,7 @@ function evaluateGrid(i) {
 //issue too many dominoes spliced only happens with wrong tile placed
 
 //Doesn't contain other functions
-function finishGameDisplay(){
+function finishGameDisplay() {
   console.log("giveup button clicked");
   document.querySelector(".textSubmit").style["z-index"] = "-1";
   document.querySelector(".textSubmit").style["display"] = "none";
@@ -1414,15 +1406,11 @@ function refillLetters() {
   //make sure can start with empty letters from word
   letters1Used = [];
   letters2Used = [];
-  console.log("letters length before refill", letters.length);
-  console.log("letterhand length before refill", letterHand, letterHand.length);
+
   let unallocatedTiles = 15 - letterHand.length;
   for (let i = 0; i < unallocatedTiles; i++) {
-    console.log("letter allocation running");
     let randLetter1 = randomNumberLet();
-    // console.log("randLetter1", randLetter1)
     letterHand.push(letters[randLetter1]);
-    // console.log("letterHand after refill", letterHand);
     letters.splice(randLetter1, 1);
 
     secondWordValid = false;
@@ -1431,9 +1419,7 @@ function refillLetters() {
     document.querySelector(tiles[j]).innerHTML = `${letterHand[j]}`;
     document.querySelector(tiles[j]).style["display"] = "inline-block";
   }
-  //console.log("letters length after refill, letters", letters.length, letters);
   turns += 1;
-  console.log("turn", turns);
   resetNextTurn();
 }
 
@@ -1464,24 +1450,20 @@ function resetNextTurn() {
 //The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
-
     calcScore(gridValues);
     if (
       score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
       score > 0
     ) {
       document.querySelector(".hallOfFame").style["display"] = "inline-block";
-    }
-    else if(score < Number(JSON.parse(localStorage.getItem("minimum")))){
-      console.log("below HoF Threshold")
-      instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
-      instruction.style['margin-bottom']='1.5rem';
+    } else if (score < Number(JSON.parse(localStorage.getItem("minimum")))) {
+      console.log("below HoF Threshold");
+      instruction.innerHTML =
+        "You have not made it into the Hall of Fame in this game. Better luck next time.";
+      instruction.style["margin-bottom"] = "1.5rem";
       instruction.style["display"] = "inline-block";
     }
     updateScores();
-
-
-
     document.querySelector(
       ".presentLet"
     ).innerHTML = `You Have Scored ${score} Points`;
@@ -1489,23 +1471,12 @@ if (document.querySelector(".giveUp"))
     document.querySelector(".presentLet").style["font-size"] = "1rem";
     //update statistics
     updateScores();
-
-    console.log("test")
-    console.log("score giveUP", score)
-    console.log("Number(JSON.parse(localStorage.getItem(minimum)))", Number(JSON.parse(localStorage.getItem("minimum"))))
-
-
-
-    let scoreForm = document.getElementById("score");
-    console.log("scoreForm", scoreForm)
-    scoreForm.value = score;
     localStorage.setItem("score", JSON.stringify(score));
   });
 
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function () {
-  instruction.innerHTML = "You are now in the Hall of Fame!"
+  instruction.innerHTML = "You are now in the Hall of Fame!";
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
-
