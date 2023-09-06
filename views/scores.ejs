@@ -15,7 +15,7 @@ let newestScore = 0
 //to populate minimum score in HoF to see if newest score eligioble for HoF
 let minimum = 0
 //number of records in the HoF
-let numRec = 20
+let numRec = 50
 //array of IDs to be deleted
 let DBdel = []
 //to find minimum score
@@ -56,7 +56,7 @@ console.log("numbers length", numbers.length)
  if(sortArray.length<numRec) {minimum = Math.min(...numbers, 0)}
  //Otherwise it's the minimum of the first 20 values
  else{
-  minimum=Math.min(...numbers.slice(0, 20));
+  minimum=Math.min(...numbers.slice(0, numRec));
  }
  console.log("minimum", minimum)
 
@@ -69,6 +69,10 @@ console.log("numbers length", numbers.length)
   // } 
 
   %>
+      <br />
+    <!-- Link to return to the game -->
+    <p class="return"><a class="game" href= "/">Go Back to Game</a></p>
+
 <div class="gridContainer">
   <h1 class="HOFTitle">Hall of Fame</h1>
   <div class="scoreContainer">
@@ -106,8 +110,13 @@ console.log("numbers length", numbers.length)
 //         .then((scores) => console.log(scores));
 //     }
     //js classes for names and scores
-    let names = [".name1", ".name2", ".name3", ".name4", ".name5", ".name6", ".name7", ".name8", ".name9", ".name10", ".name11", ".name12", ".name13", ".name14", ".name15", ".name16", ".name17", ".name18", ".name19", ".name20"]
-    let scores = [".score1", ".score2", ".score3", ".score4", ".score5", ".score6", ".score7", ".score8", ".score9", ".score10", ".score11", ".score12", ".score13", ".score14", ".score15", ".score16", ".score17", ".score18", ".score19", ".score20"]
+    let names=[]
+    let scores=[]
+    for (let i = 1; i <= numRec; i++) {
+  names.push(`.name${i}`);
+  scores.push(`.score${i}`);
+}
+console.log(names, scores)
     let numTemp = [];
     let nameTemp = [];
     //separate elements in the sortArray into two separate arrays before they are updated into the HTML elements
@@ -128,10 +137,8 @@ console.log("numbers length", numbers.length)
   </script>
   <br>
   <br>
-  <!-- Link to return to the game -->
-  <p class="return"><a class="game" href= />Go Back to Game</a></p>
-  <br />
-  <br />
+
+
   </div>
   <script>
     //pass minimum score in hall of fame to game page so that message appears if the user has made it into the HoF
