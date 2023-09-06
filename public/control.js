@@ -1236,7 +1236,7 @@ function finishGameDisplay(){
   document.querySelector(".buttons").style["display"] = "none";
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
-  instruction.style["display"] = inline-block;
+  instruction.style["display"] = "inline-block";
 }
 
 function displayTile(i) {
