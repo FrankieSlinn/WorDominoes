@@ -426,6 +426,19 @@ if (JSON.parse(localStorage.getItem("longGameScores")) != null) {
 
 window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
 
+//Update Scores when givUp Button selected
+function calcScore(gridValues){
+  for (let i = 0; i < gridValues.length; i++) {
+    score += gridValues[i][0];
+    score += gridValues[i][1];
+  }
+  //important for getting score registered / in the HoF
+  document.getElementById("score").value = score;
+  console.log("final score", score);
+  console.log("score not below minimum?", score >= Number(JSON.parse(localStorage.getItem("minimum"))) )
+  localStorage.setItem("gameScore", JSON.stringify(score));
+}
+
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
@@ -1410,17 +1423,7 @@ function resetNextTurn() {
 if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
 
-
-    let score = 0;
-    for (let i = 0; i < gridValues.length; i++) {
-      score += gridValues[i][0];
-      score += gridValues[i][1];
-    }
-    //important for getting score registered / in the HoF
-    document.getElementById("score").value = score;
-    console.log("final score", score);
-    console.log("score not below minimum?", score >= Number(JSON.parse(localStorage.getItem("minimum"))) )
-    localStorage.setItem("gameScore", JSON.stringify(score));
+    calcScore(gridValues);
     if (
       score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
       score > 0
@@ -1432,8 +1435,6 @@ if (document.querySelector(".giveUp"))
       instruction.innerHTML="You have not made it into the Hall of Fame in this game. Better luck next time."
       instruction.style['margin-bottom']='1.5rem';
       instruction.style["display"] = "inline-block";
-
-      
     }
     updateScores();
 
