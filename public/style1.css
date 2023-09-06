@@ -425,8 +425,8 @@ button:active {
   margin-top: 0.25rem;
 }
 .inactive{
-  color: #888;
-  border: #888 dotted 2px;
+  color: #999;
+  border: #888 dotted 3px;
 }
 
 .giveUpContainer {
