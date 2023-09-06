@@ -481,6 +481,11 @@ function updateScores() {
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
 
+//**GENERAL DISPLAY FUNCTIONS***//
+function addBlankLine(){
+  instruction.style["margin-bottom"] = "1.5rem";
+}
+
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
@@ -1189,7 +1194,7 @@ function evaluateGrid(i) {
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
-    instruction.style["margin-bottom"] = "1.5rem";
+    addBlankLine();
     presentLet.innerText = "WORD DOMINATION!!!";
     document.querySelector(".hallOfFame").style["display"] = "inline-block";
     updateScores();
@@ -1213,7 +1218,7 @@ function evaluateGrid(i) {
     document.querySelector(
       ".instruction"
     ).innerHTML = `Congratulations, you placed a tile!`;
-    instruction.style["margin-bottom"] = "1.5rem";
+    addBlankLine();
 
     giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
@@ -1450,24 +1455,32 @@ function resetNextTurn() {
 //The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
+  //After the giveUp button is clicked calculate the current score based on domino values in the grid. 
     calcScore(gridValues);
+    //Check if the score qualifies for the Hall of Fame
     if (
       score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
       score > 0
     ) {
+      //Display the Hall of Fame Form
       document.querySelector(".hallOfFame").style["display"] = "inline-block";
     } else if (score < Number(JSON.parse(localStorage.getItem("minimum")))) {
-      console.log("below HoF Threshold");
+      //If the user doesn't qualify for the Hall of Fame display message in instruction.
       instruction.innerHTML =
         "You have not made it into the Hall of Fame in this game. Better luck next time.";
-      instruction.style["margin-bottom"] = "1.5rem";
+      //add blank line below
+      addBlankLine();
+      
       instruction.style["display"] = "inline-block";
     }
+    //Update scores in statistics
     updateScores();
     document.querySelector(
       ".presentLet"
     ).innerHTML = `You Have Scored ${score} Points`;
     finishGameDisplay();
+    //add a space line height
+                  
     document.querySelector(".presentLet").style["font-size"] = "1rem";
     //update statistics
     updateScores();
