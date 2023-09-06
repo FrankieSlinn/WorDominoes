@@ -439,6 +439,48 @@ function calcScore(gridValues){
   localStorage.setItem("gameScore", JSON.stringify(score));
 }
 
+//update scores in statistics
+function updateScores() {
+  longGames.push(JSON.parse(localStorage.getItem("gameScore")));
+  console.log("gameScore after set", longGames);
+  console.log("longScores when being calculated(pushed)", longGames);
+  console.log(
+    "longGameScores = []",
+    JSON.parse(localStorage.getItem("longGameScores")) == []
+  );
+
+  longGameScores =
+    JSON.parse(localStorage.getItem("longGameScores")) == null
+      ? longGames
+      : JSON.parse(localStorage.getItem("longGameScores")).concat(
+          JSON.parse(localStorage.getItem("gameScore"))
+        );
+  console.log("longGameScores after concat", longGameScores);
+  longGames = [];
+  console.log("longGameScores after concat", longGameScores);
+
+  localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
+  //define averageScore after change
+  averageScore =
+    JSON.parse(localStorage.getItem("longGameScores")).length != 0
+      ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
+          (numa, numb) => numa + numb,
+          0
+        ) /
+        JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
+      : 0;
+  //amend stats message after score change
+  document.querySelector(
+    ".scores"
+  ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
+    localStorage.getItem("gameScore")
+  )}</strong><br><br>Games Played: <strong>${
+    JSON.parse(localStorage.getItem("longGameScores")).length
+  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+    0
+  )}</strong>`;
+}
+
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
@@ -1446,46 +1488,8 @@ if (document.querySelector(".giveUp"))
     finishGameDisplay();
     document.querySelector(".presentLet").style["font-size"] = "1rem";
     //update statistics
-    function updateScores() {
-      longGames.push(JSON.parse(localStorage.getItem("gameScore")));
-      console.log("gameScore after set", longGames);
-      console.log("longScores when being calculated(pushed)", longGames);
-      console.log(
-        "longGameScores = []",
-        JSON.parse(localStorage.getItem("longGameScores")) == []
-      );
+    updateScores();
 
-      longGameScores =
-        JSON.parse(localStorage.getItem("longGameScores")) == null
-          ? longGames
-          : JSON.parse(localStorage.getItem("longGameScores")).concat(
-              JSON.parse(localStorage.getItem("gameScore"))
-            );
-      console.log("longGameScores after concat", longGameScores);
-      longGames = [];
-      console.log("longGameScores after concat", longGameScores);
-
-      localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
-      //define averageScore after change
-      averageScore =
-        JSON.parse(localStorage.getItem("longGameScores")).length != 0
-          ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
-              (numa, numb) => numa + numb,
-              0
-            ) /
-            JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
-          : 0;
-      //amend stats message after score change
-      document.querySelector(
-        ".scores"
-      ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
-        localStorage.getItem("gameScore")
-      )}</strong><br><br>Games Played: <strong>${
-        JSON.parse(localStorage.getItem("longGameScores")).length
-      }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
-        0
-      )}</strong>`;
-    }
     console.log("test")
     console.log("score giveUP", score)
     console.log("Number(JSON.parse(localStorage.getItem(minimum)))", Number(JSON.parse(localStorage.getItem("minimum"))))
