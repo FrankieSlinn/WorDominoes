@@ -347,6 +347,7 @@ let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let presentLet = document.querySelector(".presentLet");
 
+
 //Local Storage Shortcuts
 let getGameScore = JSON.parse(
   localStorage.getItem("gameScore")
@@ -398,37 +399,46 @@ document.querySelector("html").style.scrollBehavior = "";
 //***SET SCORES IN THE BEGINNING***//
 
 let averageScore = 0;
-let gamesPlayed =
 //check if any games played via length of scores array. 
 //If the array length is greater than zero, display the length otherwise display "games played" as "0"
-getLongGameScores != null
+let gamesPlayed = 
+getLongGameScores
     ? getLongGameScores.length
     : 0;
-let gameScore = 0;
-let longGameScores = [];
 
+//score of last game played
+let gameScore = 0;
+
+//show a zero value for the game score if no games played
 if (getGameScore == null) {
+  console.log("null game score")
+  //ensure a zero appears in stats in the beginning if user hasn't played games
+  gameScore =0;
   localStorage.setItem("gameScore", JSON.stringify(0));
 }
 
-//***SCORES LOGIC IN Beginning***//
-console.log(
-  "json.pase localstorage is not null",
-  //check if any games played
-  getLongGameScores != null
-);
-if (getLongGameScores != null) {
-  //calculate average score if any games played
+ //calculate average score if any games played
+ function calcAverage(){
+  if (getLongGameScores) {
   averageScore =
-    getLongGameScores.length != 0
-      ? getLongGameScores.reduce(
-          (numa, numb) => numa + numb,
-          0
-        ) / getLongGameScores.length.toFixed(0)
-      : 0;
+  getLongGameScores.length != 0
+    ? getLongGameScores.reduce(
+        (numa, numb) => numa + numb,
+        0
+      ) / getLongGameScores.length.toFixed(0)
+    : 0;
+ }
+ else{
+  averageScore=0;
+ }
 }
+
+calcAverage()
+
 //store average score in local storage
 window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
+
+//***UPDATE SCORES***/
 
 //Update Scores when givUp Button selected
 function calcScore(gridValues) {
@@ -436,38 +446,37 @@ function calcScore(gridValues) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
-  //important for getting score registered / in the HoF
+  //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
   localStorage.setItem("gameScore", JSON.stringify(score));
+  console.log("gameScore", getGameScore)
 }
 
-//update scores in statistics
+//update scores in statistics after a game has been played
+//longGameScores for first turn getLongGameScores after longGameScores in local storage
 function updateScores() {
-  
+ //Add the latest score to the array of scores 
   longGameScores =
-    getLongGameScores == null
-      ? getGameScore
-      : getLongGameScores.push(getGameScore)
-        
-  console.log("longGameScores after concat", longGameScores);
-  console.log("longGameScores after concat", longGameScores);
-
-  localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
+  //check if longGameScores in local storage
+    getLongGameScores
+    //if not push latest score to array that isn't in local storage
+      ? getLongGameScores.push(getGameScore)
+      //otherwise push the latest score to the array that is in local storage
+      : [score]
+  console.log("longGameScores in updateScores()", longGameScores)
+  //Store the updated array in local storage
+  getLongGameScores?
+  localStorage.setItem("longGameScores", JSON.stringify(getLongGameScores)):
+  localStorage.setItem("longGameScores", JSON.stringify(longGameScores))
+  console.log("getLongGameScores before pouplate in stats", getLongGameScores)
   //define averageScore after change
-  averageScore =
-    getLongGameScores.length != 0
-      ? getLongGameScores.reduce(
-          (numa, numb) => numa + numb,
-          0
-        ) / getLongGameScores.length.toFixed(0)
-      : 0;
+  calcAverage();
   //amend stats message after score change
   document.querySelector(
     ".scores"
-  ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
-    localStorage.getItem("gameScore")
-  )}</strong><br><br>Games Played: <strong>${
+    //populate with last game score if that exists
+  ).innerHTML = `WorDominoes Game Score: <strong>${getGameScore?getGameScore:0}</strong><br><br>Games Played: <strong>${
     getLongGameScores.length
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
@@ -480,7 +489,7 @@ function addBlankLine(){
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
-).innerHTML = `WorDominoes Game Score: <strong>${getGameScore}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+).innerHTML = `WorDominoes Game Score: <strong>${getGameScore?getGameScore:0}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
   0
 )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 
@@ -805,22 +814,15 @@ xhr.addEventListener("readystatechange", function () {
     doc = parser.parseFromString(this.responseText, "text/xml");
 
     doc = parser.parseFromString(this.responseText, "text/xml");
-    console.log(
-      "this.responseText.length!=14",
-      this.responseText.length !== 14
-    );
+
 
     if (
       (this.responseText.length != 14 ||
         dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
       document.querySelector(".wordText1").innerHTML.length == chosen1
     ) {
-      console.log("wordText1", document.querySelector("wordText1"));
-      console.log(
-        "dictionary includes wordText1",
-        dictionary.includes(wordText1)
-      );
-      console.log("wordText1 length", wordText1.length);
+
+
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
       document.querySelector(".buttons1").style["display"] = "none";
@@ -832,11 +834,6 @@ xhr.addEventListener("readystatechange", function () {
     } else if (
       document.querySelector(".wordText1").innerHTML.length !== Number(chosen1)
     ) {
-      console.log(
-        "wordtext1length, chosen1.length",
-        document.querySelector(".wordText1").innerHTML.length,
-        chosen1
-      );
       document.querySelector(
         ".word1Instruct"
       ).innerHTML = `The word doesn't have the right amount of letters. It needs ${chosen1} letters. Try Again.`;
@@ -1281,23 +1278,16 @@ function finishGameDisplay() {
 
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
-    console.log("currentGridValue in display tile", currentGridValue);
 
-    console.log("in in selectDomGrid", currentGridValue);
-    console.log("domTile selected");
-    console.log("gridTiles i", currentGridValue);
     if (i <= 3 || (6 <= i && i <= 9)) {
-      console.log("i ,=3", i <= 3);
-      console.log("6<=i<=9", 6 <= i <= 9);
-      console.log("i for rotation", i);
-      console.log("pngName with rotation");
+
       if (rotated == false) {
         console.log("dom on grid hor rotated is false");
         pngNameGrid =
           "<img src = Images/" +
           domKey +
           '.png  style="width:30px;height:60px;transform:rotate(-90deg);margin-top:-15px;">';
-        console.log("tiles on top, bottom", pngName);
+
       } else {
         pngNameGrid =
           "<img src = Images/" +
@@ -1306,7 +1296,7 @@ function displayTile(i) {
       }
       //document.querySelector(doms[i]).innerHTML = "";
     } else if (4 <= i <= 5 || 10 <= i <= 11) {
-      console.log("unrotate pngname, i", i);
+
       if (rotated == false) {
         pngNameGrid =
           "<img src = Images/" +
@@ -1467,12 +1457,8 @@ if (document.querySelector(".giveUp"))
       ".presentLet"
     ).innerHTML = `You Have Scored ${score} Points`;
     finishGameDisplay();
-    //add a space line height
-                  
+    //add a space line height            
     document.querySelector(".presentLet").style["font-size"] = "1rem";
-    //update statistics
-    updateScores();
-    localStorage.setItem("score", JSON.stringify(score));
   });
 
 //Make HOF Form section disappear after button clicked.
