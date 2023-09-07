@@ -347,13 +347,19 @@ let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let presentLet = document.querySelector(".presentLet");
 
+//Local Storage Shortcuts
+let getGameScore = JSON.parse(
+  localStorage.getItem("gameScore")
+)
+let getLongGameScores = JSON.parse(localStorage.getItem("longGameScores"))
+
 //***SET SCORES IN THE BEGINNING***//
 let averageScore = 0;
 //temp holding place
 let longScores = [];
 let gamesPlayed =
-  JSON.parse(localStorage.getItem("longGameScores")) != null
-    ? JSON.parse(localStorage.getItem("longGameScores")).length
+getLongGameScores != null
+    ? getLongGameScores.length
     : 0;
 let gameScore = 0;
 let longGames = [];
@@ -411,16 +417,16 @@ document.querySelector("html").style.scrollBehavior = "";
 console.log(
   "json.pase localstorage is not null",
   //check if any games played
-  JSON.parse(localStorage.getItem("longGameScores")) != null
+  getLongGameScores != null
 );
-if (JSON.parse(localStorage.getItem("longGameScores")) != null) {
+if (getLongGameScores != null) {
   //calculate average score if any games played
   averageScore =
-    JSON.parse(localStorage.getItem("longGameScores")).length != 0
-      ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
+    getLongGameScores.length != 0
+      ? getLongGameScores.reduce(
           (numa, numb) => numa + numb,
           0
-        ) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
+        ) / getLongGameScores.length.toFixed(0)
       : 0;
 }
 
@@ -449,13 +455,13 @@ function updateScores() {
   console.log("longScores when being calculated(pushed)", longGames);
   console.log(
     "longGameScores = []",
-    JSON.parse(localStorage.getItem("longGameScores")) == []
+    getLongGameScores == []
   );
 
   longGameScores =
-    JSON.parse(localStorage.getItem("longGameScores")) == null
+    getLongGameScores == null
       ? longGames
-      : JSON.parse(localStorage.getItem("longGameScores")).concat(
+      : getLongGameScores.concat(
           JSON.parse(localStorage.getItem("gameScore"))
         );
   console.log("longGameScores after concat", longGameScores);
@@ -465,11 +471,11 @@ function updateScores() {
   localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
   //define averageScore after change
   averageScore =
-    JSON.parse(localStorage.getItem("longGameScores")).length != 0
-      ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
+    getLongGameScores.length != 0
+      ? getLongGameScores.reduce(
           (numa, numb) => numa + numb,
           0
-        ) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
+        ) / getLongGameScores.length.toFixed(0)
       : 0;
   //amend stats message after score change
   document.querySelector(
@@ -477,7 +483,7 @@ function updateScores() {
   ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
     localStorage.getItem("gameScore")
   )}</strong><br><br>Games Played: <strong>${
-    JSON.parse(localStorage.getItem("longGameScores")).length
+    getLongGameScores.length
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
 
@@ -489,9 +495,7 @@ function addBlankLine(){
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
-).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
-  localStorage.getItem("gameScore")
-)}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+).innerHTML = `WorDominoes Game Score: <strong>${getGameScore}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
   0
 )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 
@@ -511,7 +515,6 @@ document
     document.querySelector(".overallContainer").style["display"] = "inline";
     document.querySelector(".overallContainer").style["z-index"] = "1";
     document.querySelector(".statsContent").style["display"] = "none";
-    //document.querySelector(".scores").innerHTML = `WorDominoes Game Score: ${gameScore}%<br><br>Games Played:${JSON.parse(localStorage.getItem("longGameScores")).length}<br><br>`
   });
 
 //Show Popup Content - Help
