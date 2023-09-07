@@ -353,25 +353,7 @@ let getGameScore = JSON.parse(
 )
 let getLongGameScores = JSON.parse(localStorage.getItem("longGameScores"))
 
-//***SET SCORES IN THE BEGINNING***//
-let averageScore = 0;
-//temp holding place
-let longScores = [];
-let gamesPlayed =
-getLongGameScores != null
-    ? getLongGameScores.length
-    : 0;
-let gameScore = 0;
-let longGames = [];
-let longGameScores = [];
-console.log(
-  "JSON.parse(localStorage.getItem(gameScore))==null)",
-  localStorage.setItem("gameScore", JSON.stringify(0))
-);
 
-if (JSON.parse(localStorage.getItem("gameScore")) == null) {
-  localStorage.setItem("gameScore", JSON.stringify(0));
-}
 
 //***SET DISPLAY IN THE BEGINNING***//
 
@@ -413,6 +395,23 @@ window.onbeforeunload = function () {
 };
 document.querySelector("html").style.scrollBehavior = "";
 
+//***SET SCORES IN THE BEGINNING***//
+
+let averageScore = 0;
+let gamesPlayed =
+//check if any games played via length of scores array. 
+//If the array length is greater than zero, display the length otherwise display "games played" as "0"
+getLongGameScores != null
+    ? getLongGameScores.length
+    : 0;
+let gameScore = 0;
+let longGames = [];
+let longGameScores = [];
+
+if (getGameScore == null) {
+  localStorage.setItem("gameScore", JSON.stringify(0));
+}
+
 //***SCORES LOGIC IN Beginning***//
 console.log(
   "json.pase localstorage is not null",
@@ -429,7 +428,7 @@ if (getLongGameScores != null) {
         ) / getLongGameScores.length.toFixed(0)
       : 0;
 }
-
+//store average score in local storage
 window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
 
 //Update Scores when givUp Button selected
@@ -440,24 +439,13 @@ function calcScore(gridValues) {
   }
   //important for getting score registered / in the HoF
   document.getElementById("score").value = score;
-  console.log("final score", score);
-  console.log(
-    "score not below minimum?",
-    score >= Number(JSON.parse(localStorage.getItem("minimum")))
-  );
+  //store score in local storage
   localStorage.setItem("gameScore", JSON.stringify(score));
 }
 
 //update scores in statistics
 function updateScores() {
-  longGames.push(JSON.parse(localStorage.getItem("gameScore")));
-  console.log("gameScore after set", longGames);
-  console.log("longScores when being calculated(pushed)", longGames);
-  console.log(
-    "longGameScores = []",
-    getLongGameScores == []
-  );
-
+  longGames.push(getGameScore);
   longGameScores =
     getLongGameScores == null
       ? longGames
