@@ -405,7 +405,6 @@ getLongGameScores != null
     ? getLongGameScores.length
     : 0;
 let gameScore = 0;
-let longGames = [];
 let longGameScores = [];
 
 if (getGameScore == null) {
@@ -445,15 +444,13 @@ function calcScore(gridValues) {
 
 //update scores in statistics
 function updateScores() {
-  longGames.push(getGameScore);
+  
   longGameScores =
     getLongGameScores == null
-      ? longGames
-      : getLongGameScores.concat(
-          JSON.parse(localStorage.getItem("gameScore"))
-        );
+      ? getGameScore
+      : getLongGameScores.push(getGameScore)
+        
   console.log("longGameScores after concat", longGameScores);
-  longGames = [];
   console.log("longGameScores after concat", longGameScores);
 
   localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
