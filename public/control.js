@@ -1,3 +1,7 @@
+
+
+//***GAME SETUP***/
+
 let dominoes = [
   { d1: 22 },
   { d2: 23 },
@@ -322,6 +326,9 @@ let chosen1Temp = 0;
 let chosen2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
+
+//**DOM Shortcuts***//
+
 let hallOfFame = document.querySelector(".hallOfFame");
 let hallOfFameMessage = document.querySelector(".hallOfFameMessage");
 let submitHOFBut = document.querySelector(".submitHOFBut");
@@ -346,14 +353,6 @@ let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let presentLet = document.querySelector(".presentLet");
-
-
-//Local Storage Shortcuts
-let getGameScore = JSON.parse(
-  localStorage.getItem("gameScore")
-)
-let getLongGameScores = JSON.parse(localStorage.getItem("longGameScores"))
-
 
 
 //***SET DISPLAY IN THE BEGINNING***//
@@ -397,20 +396,24 @@ window.onbeforeunload = function () {
 document.querySelector("html").style.scrollBehavior = "";
 
 //***SET SCORES IN THE BEGINNING***//
+console.log("title", document.querySelector("title"))
+console.log("HOFTitle", document.querySelector(".HOFTitle"))
+
 
 let averageScore = 0;
 //check if any games played via length of scores array. 
 //If the array length is greater than zero, display the length otherwise display "games played" as "0"
 let gamesPlayed = 
-getLongGameScores
-    ? getLongGameScores.length
+JSON.parse(localStorage.getItem("longGameScores"))
+    ? JSON.parse(localStorage.getItem("longGameScores")).length
     : 0;
 
 //score of last game played
 let gameScore = 0;
 
 //show a zero value for the game score if no games played
-if (getGameScore == null) {
+if (JSON.parse(
+  localStorage.getItem("gameScore")) == null) {
   console.log("null game score")
   //ensure a zero appears in stats in the beginning if user hasn't played games
   gameScore =0;
@@ -419,13 +422,14 @@ if (getGameScore == null) {
 
  //calculate average score if any games played
  function calcAverage(){
-  if (getLongGameScores) {
+  
+  if (JSON.parse(localStorage.getItem("longGameScores"))) {
   averageScore =
-  getLongGameScores.length != 0
-    ? getLongGameScores.reduce(
+  JSON.parse(localStorage.getItem("longGameScores")).length != 0
+    ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
         (numa, numb) => numa + numb,
         0
-      ) / getLongGameScores.length.toFixed(0)
+      ) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
     : 0;
  }
  else{
@@ -450,46 +454,55 @@ function calcScore(gridValues) {
   document.getElementById("score").value = score;
   //store score in local storage
   localStorage.setItem("gameScore", JSON.stringify(score));
-  console.log("gameScore", getGameScore)
+
 }
 
 //update scores in statistics after a game has been played
-//longGameScores for first turn getLongGameScores after longGameScores in local storage
+//longGameScores for first turn JSON.parse(localStorage.getItem("longGameScores")); after longGameScores in local storage
 function updateScores() {
+  let gameScore = JSON.parse(localStorage.getItem("gameScore"))
+  console.log("gameScore", gameScore)
  //Add the latest score to the array of scores 
   longGameScores =
   //check if longGameScores in local storage
-    getLongGameScores
+    JSON.parse(localStorage.getItem("longGameScores"))
     //if not push latest score to array that isn't in local storage
-      ? getLongGameScores.push(getGameScore)
+      ? JSON.parse(localStorage.getItem("longGameScores")).concat([gameScore])
       //otherwise push the latest score to the array that is in local storage
-      : [score]
-  console.log("longGameScores in updateScores()", longGameScores)
+      : [score];
+
   //Store the updated array in local storage
-  getLongGameScores?
-  localStorage.setItem("longGameScores", JSON.stringify(getLongGameScores)):
   localStorage.setItem("longGameScores", JSON.stringify(longGameScores))
-  console.log("getLongGameScores before pouplate in stats", getLongGameScores)
+  console.log("JSON.parse(localStorage.getItem(longGameScores))", JSON.parse(localStorage.getItem("longGameScores")))
+  console.log("JSON.parse(localStorage.getItem(gameScore))", JSON.parse(localStorage.getItem("gameScore")))
+console.log("longGameScores", longGameScores)
+console.log("push gamescore in parsed longameScores", JSON.parse(localStorage.getItem("longGameScores")).push(gameScore))
+ 
+  
   //define averageScore after change
   calcAverage();
   //amend stats message after score change
+      //populate with last game score if that exists
   document.querySelector(
     ".scores"
-    //populate with last game score if that exists
-  ).innerHTML = `WorDominoes Game Score: <strong>${getGameScore?getGameScore:0}</strong><br><br>Games Played: <strong>${
-    getLongGameScores.length
+  ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
+  localStorage.getItem("gameScore"))?JSON.parse(
+  localStorage.getItem("gameScore")):0}</strong><br><br>Games Played: <strong>${
+    JSON.parse(localStorage.getItem("longGameScores")).length
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
 
 //**GENERAL DISPLAY FUNCTIONS***//
 function addBlankLine(){
-  instruction.style["margin-bottom"] = "1.5rem";
+  instruction.style["margin-bottom"] = "1.5rem"
 }
 
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
-).innerHTML = `WorDominoes Game Score: <strong>${getGameScore?getGameScore:0}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
+  localStorage.getItem("gameScore"))?JSON.parse(
+  localStorage.getItem("gameScore")):0}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
   0
 )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 
@@ -1435,7 +1448,14 @@ if (document.querySelector(".giveUp"))
   document.querySelector(".giveUp").addEventListener("click", function () {
   //After the giveUp button is clicked calculate the current score based on domino values in the grid. 
     calcScore(gridValues);
+    //add blank line below
+    addBlankLine();
+
+    document.querySelector(
+      ".presentLet"
+    ).innerHTML = `You Have Scored ${score} Points`;
     //Check if the score qualifies for the Hall of Fame
+    updateScores();
     if (
       score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
       score > 0
@@ -1446,16 +1466,12 @@ if (document.querySelector(".giveUp"))
       //If the user doesn't qualify for the Hall of Fame display message in instruction.
       instruction.innerHTML =
         "You have not made it into the Hall of Fame in this game. Better luck next time.";
-      //add blank line below
-      addBlankLine();
+
       
       instruction.style["display"] = "inline-block";
     }
     //Update scores in statistics
-    updateScores();
-    document.querySelector(
-      ".presentLet"
-    ).innerHTML = `You Have Scored ${score} Points`;
+
     finishGameDisplay();
     //add a space line height            
     document.querySelector(".presentLet").style["font-size"] = "1rem";
