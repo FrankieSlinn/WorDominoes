@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index')
 const scoresRouter=require('./routes/scores')
+const minimumsRouter=require('./routes/minimums')
+// const minimumRouter=require('./routes/minValue')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors());
 app.use(express.json())
@@ -53,9 +55,35 @@ app.set('views', __dirname + '/views');
         res.status(500).send('Error fetching scores from database.');
       });
   });
+  // const Minimum = require('./models/minimum');
+
+  // app.get('/minvalues', (req, res) => {
+  //   Minimum.find()
+  //     .then(results => {
+  //       res.json({ minimums: results });
+  //     })
+  //     .catch(err => {
+  //       console.error('Error fetching minimums from database:', err);
+  //       res.status(500).send('Error fetching minimums from database.');
+  //     });
+  // });
+
+  // const Minimum = require('./models/minValue'); 
+  // app.get('/', (req, res) => {
+  //   minValue.find()
+  //     .then(results => {
+  //       res.render({ minimum: results }); // Render HTML for browser requests
+
+  //     })
+  //     .catch(err => {
+  //       console.error('Error fetching scores from database:', err);
+  //       res.status(500).send('Error fetching scores from database.');
+  //     });
+  // });
   
 app.use(indexRouter)
 app.use(scoresRouter)
+app.use(minimumsRouter)
 
 
 

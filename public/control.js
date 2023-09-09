@@ -1,5 +1,3 @@
-
-
 //***GAME SETUP***/
 
 let dominoes = [
@@ -243,7 +241,6 @@ let gridValues = [
 let currentGridValue = 0;
 //array of four. 0: end of last tile 1: beginning of current tile 2: end of current tile 3: beginning of next tile
 let gridValueCompare = [];
-
 let dominoHand = [];
 let domHandValues = [];
 let domHandKeys = [];
@@ -354,7 +351,6 @@ let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let presentLet = document.querySelector(".presentLet");
 
-
 //***SET DISPLAY IN THE BEGINNING***//
 
 hallOfFame.style["display"] = "none";
@@ -395,49 +391,75 @@ window.onbeforeunload = function () {
 };
 document.querySelector("html").style.scrollBehavior = "";
 
-//***SET SCORES IN THE BEGINNING***//
-console.log("title", document.querySelector("title"))
-console.log("HOFTitle", document.querySelector(".HOFTitle"))
 
+
+//***SET SCORES IN THE BEGINNING***//
+console.log("title", document.querySelector("title"));
+console.log("HOFTitle", document.querySelector(".HOFTitle"));
 
 let averageScore = 0;
-//check if any games played via length of scores array. 
+//check if any games played via length of scores array.
 //If the array length is greater than zero, display the length otherwise display "games played" as "0"
-let gamesPlayed = 
-JSON.parse(localStorage.getItem("longGameScores"))
-    ? JSON.parse(localStorage.getItem("longGameScores")).length
-    : 0;
+let gamesPlayed = JSON.parse(localStorage.getItem("longGameScores"))
+  ? JSON.parse(localStorage.getItem("longGameScores")).length
+  : 0;
+//**API CALL TO GET MINIMUM HALL OF FAME SCORE***//
+//API to get minimum value
+// Define the URL for the API endpoint
+const apiUrl = "http://localhost:3000/minimums"; // Replace with your actual API URL
+let minHOFScore; // Declare minHOFScore in a scope accessible to the entire program
 
+fetch(apiUrl)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json(); // Parse response JSON
+  })
+  .then((responseData) => {
+    // Handle the response data
+    console.log("Response Data:", responseData);
+    minHOFScore = responseData.minvalue[0].minvalue;
+    console.log("minHOFScore", minHOFScore);
+    
+    // You can use minHOFScore here or assign it to other variables/functions
+    // Example: myFunction(minHOFScore);
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during the fetch
+    console.error("Fetch Error:", error);
+    // Handle the error in your application as needed
+  });
+  console.log("minHOFScore just after API", minHOFScore)
+  
 //score of last game played
 let gameScore = 0;
 
 //show a zero value for the game score if no games played
-if (JSON.parse(
-  localStorage.getItem("gameScore")) == null) {
-  console.log("null game score")
+if (JSON.parse(localStorage.getItem("gameScore")) == null) {
+  console.log("null game score");
   //ensure a zero appears in stats in the beginning if user hasn't played games
-  gameScore =0;
+  gameScore = 0;
   localStorage.setItem("gameScore", JSON.stringify(0));
 }
 
- //calculate average score if any games played
- function calcAverage(){
-  
+//calculate average score if any games played
+function calcAverage() {
   if (JSON.parse(localStorage.getItem("longGameScores"))) {
-  averageScore =
-  JSON.parse(localStorage.getItem("longGameScores")).length != 0
-    ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
-        (numa, numb) => numa + numb,
-        0
-      ) / JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
-    : 0;
- }
- else{
-  averageScore=0;
- }
+    averageScore =
+      JSON.parse(localStorage.getItem("longGameScores")).length != 0
+        ? JSON.parse(localStorage.getItem("longGameScores")).reduce(
+            (numa, numb) => numa + numb,
+            0
+          ) /
+          JSON.parse(localStorage.getItem("longGameScores")).length.toFixed(0)
+        : 0;
+  } else {
+    averageScore = 0;
+  }
 }
 
-calcAverage()
+calcAverage();
 
 //store average score in local storage
 window.localStorage.setItem("averageScore", JSON.stringify(averageScore));
@@ -454,55 +476,66 @@ function calcScore(gridValues) {
   document.getElementById("score").value = score;
   //store score in local storage
   localStorage.setItem("gameScore", JSON.stringify(score));
-
 }
 
 //update scores in statistics after a game has been played
 //longGameScores for first turn JSON.parse(localStorage.getItem("longGameScores")); after longGameScores in local storage
 function updateScores() {
-  let gameScore = JSON.parse(localStorage.getItem("gameScore"))
-  console.log("gameScore", gameScore)
- //Add the latest score to the array of scores 
+  let gameScore = JSON.parse(localStorage.getItem("gameScore"));
+  console.log("gameScore", gameScore);
+  //Add the latest score to the array of scores
   longGameScores =
-  //check if longGameScores in local storage
+    //check if longGameScores in local storage
     JSON.parse(localStorage.getItem("longGameScores"))
-    //if not push latest score to array that isn't in local storage
-      ? JSON.parse(localStorage.getItem("longGameScores")).concat([gameScore])
-      //otherwise push the latest score to the array that is in local storage
-      : [score];
+      ? //if not push latest score to array that isn't in local storage
+        JSON.parse(localStorage.getItem("longGameScores")).concat([gameScore])
+      : //otherwise push the latest score to the array that is in local storage
+        [score];
 
   //Store the updated array in local storage
-  localStorage.setItem("longGameScores", JSON.stringify(longGameScores))
-  console.log("JSON.parse(localStorage.getItem(longGameScores))", JSON.parse(localStorage.getItem("longGameScores")))
-  console.log("JSON.parse(localStorage.getItem(gameScore))", JSON.parse(localStorage.getItem("gameScore")))
-console.log("longGameScores", longGameScores)
-console.log("push gamescore in parsed longameScores", JSON.parse(localStorage.getItem("longGameScores")).push(gameScore))
- 
-  
+  localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
+  console.log(
+    "JSON.parse(localStorage.getItem(longGameScores))",
+    JSON.parse(localStorage.getItem("longGameScores"))
+  );
+  console.log(
+    "JSON.parse(localStorage.getItem(gameScore))",
+    JSON.parse(localStorage.getItem("gameScore"))
+  );
+  console.log("longGameScores", longGameScores);
+  console.log(
+    "push gamescore in parsed longameScores",
+    JSON.parse(localStorage.getItem("longGameScores")).push(gameScore)
+  );
+
   //define averageScore after change
   calcAverage();
   //amend stats message after score change
-      //populate with last game score if that exists
+  //populate with last game score if that exists
   document.querySelector(
     ".scores"
-  ).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
-  localStorage.getItem("gameScore"))?JSON.parse(
-  localStorage.getItem("gameScore")):0}</strong><br><br>Games Played: <strong>${
+  ).innerHTML = `WorDominoes Game Score: <strong>${
+    JSON.parse(localStorage.getItem("gameScore"))
+      ? JSON.parse(localStorage.getItem("gameScore"))
+      : 0
+  }</strong><br><br>Games Played: <strong>${
     JSON.parse(localStorage.getItem("longGameScores")).length
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
 }
 
 //**GENERAL DISPLAY FUNCTIONS***//
-function addBlankLine(){
-  instruction.style["margin-bottom"] = "1.5rem"
+function addBlankLine() {
+  instruction.style["margin-bottom"] = "1.5rem";
 }
 
 //***NAVIGATION REGION BUTTONS***//
 document.querySelector(
   ".scores"
-).innerHTML = `WorDominoes Game Score: <strong>${JSON.parse(
-  localStorage.getItem("gameScore"))?JSON.parse(
-  localStorage.getItem("gameScore")):0}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+).innerHTML = `WorDominoes Game Score: <strong>${
+  JSON.parse(localStorage.getItem("gameScore"))
+    ? JSON.parse(localStorage.getItem("gameScore"))
+    : 0
+}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
   0
 )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 
@@ -828,14 +861,11 @@ xhr.addEventListener("readystatechange", function () {
 
     doc = parser.parseFromString(this.responseText, "text/xml");
 
-
     if (
       (this.responseText.length != 14 ||
         dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
       document.querySelector(".wordText1").innerHTML.length == chosen1
     ) {
-
-
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
       document.querySelector(".buttons1").style["display"] = "none";
@@ -1250,13 +1280,6 @@ function evaluateGrid(i) {
         .querySelector(gridTiles[i])
         .addEventListener("click", function () {
           currentGridValue = i;
-          console.log("selectDomGrid in evaluate gridrunning");
-
-          // gridTilesi = gridTiles[i];
-          //gridValuesi = gridValues[i];
-          //console.log("dominoHand in selectDomGrid after splice", dominoHand);
-
-          console.log("in in selectDomGrid", i);
 
           pushGridValues(currentGridValue);
         });
@@ -1291,16 +1314,13 @@ function finishGameDisplay() {
 
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
-
     if (i <= 3 || (6 <= i && i <= 9)) {
-
       if (rotated == false) {
         console.log("dom on grid hor rotated is false");
         pngNameGrid =
           "<img src = Images/" +
           domKey +
           '.png  style="width:30px;height:60px;transform:rotate(-90deg);margin-top:-15px;">';
-
       } else {
         pngNameGrid =
           "<img src = Images/" +
@@ -1309,7 +1329,6 @@ function displayTile(i) {
       }
       //document.querySelector(doms[i]).innerHTML = "";
     } else if (4 <= i <= 5 || 10 <= i <= 11) {
-
       if (rotated == false) {
         pngNameGrid =
           "<img src = Images/" +
@@ -1445,8 +1464,9 @@ function resetNextTurn() {
 
 //The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
+  console.log("minHOFScore in giveup", minHOFScore)
   document.querySelector(".giveUp").addEventListener("click", function () {
-  //After the giveUp button is clicked calculate the current score based on domino values in the grid. 
+    //After the giveUp button is clicked calculate the current score based on domino values in the grid.
     calcScore(gridValues);
     //add blank line below
     addBlankLine();
@@ -1457,7 +1477,7 @@ if (document.querySelector(".giveUp"))
     //Check if the score qualifies for the Hall of Fame
     updateScores();
     if (
-      score >= Number(JSON.parse(localStorage.getItem("minimum"))) &&
+      score >= minHOFScore &&
       score > 0
     ) {
       //Display the Hall of Fame Form
@@ -1467,13 +1487,12 @@ if (document.querySelector(".giveUp"))
       instruction.innerHTML =
         "You have not made it into the Hall of Fame in this game. Better luck next time.";
 
-      
       instruction.style["display"] = "inline-block";
     }
     //Update scores in statistics
 
     finishGameDisplay();
-    //add a space line height            
+    //add a space line height
     document.querySelector(".presentLet").style["font-size"] = "1rem";
   });
 
@@ -1483,3 +1502,5 @@ submitHOFBut.addEventListener("click", function () {
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
+
+

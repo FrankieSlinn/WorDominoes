@@ -13,7 +13,7 @@
 let sortArray = []
 let newestScore = 0
 //to populate minimum score in HoF to see if newest score eligioble for HoF
-let minimum = 0
+let minimum
 //number of records in the HoF
 let numRec = 50
 //array of IDs to be deleted
@@ -22,18 +22,16 @@ let DBdel = []
 let numbers =[]
 
  //populate array with names, scores and ids from scores array with objects
- console.log("socres.length", scores.length)
 for(let i = 0; i < scores.length; i++) { 
-  console.log("socres[i]", scores[i])
   if(parseInt(scores[i].score)){
   sortArray.push([JSON.stringify(scores[i].lname), parseInt(scores[i].score), scores[i].id]); 
   numbers.push(parseInt(scores[i].score));
 }}
 
-console.log("sortArray", sortArray)
+
 console.log("sortArray length", sortArray.length)
 console.log("numbers length", numbers.length)
- console.log("numbers", numbers)
+
  console.log("min numbers", Math.min(...numbers))
  console.log("minimum", minimum)
 
@@ -43,12 +41,12 @@ console.log("numbers length", numbers.length)
   for(i=0; i< sortArray.length; i++){
     sortArray[i].pop();
   }
-  console.log("sortarray after get rid of last element in record", sortArray)
+
   //sort sortArray by score
   sortArray.sort((a, b) => b[1] - a[1]);
   //sort numbers to find minimum value
   numbers.sort((a, b) => b - a);
-  console.log("numbers sorted", numbers)
+
 
   //get minimum score for comparison with newest score to see if qualifies for HoF
   //define minimum value so that on the game it can be determined if the user has made it into the hall of fame
@@ -59,6 +57,8 @@ console.log("numbers length", numbers.length)
   minimum=Math.min(...numbers.slice(0, numRec));
  }
  console.log("minimum", minimum)
+
+
 
   // //Remove excess records(too low) form the sortArray so they can be deleted from the database
   // let DBDelArray = sortArray.splice(numRec, sortArray.length-numRec)
@@ -97,6 +97,9 @@ console.log("numbers length", numbers.length)
     let minimum= <%- minimum %>;
     
     let numRec = <%- numRec %>;
+
+    console.log("minimum in frontend js in scores", minimum)
+    updateMinimumHOFScore();
 // //delete items from database if score too low to be displayed in teh hall of fame
 //     for (i = 0; i < DBDel.length; i++) {
 //       let id = DBDel[i]
@@ -121,7 +124,7 @@ console.log(names, scores)
     let nameTemp = [];
     //separate elements in the sortArray into two separate arrays before they are updated into the HTML elements
     for (var i = 0; i < sortArray.length; i++) {
-      console.log("Sortarray[i]", sortArray[i])
+
       if (typeof sortArray[i] === "number") {
         numTemp.push(sortArray[i])
       }
@@ -134,25 +137,65 @@ console.log(names, scores)
       document.querySelector(scores[i]).innerHTML = numTemp[i];
       document.querySelector(names[i]).innerHTML = nameTemp[i];
     }
+
+       //pass minimum score in hall of fame to game page so that message appears if the user has made it into the HoF
+     // fetch api and use "put" to change minimum
+     console.log("minimum before api call", minimum) 
+ function updateMinimumHOFScore() {
+  console.log("updateMinimumHOFScore running")
+  const id = "64fb5b18108785ce0cdf46dc"; 
+  
+
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                  minvalue: minimum
+                 })
+            };
+
+            fetch(`/minimums/${id}`, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                console.log("Response not OK for change API");
+                throw new Error("Error");
+            }
+            console.log("Good response");
+            console.log(response)
+            return response.json(); // Call response.json() to parse JSON data
+        })
+        .then(updatedMinimum => {
+            console.log("Updating minimum");
+            document.getElementById("result").innerHTML = `Minimum updated: ${JSON.stringify(updatedMinimum)}`;
+        })
+        .catch(error => {
+          if(error){
+            console.log(error(error));
+            document.getElementById("result").innerHTML = "Error: An error occurred while updating.";}
+        });
+        }
+        console.log("test")
+
   </script>
   <br>
   <br>
-  <div class="minimumValue" minvalue="<%- minimum %>" hidden></div>
+ 
 
 
 
   </div>
   <script>
-    //pass minimum score in hall of fame to game page so that message appears if the user has made it into the HoF
-    let n = <%-JSON.stringify(minimum)%>
-    console.log("n", n)
-    localStorage.setItem("minimum", JSON.stringify(n));
+ 
+    
+    // let n = <%-JSON.stringify(minimum)%>
+    // console.log("n", n)
+    // localStorage.setItem("minimum", JSON.stringify(n));
     let m = <%-JSON.stringify(newestScore)%>
     localStorage.setItem("newestScore", JSON.stringify(m));
 
   </script>
-   <script type="module" src="../public/scores.js"></script>
-  <!-- <script type="module"  src="../control.js" ></script> -->
- 
+  <script src="../public/control.js"></script>
 </body>
 </html>

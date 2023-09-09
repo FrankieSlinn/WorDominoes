@@ -17,6 +17,7 @@ router.get('/scores', (req, res)=>{
     })
 })
 
+
 router.post('/scores', async (req, res) => {
     try {
       // Get the data from the request body
