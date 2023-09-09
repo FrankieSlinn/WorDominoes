@@ -349,7 +349,7 @@ let placeDomInstruct = "Select letter tiles below to make the word";
 let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
-let presentLet = document.querySelector(".presentLet");
+let instructionCenter = document.querySelector(".instructionCenter");
 
 //***SET DISPLAY IN THE BEGINNING***//
 
@@ -492,19 +492,19 @@ function updateScores() {
 
   //Store the updated array in local storage
   localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
-  console.log(
-    "JSON.parse(localStorage.getItem(longGameScores))",
-    JSON.parse(localStorage.getItem("longGameScores"))
-  );
-  console.log(
-    "JSON.parse(localStorage.getItem(gameScore))",
-    JSON.parse(localStorage.getItem("gameScore"))
-  );
-  console.log("longGameScores", longGameScores);
-  console.log(
-    "push gamescore in parsed longameScores",
-    JSON.parse(localStorage.getItem("longGameScores")).push(gameScore)
-  );
+  // console.log(
+  //   "JSON.parse(localStorage.getItem(longGameScores))",
+  //   JSON.parse(localStorage.getItem("longGameScores"))
+  // );
+  // console.log(
+  //   "JSON.parse(localStorage.getItem(gameScore))",
+  //   JSON.parse(localStorage.getItem("gameScore"))
+  // );
+  // console.log("longGameScores", longGameScores);
+  // console.log(
+  //   "push gamescore in parsed longameScores",
+  //   JSON.parse(localStorage.getItem("longGameScores")).push(gameScore)
+  // );
 
   //define averageScore after change
   calcAverage();
@@ -581,21 +581,14 @@ function randomNumberDom() {
 
 //generate first domino hand
 
-//subtracted 1 to select starting from zero
-if (firstGo == true) {
-  let rand1 = dominoes[randomNumberDom()];
-  dominoHand.push(rand1);
-  dominoes.splice(dominoes.indexOf(rand1), 1);
-  dominoesUsed.push(rand1);
-  let rand2 = dominoes[randomNumberDom()];
-  dominoHand.push(rand2);
-  dominoes.splice(dominoes.indexOf(rand2), 1);
-  let rand3 = dominoes[randomNumberDom()];
-  dominoHand.push(rand3);
-  dominoes.splice(dominoes.indexOf(rand3), 1);
-  let rand4 = dominoes[randomNumberDom()];
-  dominoHand.push(rand4);
-  dominoes.splice(dominoes.indexOf(rand4), 1);
+
+if (firstGo) {
+  for (let i = 0; i < 4; i++) {
+    const rand = dominoes[randomNumberDom()];
+    dominoHand.push(rand);
+    dominoes.splice(dominoes.indexOf(rand), 1);
+    dominoesUsed.push(rand);
+  }
   firstGo = false;
 }
 
@@ -701,7 +694,7 @@ let selDomValue = function () {
             "#ABABAB";
           scrollToMiddleThird();
 
-          document.querySelector(".presentLet").innerHTML =
+          document.querySelector(".instructionCenter").innerHTML =
             "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
           selectedDomino = true;
@@ -761,7 +754,7 @@ function makeFirstWord() {
             "wordText1 after created",
             document.querySelector(".wordText1").innerHTML
           );
-          document.querySelector(".presentLet").innerHTML =
+          document.querySelector(".instructionCenter").innerHTML =
             "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
           // document.querySelector(tiles[i]).style["display"] = "none";
@@ -964,7 +957,7 @@ xhr2.addEventListener("readystatechange", function () {
       //wordText2.style["display"] = "none";
       textSubmit.style["display"] = "none";
 
-      document.querySelector(".presentLet").innerHTML =
+      document.querySelector(".instructionCenter").innerHTML =
         "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
       reverseOrder.style["flex-direction"] = "column-reverse";
       reverseOrder.style["margin-top"] = "-0.8rem";
@@ -1219,7 +1212,7 @@ function evaluateGrid(i) {
       ".instruction"
     ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
     addBlankLine();
-    presentLet.innerText = "WORD DOMINATION!!!";
+    instructionCenter.innerText = "WORD DOMINATION!!!";
     document.querySelector(".hallOfFame").style["display"] = "inline-block";
     updateScores();
     localStorage.setItem("gameScore", JSON.stringify(score));
@@ -1400,7 +1393,7 @@ function newTilesDominoes() {
         "documentqueryselectordoms[chosendomindex])",
         document.querySelector(doms[chosenDomIndex]).innerHTML
       );
-      document.querySelector(".presentLet").innerHTML =
+      document.querySelector(".instructionCenter").innerHTML =
         "Now select another domino above that will fit in the grid";
       //change the order of selected domino and instruction back
       reverseOrder.style["flex-direction"] = "column";
@@ -1468,7 +1461,7 @@ document.querySelector(".giveUp").addEventListener("click", function () {
   addBlankLine();
 
   document.querySelector(
-    ".presentLet"
+    ".instructionCenter"
   ).innerHTML = `You Have Scored ${score} Points`;
   //Check if the score qualifies for the Hall of Fame
   updateScores();
@@ -1486,7 +1479,7 @@ document.querySelector(".giveUp").addEventListener("click", function () {
 
   finishGameDisplay();
   //add a space line height
-  document.querySelector(".presentLet").style["font-size"] = "1rem";
+  document.querySelector(".instructionCenter").style["font-size"] = "1rem";
 });
 
 //Make HOF Form section disappear after button clicked.

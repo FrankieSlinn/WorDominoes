@@ -150,11 +150,11 @@ button:active {
   cursor: pointer;
 }
 
-.presentLetContainer {
+.instructionCenterContainer {
   text-align: center;
 }
 
-.presentLet {
+.instructionCenter {
   display: inline-block;
   font-weight: 700;
   margin-top: 1rem;
@@ -172,9 +172,6 @@ button:active {
   border-radius: 15px;
   color: #191970;
   background: #eae6e6;
-}
-
-.presentLet p {
 }
 
 .gridContainer {
