@@ -391,8 +391,6 @@ window.onbeforeunload = function () {
 };
 document.querySelector("html").style.scrollBehavior = "";
 
-
-
 //***SET SCORES IN THE BEGINNING***//
 console.log("title", document.querySelector("title"));
 console.log("HOFTitle", document.querySelector(".HOFTitle"));
@@ -421,7 +419,7 @@ fetch(apiUrl)
     console.log("Response Data:", responseData);
     minHOFScore = responseData.minvalue[0].minvalue;
     console.log("minHOFScore", minHOFScore);
-    
+
     // You can use minHOFScore here or assign it to other variables/functions
     // Example: myFunction(minHOFScore);
   })
@@ -430,8 +428,8 @@ fetch(apiUrl)
     console.error("Fetch Error:", error);
     // Handle the error in your application as needed
   });
-  console.log("minHOFScore just after API", minHOFScore)
-  
+console.log("minHOFScore just after API", minHOFScore);
+
 //score of last game played
 let gameScore = 0;
 
@@ -539,40 +537,41 @@ document.querySelector(
   0
 )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 
-//Show Popup Content - Stats
-document.querySelector(".stats").addEventListener("click", function () {
-  console.log("stats clicked");
-  document.querySelector(".helpContent").style["display"] = "none";
+//Ensures the active popup is displayed and remaining content hidden.
+function displayPopup(inactivePopup, activePopup) {
+  document.querySelector(`.${inactivePopup}`).style["display"] = "none";
   document.querySelector(".overallContainer").style["display"] = "none";
   document.querySelector(".overallContainer").style["z-index"] = "-1";
-  document.querySelector(".statsContent").style["display"] = "inline-block";
+  document.querySelector(`.${activePopup}`).style["display"] = "inline-block";
+}
+function hidePopup(closedPopup) {
+  document.querySelector(".overallContainer").style["display"] = "inline";
+  document.querySelector(".overallContainer").style["z-index"] = "1";
+  document.querySelector(`.${closedPopup}`).style["display"] = "none";
+}
+
+//Show Popup Content - Stats
+document.querySelector(".stats").addEventListener("click", function () {
+  displayPopup("helpContent", "statsContent");
 });
 
 //Close Button - Stats
 document
   .querySelector(".closeButtonStats")
   .addEventListener("click", function () {
-    document.querySelector(".overallContainer").style["display"] = "inline";
-    document.querySelector(".overallContainer").style["z-index"] = "1";
-    document.querySelector(".statsContent").style["display"] = "none";
+    hidePopup("statsContent");
   });
 
 //Show Popup Content - Help
 document.querySelector(".help").addEventListener("click", function () {
-  console.log("help clicked");
-  document.querySelector(".statsContent").style["display"] = "none";
-  document.querySelector(".overallContainer").style["display"] = "none";
-  document.querySelector(".overallContainer").style["z-index"] = "-1";
-  document.querySelector(".helpContent").style["display"] = "inline-block";
+  displayPopup("statsContent", "helpContent");
 });
 
 //Close Button - Help
 document
   .querySelector(".closeButtonHelp")
   .addEventListener("click", function () {
-    document.querySelector(".overallContainer").style["display"] = "inline";
-    document.querySelector(".overallContainer").style["z-index"] = "1";
-    document.querySelector(".helpContent").style["display"] = "none";
+    hidePopup("helpContent");
   });
 
 //Generate a Random Number within the range of the dominoes available
@@ -581,13 +580,10 @@ function randomNumberDom() {
 }
 
 //generate first domino hand
-console.log("dominoHand", dominoHand);
 
-console.log("generation running");
 //subtracted 1 to select starting from zero
 if (firstGo == true) {
   let rand1 = dominoes[randomNumberDom()];
-  console.log("rand1", rand1);
   dominoHand.push(rand1);
   dominoes.splice(dominoes.indexOf(rand1), 1);
   dominoesUsed.push(rand1);
@@ -1464,37 +1460,34 @@ function resetNextTurn() {
 
 //The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
-  console.log("minHOFScore in giveup", minHOFScore)
-  document.querySelector(".giveUp").addEventListener("click", function () {
-    //After the giveUp button is clicked calculate the current score based on domino values in the grid.
-    calcScore(gridValues);
-    //add blank line below
-    addBlankLine();
+  console.log("minHOFScore in giveup", minHOFScore);
+document.querySelector(".giveUp").addEventListener("click", function () {
+  //After the giveUp button is clicked calculate the current score based on domino values in the grid.
+  calcScore(gridValues);
+  //add blank line below
+  addBlankLine();
 
-    document.querySelector(
-      ".presentLet"
-    ).innerHTML = `You Have Scored ${score} Points`;
-    //Check if the score qualifies for the Hall of Fame
-    updateScores();
-    if (
-      score >= minHOFScore &&
-      score > 0
-    ) {
-      //Display the Hall of Fame Form
-      document.querySelector(".hallOfFame").style["display"] = "inline-block";
-    } else if (score < Number(JSON.parse(localStorage.getItem("minimum")))) {
-      //If the user doesn't qualify for the Hall of Fame display message in instruction.
-      instruction.innerHTML =
-        "You have not made it into the Hall of Fame in this game. Better luck next time.";
+  document.querySelector(
+    ".presentLet"
+  ).innerHTML = `You Have Scored ${score} Points`;
+  //Check if the score qualifies for the Hall of Fame
+  updateScores();
+  if (score >= minHOFScore && score > 0) {
+    //Display the Hall of Fame Form
+    document.querySelector(".hallOfFame").style["display"] = "inline-block";
+  } else if (score < Number(JSON.parse(localStorage.getItem("minimum")))) {
+    //If the user doesn't qualify for the Hall of Fame display message in instruction.
+    instruction.innerHTML =
+      "You have not made it into the Hall of Fame in this game. Better luck next time.";
 
-      instruction.style["display"] = "inline-block";
-    }
-    //Update scores in statistics
+    instruction.style["display"] = "inline-block";
+  }
+  //Update scores in statistics
 
-    finishGameDisplay();
-    //add a space line height
-    document.querySelector(".presentLet").style["font-size"] = "1rem";
-  });
+  finishGameDisplay();
+  //add a space line height
+  document.querySelector(".presentLet").style["font-size"] = "1rem";
+});
 
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function () {
@@ -1502,5 +1495,3 @@ submitHOFBut.addEventListener("click", function () {
   textSubmit.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
-
-
