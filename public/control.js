@@ -711,34 +711,46 @@ function showLetters() {
 //Make Word 1st field
 
 makeFirstWord();
+function makeWordGeneric(wordLetters, wordTextElement, tileNum, buttons){
+
+  document.querySelector(wordTextElement).classList.remove("placeholder");
+  document.querySelector(".createWordGrid").style["display"] =
+  "inline-block";
+  document.querySelector(".instructionCenter").innerHTML =
+  "Now make two words with the same amount of letters as the domino dots so you can place this domino";
+  document.querySelector(buttons).style["display"] = "inline-block";
+
+
+}
 
 function makeFirstWord() {
-  wordText1 = "";
+  wordText1="";
 
-  for (let i = 0; i < 15; i++) {
-    if (document.querySelector(tiles[i]))
+
+  for (let tileNum = 0; tileNum < 15; tileNum++) {
+    if (document.querySelector(tiles[tileNum]))
       console.log("doesn't contain inactive");
 
-    document.querySelector(tiles[i]).addEventListener("click", function () {
-      if (!document.querySelector(tiles[i]).classList.contains("inactive")) {
+    document.querySelector(tiles[tileNum]).addEventListener("click", function () {
+      if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
         if (wordNumber == 1) {
-          document.querySelector(".wordText1").classList.remove("placeholder");
-          wordText1 += letterHand[i];
-          lettersUsed1.push(tiles[i]);
+          makeWordGeneric(wordText1,".wordText1", tileNum, ".buttons1")
+          wordText1+=letterHand[tileNum]
+          
+          // wordText1 += letterHand[tileNum];
+          lettersUsed1.push(tiles[tileNum]);
           document.querySelector(".wordText1").innerHTML = wordText1;
-          document.querySelector(".buttons1").style["display"] = "inline-block";
-          document.querySelector(".createWordGrid").style["display"] =
-            "inline-block";
+
+
 
           console.log(
             "wordText1 after created",
             document.querySelector(".wordText1").innerHTML
           );
-          document.querySelector(".instructionCenter").innerHTML =
-            "Now make two words with the same amount of letters as the domino dots so you can place this domino";
+
 
           // document.querySelector(tiles[i]).style["display"] = "none";
-          document.querySelector(tiles[i]).classList.add("inactive");
+          document.querySelector(tiles[tileNum]).classList.add("inactive");
         }
       }
     });
