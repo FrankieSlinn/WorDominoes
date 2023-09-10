@@ -350,6 +350,7 @@ let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let instructionCenter = document.querySelector(".instructionCenter");
+let scores = document.querySelector(".scores")
 
 //***SET DISPLAY IN THE BEGINNING***//
 
@@ -492,33 +493,13 @@ function updateScores() {
 
   //Store the updated array in local storage
   localStorage.setItem("longGameScores", JSON.stringify(longGameScores));
-  // console.log(
-  //   "JSON.parse(localStorage.getItem(longGameScores))",
-  //   JSON.parse(localStorage.getItem("longGameScores"))
-  // );
-  // console.log(
-  //   "JSON.parse(localStorage.getItem(gameScore))",
-  //   JSON.parse(localStorage.getItem("gameScore"))
-  // );
-  // console.log("longGameScores", longGameScores);
-  // console.log(
-  //   "push gamescore in parsed longameScores",
-  //   JSON.parse(localStorage.getItem("longGameScores")).push(gameScore)
-  // );
 
   //define averageScore after change
+
   calcAverage();
   //amend stats message after score change
   //populate with last game score if that exists
-  document.querySelector(
-    ".scores"
-  ).innerHTML = `WorDominoes Game Score: <strong>${
-    JSON.parse(localStorage.getItem("gameScore"))
-      ? JSON.parse(localStorage.getItem("gameScore"))
-      : 0
-  }</strong><br><br>Games Played: <strong>${
-    JSON.parse(localStorage.getItem("longGameScores")).length
-  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(0)}</strong>`;
+  displayScoresInStatsPopup();
 }
 
 //**GENERAL DISPLAY FUNCTIONS***//
@@ -527,15 +508,16 @@ function addBlankLine() {
 }
 
 //***NAVIGATION REGION BUTTONS***//
-document.querySelector(
-  ".scores"
-).innerHTML = `WorDominoes Game Score: <strong>${
-  JSON.parse(localStorage.getItem("gameScore"))
-    ? JSON.parse(localStorage.getItem("gameScore"))
-    : 0
-}</strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
-  0
-)}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
+function displayScoresInStatsPopup(){
+  scores.innerHTML = `WorDominoes Game Score: <strong>${
+    JSON.parse(localStorage.getItem("longGameScores")) ? 
+    JSON.parse(localStorage.getItem("longGameScores"))[JSON.parse(localStorage.getItem("longGameScores")).length - 1] : 0
+  }
+  </strong><br><br>Games Played: <strong>${JSON.parse(localStorage.getItem("longGameScores")).length}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+    0
+  )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
+}
+displayScoresInStatsPopup();
 
 //Ensures the active popup is displayed and remaining content hidden.
 function displayPopup(inactivePopup, activePopup) {
