@@ -287,7 +287,6 @@ let lettersUsed2 = [];
 let lettersUsedBoth = [];
 let pngName = "";
 let chosenName = "";
-let chosenValue = 0;
 let domindex = 0;
 //first & second digits of domino
 let order = 0;
@@ -634,12 +633,10 @@ let selDomValue = function () {
           secondWordValid = false;
           //layout changes to enable word creation
           initialDisplayChangeAfterDominoSelected();
-
-          // chosenDomIndex = j;
+          //Create array of word lengths from domino for each side
           domHandValues.push(...Object.values(dominoHand[j]));
+          //domino name
           chosenKey.push(...Object.keys(dominoHand[j]));
-          console.log("chosenKey", chosenKey);
-          chosenValue = Object.values(dominoHand[j]);
           dominoHand.splice(j, 1);
           domKey = String(chosenKey);
           chosen1 = String(domHandValues[0])[0];
@@ -647,8 +644,6 @@ let selDomValue = function () {
           document.querySelector(
             ".word1Instruct"
           ).innerHTML = `Make a Word With ${chosen1} Letters`;
-
-          chosenValue = String(chosen1 + chosen2);
           if (rotated == false) {
             chosenName =
               "<img src = Images/" +
