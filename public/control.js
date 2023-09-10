@@ -596,8 +596,10 @@ for (let i = 0; i < dominoHand.length; i++) {
 let selDomValue = function () {
   for (let j = 0; j < dominoHand.length; j++) {
     if (document.querySelector(dominoHandDisplayClasses[j]))
+    //check if a domino has been selected from the hand by a user
       document.querySelector(dominoHandDisplayClasses[j]).addEventListener("click", function () {
-        if (selectedDomino == false) {
+        
+
           //remove rows from grid
           textSubmit.style["grid-template-rows"] = "1.5rem 3rem";
           textSubmit.style["grid-template-columns"] = "1fr 1fr";
@@ -637,10 +639,7 @@ let selDomValue = function () {
           document.querySelector(".word2Instruct").style["display"] = "none";
           document.querySelector(".wordText2").style["display"] = "none";
           document.querySelector(".giveUp").style["display"] = "inline-block";
-          //domHandFirst.concat.apply = [...domHandValues];
-          console.log("chosen1, chosen2", chosen1, chosen2);
           chosenValue = String(chosen1 + chosen2);
-          console.log("domKey", domKey);
           if (rotated == false) {
             chosenName =
               "<img src = Images/" +
@@ -682,7 +681,7 @@ let selDomValue = function () {
             "Now make two words with the same amount of letters as the domino dots so you can place this domino";
 
           selectedDomino = true;
-        }
+        
       });
   }
   chosenValues.push(chosen1);
