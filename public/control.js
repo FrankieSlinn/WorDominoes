@@ -251,7 +251,6 @@ let chosenKey = [];
 let domKey = "";
 let domHandFirst = [];
 let dominoHandDisplayClasses = [".dom1", ".dom2", ".dom3", ".dom4"];
-let chosenDomIndex = 0;
 let domLeft = "";
 let domRight = "";
 let selectedDomino = false;
@@ -617,6 +616,8 @@ function initialDisplayChangeAfterDominoSelected() {
   document.querySelector(".submit1").style["display"] = "inline-block";
   document.querySelector(".wordText2").classList.add("placeholder");
   document.querySelector(".wordText").style["background-color"] = "#ABABAB";
+  document.querySelector(".wordText2").innerHTML =
+  "Select letter tiles below to make the word";
 }
 
 //user selects domino
@@ -629,18 +630,18 @@ let selDomValue = function () {
       document
         .querySelector(dominoHandDisplayClasses[j])
         .addEventListener("click", function () {
-          //ensure not rotated
+          //ensure not rotated as latest trigger for rotation("secondWordValid") set to "false"
           secondWordValid = false;
+          //layout changes to enable word creation
           initialDisplayChangeAfterDominoSelected();
-          chosenDomIndex = j;
+
+          // chosenDomIndex = j;
           domHandValues.push(...Object.values(dominoHand[j]));
           chosenKey.push(...Object.keys(dominoHand[j]));
           console.log("chosenKey", chosenKey);
           chosenValue = Object.values(dominoHand[j]);
-          dominoHand.splice(chosenDomIndex, 1);
+          dominoHand.splice(j, 1);
           domKey = String(chosenKey);
-          //prevent rotation
-          secondWordValid = false;
           chosen1 = String(domHandValues[0])[0];
           chosen2 = String(domHandValues[0])[1];
           document.querySelector(
@@ -674,8 +675,6 @@ let selDomValue = function () {
           document.querySelector(
             ".word2Instruct"
           ).innerHTML = `Make a word with ${chosen2} letters`;
-          document.querySelector(".wordText2").innerHTML =
-            "Select letter tiles below to make the word";
 
           showLetters();
 
