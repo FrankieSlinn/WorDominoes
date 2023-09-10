@@ -790,11 +790,10 @@ for (let tileNum = 0; tileNum < 15; tileNum++) {
         if (wordNumber == 2) {
           makeWordGeneric(wordText2,".wordText2", tileNum, ".buttons2")
           wordText2 += letterHand[tileNum];
-          document.querySelector(".wordText2").classList.remove("placeholder");
+
           lettersUsed2.push(tiles[tileNum]);
           console.log("lettersUsed2");
           document.querySelector(".wordText2").innerHTML = wordText2;
-          document.querySelector(".buttons2").style["display"] = "inline-block";
 
           document.querySelector(tiles[tileNum]).classList.add("inactive");
           //if undo display all tiles, reset everything
