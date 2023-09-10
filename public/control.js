@@ -250,7 +250,7 @@ let domHandKeys1 = [];
 let chosenKey = [];
 let domKey = "";
 let domHandFirst = [];
-let doms = [".dom1", ".dom2", ".dom3", ".dom4"];
+let dominoHandDisplayClasses = [".dom1", ".dom2", ".dom3", ".dom4"];
 let chosenDomIndex = 0;
 let domLeft = "";
 let domRight = "";
@@ -587,16 +587,16 @@ for (let i = 0; i < dominoHand.length; i++) {
     domHandKeys[i] +
     '.png  style="width:30px;height:60px;">';
 //assign domino image and style to domino in hand to display domino
-  if (document.querySelector(doms[i]))
-    document.querySelector(doms[i]).innerHTML = pngName;
+  if (document.querySelector(dominoHandDisplayClasses[i]))
+    document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
 }
 //user selects domino
 
 //get selectedDominoValue/
 let selDomValue = function () {
   for (let j = 0; j < dominoHand.length; j++) {
-    if (document.querySelector(doms[j]))
-      document.querySelector(doms[j]).addEventListener("click", function () {
+    if (document.querySelector(dominoHandDisplayClasses[j]))
+      document.querySelector(dominoHandDisplayClasses[j]).addEventListener("click", function () {
         if (selectedDomino == false) {
           //remove rows from grid
           textSubmit.style["grid-template-rows"] = "1.5rem 3rem";
@@ -657,8 +657,8 @@ let selDomValue = function () {
             "inline-block";
           document.querySelector(".handLetters").style["display"] =
             "inline-block";
-          document.querySelector(doms[j]).style["display"] = "none";
-          //doms.splice(j,1);
+          document.querySelector(dominoHandDisplayClasses[j]).style["display"] = "none";
+          //dominoHandDisplayClasses.splice(j,1);
           //dominoHand.splice(indexOf(j,1));
           document.querySelector(
             ".word1Instruct"
@@ -1365,15 +1365,15 @@ function newTilesDominoes() {
         "<img src = Images/" +
         String(Object.keys(dominoHand[i])) +
         '.png  style="width:30px;height:60px;">';
-      console.log("doms[i], i", doms[i], i);
-      document.querySelector(doms[i]).innerHTML = pngName;
-      document.querySelector(doms[i]).style["display"] = "inline-block";
+      console.log("dominoHandDisplayClasses[i], i", dominoHandDisplayClasses[i], i);
+      document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
+      document.querySelector(dominoHandDisplayClasses[i]).style["display"] = "inline-block";
 
       console.log("domHandKeys1", domHandKeys1);
 
       console.log(
-        "documentqueryselectordoms[chosendomindex])",
-        document.querySelector(doms[chosenDomIndex]).innerHTML
+        "documentqueryselectordominoHandDisplayClasses[chosendomindex])",
+        document.querySelector(dominoHandDisplayClasses[chosenDomIndex]).innerHTML
       );
       document.querySelector(".instructionCenter").innerHTML =
         "Now select another domino above that will fit in the grid";
