@@ -293,7 +293,6 @@ let order = 0;
 let lettersWord1 = 0;
 let lettersWord2 = 0;
 //values that define whether grid is full or no
-let chosenValues = [];
 let chosenNums = [];
 let gridTiles = [
   ".domGrid1",
@@ -592,7 +591,7 @@ for (let i = 0; i < dominoHand.length; i++) {
   if (document.querySelector(dominoHandDisplayClasses[i]))
     document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
 }
-function initialDisplayChangeAfterDominoSelected() {
+function initialDisplayChangeAfterDominoSelected(j, lettersWord1, lettersWord2) {
   document.querySelector(".instructionCenter").innerHTML =
     "Now make two words with the same amount of letters as the domino dots so you can place this domino";
   //remove rows from grid
@@ -617,82 +616,84 @@ function initialDisplayChangeAfterDominoSelected() {
   document.querySelector(".wordText").style["background-color"] = "#ABABAB";
   document.querySelector(".wordText2").innerHTML =
   "Select letter tiles below to make the word";
+  document.querySelector(".chosenDom").style["display"] =
+  "inline-block";
+document.querySelector(".handLetters").style["display"] =
+  "inline-block";
+  document.querySelector(dominoHandDisplayClasses[j]).style["display"] =
+  "none";
+document.querySelector(
+  ".word1Instruct"
+).innerHTML = `Make a word with ${lettersWord1} letters`;
+document.querySelector(
+  ".word2Instruct"
+).innerHTML = `Make a word with ${lettersWord2} letters`;
+}
+function displaySelectedDomino(domKey){
+ //ensure tile has correct orientation settings
+ rotated=false;
+ //create HTML for domino image and style
+   chosenName =
+     "<img src = Images/" +
+     domKey +
+     '.png style="width:60px;height:120px;">';
+  //populate chosen domino element with the HTML
+ document.querySelector(".chosenDom").innerHTML = chosenName;
+}
+
+function getWordLengths(domHandValues){
+    //shows amount of letters for word 1
+    lettersWord1 = String(domHandValues[0])[0];
+    //shows amount of letters for word 2
+    lettersWord2 = String(domHandValues[0])[1];
+}
+function selectedDominoParameterChanges(j){
+  //Create array of word lengths from domino for each side
+  domHandValues.push(...Object.values(dominoHand[j]));
+  //domino name
+  chosenKey.push(...Object.keys(dominoHand[j]));
+  dominoHand.splice(j, 1);
+  domKey = String(chosenKey);
+  //flag that a dominoe has been selected
+selectedDomino = true;
+
 }
 
 //user selects domino
 
 //get selectedDominoValue/
-let selDomValue = function () {
+let manageDominoSelectedChanges = function () {
   for (let j = 0; j < dominoHand.length; j++) {
     if (document.querySelector(dominoHandDisplayClasses[j]))
       //check if a domino has been selected from the hand by a user
       document
         .querySelector(dominoHandDisplayClasses[j])
         .addEventListener("click", function () {
-          //ensure not rotated as latest trigger for rotation("secondWordValid") set to "false"
-          secondWordValid = false;
+          //run parameter changes needed after domino selected
+          selectedDominoParameterChanges(j)
+          //display the chosen domino above the word creation section
+          displaySelectedDomino(domKey)
+          getWordLengths(domHandValues);
           //layout changes to enable word creation
-          initialDisplayChangeAfterDominoSelected();
-          //Create array of word lengths from domino for each side
-          domHandValues.push(...Object.values(dominoHand[j]));
-          //domino name
-          chosenKey.push(...Object.keys(dominoHand[j]));
-          dominoHand.splice(j, 1);
-          domKey = String(chosenKey);
-          //shows amount of letters for word 1
-          lettersWord1 = String(domHandValues[0])[0];
-          //shows amount of letters for word 2
-          lettersWord2 = String(domHandValues[0])[1];
-          document.querySelector(
-            ".word1Instruct"
-          ).innerHTML = `Make a Word With ${lettersWord1} Letters`;
-          if (rotated == false) {
-            chosenName =
-              "<img src = Images/" +
-              domKey +
-              '.png style="width:60px;height:120px;">';
-          } else {
-            chosenName =
-              "<img src = Images/" +
-              domKey +
-              '.png style="width:60px;height:120px;transform:rotate(180deg)">';
-          }
-          document.querySelector(".chosenDom").innerHTML = chosenName;
-          document.querySelector(".chosenDom").style["display"] =
-            "inline-block";
-          document.querySelector(".handLetters").style["display"] =
-            "inline-block";
-          document.querySelector(dominoHandDisplayClasses[j]).style["display"] =
-            "none";
-
-          document.querySelector(
-            ".word1Instruct"
-          ).innerHTML = `Make a word with ${lettersWord1} letters`;
-
-          document.querySelector(
-            ".word2Instruct"
-          ).innerHTML = `Make a word with ${lettersWord2} letters`;
-
+          initialDisplayChangeAfterDominoSelected(j, lettersWord1, lettersWord2);
+          //display letter tiles
           showLetters();
-
+          //move screen down where words can be created
           scrollToMiddleThird();
 
-          selectedDomino = true;
         });
   }
-  chosenValues.push(lettersWord1);
-  chosenValues.push(lettersWord2);
 };
 
-selDomValue();
+manageDominoSelectedChanges();
 
 //generate first letter hand
-function randomNumberLet() {
+function randomNumLetters() {
   return Math.abs(Math.floor(Math.random() * letters.length) - 1);
 }
 
 for (let i = 0; i < 15; i++) {
-  let randLetter = randomNumberLet();
+  let randLetter = randomNumLetters();
   letterHand.push(letters[randLetter]);
   letters.splice(randLetter, 1);
 }
@@ -1374,7 +1375,7 @@ function refillLetters() {
 
   let unallocatedTiles = 15 - letterHand.length;
   for (let i = 0; i < unallocatedTiles; i++) {
-    let randLetter1 = randomNumberLet();
+    let randLetter1 = randomNumLetters();
     letterHand.push(letters[randLetter1]);
     letters.splice(randLetter1, 1);
 
