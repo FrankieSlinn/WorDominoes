@@ -435,7 +435,7 @@ let gameScore = 0;
 
 //show a zero value for the game score if no games played
 if (JSON.parse(localStorage.getItem("gameScore")) == null) {
-  console.log("null game score");
+
   //ensure a zero appears in stats in the beginning if user hasn't played games
   gameScore = 0;
   localStorage.setItem("gameScore", JSON.stringify(0));
@@ -1301,36 +1301,34 @@ function finishGameDisplay() {
   instruction.style["display"] = "inline-block";
 }
 
+// function showTileWithRotation(deg, direction){
+  
+//   if(direction==vertical){
+//   pngNameGrid =
+//   "<img src = Images/" +
+//   domKey +
+//   `.png  style="width:30px;height:60px;transform:rotate(${degree}deg)">`;
+// }
+// else if(direction==horizontal){
+//   `.png  style="width:30px;height:60px;transform:rotate(${degree}deg);margin-top:-15px;`
+// }
+
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
+    let rotation = 0;
+    let margin = 0;
     if (i <= 3 || (6 <= i && i <= 9)) {
-      if (rotated == false) {
-        console.log("dom on grid hor rotated is false");
-        pngNameGrid =
-          "<img src = Images/" +
-          domKey +
-          '.png  style="width:30px;height:60px;transform:rotate(-90deg);margin-top:-15px;">';
-      } else {
-        pngNameGrid =
-          "<img src = Images/" +
-          domKey +
-          '.png  style="width:30px;height:60px;transform:rotate(90deg);margin-top:-15px;">';
-      }
-      //document.querySelector(doms[i]).innerHTML = "";
-    } else if (4 <= i <= 5 || 10 <= i <= 11) {
-      if (rotated == false) {
-        pngNameGrid =
-          "<img src = Images/" +
-          domKey +
-          '.png  style="width:30px;height:60px;">';
-        console.log("tiles on sides", pngName);
-      } else {
-        pngNameGrid =
-          "<img src = Images/" +
-          domKey +
-          '.png  style="width:30px;height:60px;transform:rotate(180deg)">';
-      }
-    }
+      //determine rotation and display of tile depending on grid location
+      if (i <= 3 || (6 <= i && i <= 9)) {
+        rotation = rotated ? 90 : -90;
+        margin = -15;
+      } else if (4 <= i <= 5 || 10 <= i <= 11) {
+        rotation = rotated ? 180 : 0;
+        }}
+    
+      const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
+      const imgSrc = `Images/${domKey}.png`;
+      const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
     document.querySelector(gridTiles[i]).innerHTML = pngNameGrid;
     document.querySelector(".chosenDom").innerHTML = "";
     //name for chosenDom, ensure not impacted by rotation
