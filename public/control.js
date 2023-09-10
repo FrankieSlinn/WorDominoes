@@ -258,6 +258,8 @@ let dominoesUsed = [];
 let letterHand = [];
 let firstWord = "";
 let secondWord = "";
+let firstWordText = "";
+let secondWordText = "";
 let firstWordValid = false;
 let secondWordValid = false;
 let tiles = [
@@ -321,6 +323,7 @@ let lettersWord1Temp = 0;
 let lettersWord2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
+
 
 //**DOM Shortcuts***//
 
@@ -710,7 +713,12 @@ function showLetters() {
 
 //Make Word 1st field
 
+
 makeFirstWord();
+
+function clearTextBeforeFirstWord(wordLetters) {
+  wordLetters="";
+}
 function makeWordGeneric(wordLetters, wordTextElement, tileNum, buttons){
 
   document.querySelector(wordTextElement).classList.remove("placeholder");
@@ -720,37 +728,26 @@ function makeWordGeneric(wordLetters, wordTextElement, tileNum, buttons){
   "Now make two words with the same amount of letters as the domino dots so you can place this domino";
   document.querySelector(buttons).style["display"] = "inline-block";
 
-
+  // document.querySelector(tiles[i]).style["display"] = "none";
+  document.querySelector(tiles[tileNum]).classList.add("inactive");
 }
 
 function makeFirstWord() {
-  wordText1="";
+  clearTextBeforeFirstWord(firstWordText);
 
 
   for (let tileNum = 0; tileNum < 15; tileNum++) {
     if (document.querySelector(tiles[tileNum]))
-      console.log("doesn't contain inactive");
+
 
     document.querySelector(tiles[tileNum]).addEventListener("click", function () {
       if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
         if (wordNumber == 1) {
+          firstWordText+=letterHand[tileNum]
+          console.log("wordLetters in generic", wordText1)
+          document.querySelector(".wordText1").innerHTML = firstWordText;
           makeWordGeneric(wordText1,".wordText1", tileNum, ".buttons1")
-          wordText1+=letterHand[tileNum]
-          
-          // wordText1 += letterHand[tileNum];
           lettersUsed1.push(tiles[tileNum]);
-          document.querySelector(".wordText1").innerHTML = wordText1;
-
-
-
-          console.log(
-            "wordText1 after created",
-            document.querySelector(".wordText1").innerHTML
-          );
-
-
-          // document.querySelector(tiles[i]).style["display"] = "none";
-          document.querySelector(tiles[tileNum]).classList.add("inactive");
         }
       }
     });
@@ -773,7 +770,7 @@ function redo1() {
     lettersUsed1.forEach((item) =>
       document.querySelector(`${item}`).classList.remove("inactive")
     );
-    wordText1 = "";
+    firstWordText = "";
     lettersUsed1 = [];
   });
 }
@@ -781,7 +778,7 @@ function redo1() {
 //Create 2nd Word
 
 console.log("wordNumber in function two", wordNumber);
-wordText2 = "";
+clearTextBeforeFirstWord(secondWordText);
 
 for (let tileNum = 0; tileNum < 15; tileNum++) {
   if (document.querySelector(tiles[tileNum]))
@@ -789,11 +786,11 @@ for (let tileNum = 0; tileNum < 15; tileNum++) {
       if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
         if (wordNumber == 2) {
           makeWordGeneric(wordText2,".wordText2", tileNum, ".buttons2")
-          wordText2 += letterHand[tileNum];
+          secondWordText += letterHand[tileNum];
 
           lettersUsed2.push(tiles[tileNum]);
           console.log("lettersUsed2");
-          document.querySelector(".wordText2").innerHTML = wordText2;
+          document.querySelector(".wordText2").innerHTML = secondWordText;
 
           document.querySelector(tiles[tileNum]).classList.add("inactive");
           //if undo display all tiles, reset everything
@@ -815,12 +812,12 @@ function redo2() {
       "Select letter tiles below to make the word";
 
     console.log("lettersused2 in function for it", lettersUsed2);
-    //wordText2 = "";
+
 
     lettersUsed2.forEach((item) =>
       document.querySelector(`${item}`).classList.remove("inactive")
     );
-    wordText2 = "";
+    secondWordText= "";
     lettersUsed2 = [];
     wordNumber = 2;
   });
@@ -954,6 +951,8 @@ xhr2.addEventListener("readystatechange", function () {
       reverseOrder.style["flex-direction"] = "column-reverse";
       reverseOrder.style["margin-top"] = "-0.8rem";
       chosenDom.style["margin-bottom"] = "-1.5rem";
+      firstWordText=""; 
+      secondWordText="";
 
       document.querySelector(".buttons2").style["display"] = "none";
       //document.querySelector(".rotate").style["display"] = "inline-block";
