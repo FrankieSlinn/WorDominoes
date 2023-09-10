@@ -306,7 +306,7 @@ button:active {
 
 }
 
-.textSubmit {
+.createWordGrid {
   display: inline-grid !important;
   grid-template-columns: auto auto;
   grid-template-rows: 1fr 2fr 2fr 2fr;
@@ -550,7 +550,7 @@ input {
   /* .wordText {
     line-height: 1rem;
   } */
-  .textSubmit {
+  .createWordGrid {
     margin-bottom: -0.5rem;
   }
 
@@ -563,7 +563,7 @@ input {
   .wordInstruct {
     margin-bottom: 1rem;
   }
-  .textSubmit {
+  .createWordGrid {
     margin-top: 2rem;
     margin-bottom: 1rem;
   }

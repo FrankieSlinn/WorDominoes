@@ -330,7 +330,7 @@ let score = 0;
 let hallOfFame = document.querySelector(".hallOfFame");
 let hallOfFameMessage = document.querySelector(".hallOfFameMessage");
 let submitHOFBut = document.querySelector(".submitHOFBut");
-let textSubmit = document.querySelector(".textSubmit");
+let createWordGrid = document.querySelector(".createWordGrid");
 let wordText = document.querySelector(".wordText");
 let wordText1 = document.querySelector(".wordText1");
 let wordText2 = document.querySelector(".wordText2");
@@ -351,12 +351,12 @@ let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let instructionCenter = document.querySelector(".instructionCenter");
-let scores = document.querySelector(".scores")
+let scores = document.querySelector(".scores");
 
 //***SET DISPLAY IN THE BEGINNING***//
 
 hallOfFame.style["display"] = "none";
-textSubmit.style["display"] = "none";
+createWordGrid.style["display"] = "none";
 document.querySelectorAll(".wordText").forEach((item) => {
   item.style["display"] = "none";
 });
@@ -437,7 +437,6 @@ let gameScore = 0;
 
 //show a zero value for the game score if no games played
 if (JSON.parse(localStorage.getItem("gameScore")) == null) {
-
   //ensure a zero appears in stats in the beginning if user hasn't played games
   gameScore = 0;
   localStorage.setItem("gameScore", JSON.stringify(0));
@@ -509,12 +508,17 @@ function addBlankLine() {
 }
 
 //***NAVIGATION REGION BUTTONS***//
-function displayScoresInStatsPopup(){
+function displayScoresInStatsPopup() {
   scores.innerHTML = `WorDominoes Game Score: <strong>${
-    JSON.parse(localStorage.getItem("longGameScores")) ? 
-    JSON.parse(localStorage.getItem("longGameScores"))[JSON.parse(localStorage.getItem("longGameScores")).length - 1] : 0
+    JSON.parse(localStorage.getItem("longGameScores"))
+      ? JSON.parse(localStorage.getItem("longGameScores"))[
+          JSON.parse(localStorage.getItem("longGameScores")).length - 1
+        ]
+      : 0
   }
-  </strong><br><br>Games Played: <strong>${JSON.parse(localStorage.getItem("longGameScores")).length}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+  </strong><br><br>Games Played: <strong>${
+    JSON.parse(localStorage.getItem("longGameScores")).length
+  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
     0
   )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 }
@@ -581,49 +585,58 @@ for (let i = 0; i < dominoHand.length; i++) {
   //dominoes set up as objects in game setup. The key is the domino name. The value is the amount of dominoes on each side.
   domHandKeys.push(...Object.keys(dominoHand[i]));
 
-//domino image name and its style
+  //domino image name and its style
   let pngName =
     "<img src = Images/" +
     domHandKeys[i] +
     '.png  style="width:30px;height:60px;">';
-//assign domino image and style to domino in hand to display domino
+  //assign domino image and style to domino in hand to display domino
   if (document.querySelector(dominoHandDisplayClasses[i]))
     document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
 }
+function initialDisplayChangeAfterDominoSelected() {
+  document.querySelector(".instructionCenter").innerHTML =
+    "Now make two words with the same amount of letters as the domino dots so you can place this domino";
+  //remove rows from grid
+  createWordGrid.style["grid-template-rows"] = "1.5rem 3rem";
+  createWordGrid.style["grid-template-columns"] = "1fr 1fr";
+  document.querySelector(".wordText1").style["display"] = "inline-block";
+  redo1But.style["display"] = "inline-block";
+  document.querySelector(".buttons1").style["display"] = "inline-block";
+  word1Instruct.style["display"] = "inline-block";
+  document.querySelector(".wordText1").innerHTML = placeDomInstruct;
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".wordText2").style["backgroundColor"] = "none";
+  document.querySelector(".wordText2").style["visibility"] = "hidden";
+  document.querySelector(".instruction").style["display"] = "none";
+  document.querySelector(".wordText1").style["display"] = "inline-block";
+  document.querySelector(".word2Instruct").style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".giveUp").style["display"] = "inline-block";
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".submit1").style["display"] = "inline-block";
+  document.querySelector(".wordText2").classList.add("placeholder");
+  document.querySelector(".wordText").style["background-color"] = "#ABABAB";
+}
+
 //user selects domino
 
 //get selectedDominoValue/
 let selDomValue = function () {
   for (let j = 0; j < dominoHand.length; j++) {
     if (document.querySelector(dominoHandDisplayClasses[j]))
-    //check if a domino has been selected from the hand by a user
-      document.querySelector(dominoHandDisplayClasses[j]).addEventListener("click", function () {
-        
-
-          //remove rows from grid
-          textSubmit.style["grid-template-rows"] = "1.5rem 3rem";
-          textSubmit.style["grid-template-columns"] = "1fr 1fr";
-
+      //check if a domino has been selected from the hand by a user
+      document
+        .querySelector(dominoHandDisplayClasses[j])
+        .addEventListener("click", function () {
           //ensure not rotated
           secondWordValid = false;
-          //document.querySelector(".text1Submit").style["display"] = "inline-block";
-          document.querySelector(".wordText1").style["display"] =
-            "inline-block";
-          redo1But.style["display"] = "inline-block";
-          document.querySelector(".buttons1").style["display"] = "inline-block";
-          word1Instruct.style["display"] = "inline-block";
-          document.querySelector(".wordText1").innerHTML = placeDomInstruct;
-          document.querySelector(".wordText2").style["display"] = "none";
-          document.querySelector(".wordText2").style["backgroundColor"] =
-            "none";
-          document.querySelector(".wordText2").style["visibility"] = "hidden";
-          document.querySelector(".instruction").style["display"] = "none";
+          initialDisplayChangeAfterDominoSelected();
           chosenDomIndex = j;
           domHandValues.push(...Object.values(dominoHand[j]));
           chosenKey.push(...Object.keys(dominoHand[j]));
           console.log("chosenKey", chosenKey);
           chosenValue = Object.values(dominoHand[j]);
-          //dominoes.splice(dominoes.indexOf(dominoHand[j]),1);
           dominoHand.splice(chosenDomIndex, 1);
           domKey = String(chosenKey);
           //prevent rotation
@@ -634,11 +647,6 @@ let selDomValue = function () {
             ".word1Instruct"
           ).innerHTML = `Make a Word With ${chosen1} Letters`;
 
-          document.querySelector(".wordText1").style["display"] =
-            "inline-block";
-          document.querySelector(".word2Instruct").style["display"] = "none";
-          document.querySelector(".wordText2").style["display"] = "none";
-          document.querySelector(".giveUp").style["display"] = "inline-block";
           chosenValue = String(chosen1 + chosen2);
           if (rotated == false) {
             chosenName =
@@ -656,33 +664,25 @@ let selDomValue = function () {
             "inline-block";
           document.querySelector(".handLetters").style["display"] =
             "inline-block";
-          document.querySelector(dominoHandDisplayClasses[j]).style["display"] = "none";
-          //dominoHandDisplayClasses.splice(j,1);
-          //dominoHand.splice(indexOf(j,1));
+          document.querySelector(dominoHandDisplayClasses[j]).style["display"] =
+            "none";
+
           document.querySelector(
             ".word1Instruct"
           ).innerHTML = `Make a word with ${chosen1} letters`;
-          document.querySelector(".wordText2").style["display"] = "none";
-          document.querySelector(".submit1").style["display"] = "inline-block";
+
           document.querySelector(
             ".word2Instruct"
           ).innerHTML = `Make a word with ${chosen2} letters`;
           document.querySelector(".wordText2").innerHTML =
             "Select letter tiles below to make the word";
-          document.querySelector(".wordText2").classList.add("placeholder");
 
           showLetters();
 
-          document.querySelector(".wordText").style["background-color"] =
-            "#ABABAB";
           scrollToMiddleThird();
 
-          document.querySelector(".instructionCenter").innerHTML =
-            "Now make two words with the same amount of letters as the domino dots so you can place this domino";
-
           selectedDomino = true;
-        
-      });
+        });
   }
   chosenValues.push(chosen1);
   chosenValues.push(chosen2);
@@ -730,7 +730,7 @@ function makeFirstWord() {
           lettersUsed1.push(tiles[i]);
           document.querySelector(".wordText1").innerHTML = wordText1;
           document.querySelector(".buttons1").style["display"] = "inline-block";
-          document.querySelector(".textSubmit").style["display"] =
+          document.querySelector(".createWordGrid").style["display"] =
             "inline-block";
 
           console.log(
@@ -938,7 +938,7 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").style["display"] = "none";
       word2Instruct.style["display"] = "none";
       //wordText2.style["display"] = "none";
-      textSubmit.style["display"] = "none";
+      createWordGrid.style["display"] = "none";
 
       document.querySelector(".instructionCenter").innerHTML =
         "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
@@ -1264,9 +1264,9 @@ function evaluateGrid(i) {
 //Doesn't contain other functions
 function finishGameDisplay() {
   console.log("giveup button clicked");
-  document.querySelector(".textSubmit").style["z-index"] = "-1";
-  document.querySelector(".textSubmit").style["display"] = "none";
-  document.querySelector(".textSubmit").style["opacity"] = "none";
+  document.querySelector(".createWordGrid").style["z-index"] = "-1";
+  document.querySelector(".createWordGrid").style["display"] = "none";
+  document.querySelector(".createWordGrid").style["opacity"] = "none";
   document.querySelector(".handLetters").style["display"] = "none";
   document.querySelector(".wordText").style["display"] = "none";
   document.querySelector(".wordText1").style["display"] = "none";
@@ -1284,18 +1284,6 @@ function finishGameDisplay() {
   instruction.style["display"] = "inline-block";
 }
 
-// function showTileWithRotation(deg, direction){
-  
-//   if(direction==vertical){
-//   pngNameGrid =
-//   "<img src = Images/" +
-//   domKey +
-//   `.png  style="width:30px;height:60px;transform:rotate(${degree}deg)">`;
-// }
-// else if(direction==horizontal){
-//   `.png  style="width:30px;height:60px;transform:rotate(${degree}deg);margin-top:-15px;`
-// }
-
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
     let rotation = 0;
@@ -1307,11 +1295,12 @@ function displayTile(i) {
         margin = -15;
       } else if (4 <= i <= 5 || 10 <= i <= 11) {
         rotation = rotated ? 180 : 0;
-        }}
-    
-      const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
-      const imgSrc = `Images/${domKey}.png`;
-      const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
+      }
+    }
+
+    const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
+    const imgSrc = `Images/${domKey}.png`;
+    const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
     document.querySelector(gridTiles[i]).innerHTML = pngNameGrid;
     document.querySelector(".chosenDom").innerHTML = "";
     //name for chosenDom, ensure not impacted by rotation
@@ -1364,16 +1353,11 @@ function newTilesDominoes() {
         "<img src = Images/" +
         String(Object.keys(dominoHand[i])) +
         '.png  style="width:30px;height:60px;">';
-      console.log("dominoHandDisplayClasses[i], i", dominoHandDisplayClasses[i], i);
+
       document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
-      document.querySelector(dominoHandDisplayClasses[i]).style["display"] = "inline-block";
+      document.querySelector(dominoHandDisplayClasses[i]).style["display"] =
+        "inline-block";
 
-      console.log("domHandKeys1", domHandKeys1);
-
-      console.log(
-        "documentqueryselectordominoHandDisplayClasses[chosendomindex])",
-        document.querySelector(dominoHandDisplayClasses[chosenDomIndex]).innerHTML
-      );
       document.querySelector(".instructionCenter").innerHTML =
         "Now select another domino above that will fit in the grid";
       //change the order of selected domino and instruction back
@@ -1382,7 +1366,7 @@ function newTilesDominoes() {
       chosenDom.style["margin-bottom"] = "-5rem";
       document.querySelector(".wordText").style["display"] = "none";
       document.querySelector(".wordText2").style["display"] = "none";
-      document.querySelector(".textSubmit").style["display"] = "none";
+      document.querySelector(".createWordGrid").style["display"] = "none";
     }
     blockPlaceTile = true;
   }
@@ -1466,6 +1450,6 @@ document.querySelector(".giveUp").addEventListener("click", function () {
 //Make HOF Form section disappear after button clicked.
 submitHOFBut.addEventListener("click", function () {
   instruction.innerHTML = "You are now in the Hall of Fame!";
-  textSubmit.style["display"] = "none";
+  createWordGrid.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
