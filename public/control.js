@@ -514,7 +514,7 @@ function displayScoresInStatsPopup() {
       : 0
   }
   </strong><br><br>Games Played: <strong>${
-    JSON.parse(localStorage.getItem("longGameScores")).length
+    gamesPlayed
   }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
     0
   )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
