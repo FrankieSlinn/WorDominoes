@@ -783,19 +783,20 @@ function redo1() {
 console.log("wordNumber in function two", wordNumber);
 wordText2 = "";
 
-for (let i = 0; i < 15; i++) {
-  if (document.querySelector(tiles[i]))
-    document.querySelector(tiles[i]).addEventListener("click", function () {
-      if (!document.querySelector(tiles[i]).classList.contains("inactive")) {
+for (let tileNum = 0; tileNum < 15; tileNum++) {
+  if (document.querySelector(tiles[tileNum]))
+    document.querySelector(tiles[tileNum]).addEventListener("click", function () {
+      if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
         if (wordNumber == 2) {
-          wordText2 += letterHand[i];
+          makeWordGeneric(wordText2,".wordText2", tileNum, ".buttons2")
+          wordText2 += letterHand[tileNum];
           document.querySelector(".wordText2").classList.remove("placeholder");
-          lettersUsed2.push(tiles[i]);
+          lettersUsed2.push(tiles[tileNum]);
           console.log("lettersUsed2");
           document.querySelector(".wordText2").innerHTML = wordText2;
           document.querySelector(".buttons2").style["display"] = "inline-block";
 
-          document.querySelector(tiles[i]).classList.add("inactive");
+          document.querySelector(tiles[tileNum]).classList.add("inactive");
           //if undo display all tiles, reset everything
 
           //check if answer 1 submitted
