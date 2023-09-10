@@ -243,6 +243,7 @@ let currentGridValue = 0;
 let gridValueCompare = [];
 let dominoHand = [];
 let domHandValues = [];
+//dominoes set up as objects in game setup. The value is the amount of dominoes on each side.
 let domHandKeys = [];
 //keys for second time dommino chosen
 let domHandKeys1 = [];
@@ -562,29 +563,30 @@ function randomNumberDom() {
 }
 
 //generate first domino hand
-
-
 if (firstGo) {
   for (let i = 0; i < 4; i++) {
-    const rand = dominoes[randomNumberDom()];
-    dominoHand.push(rand);
-    dominoes.splice(dominoes.indexOf(rand), 1);
-    dominoesUsed.push(rand);
+    const randDomino = dominoes[randomNumberDom()];
+    dominoHand.push(randDomino);
+    dominoes.splice(dominoes.indexOf(randDomino), 1);
+    dominoesUsed.push(randDomino);
   }
+  //Flag that it isn't the user's first turn
   firstGo = false;
 }
 
 //displayDominoes
 for (let i = 0; i < dominoHand.length; i++) {
+  //No domino has yet been selected so all four displayed
   selectedDomino = false;
+  //dominoes set up as objects in game setup. The key is the domino name. The value is the amount of dominoes on each side.
   domHandKeys.push(...Object.keys(dominoHand[i]));
-  domHandKeys.map((i) => i.key);
 
+//domino image name and its style
   let pngName =
     "<img src = Images/" +
     domHandKeys[i] +
     '.png  style="width:30px;height:60px;">';
-
+//assign domino image and style to domino in hand to display domino
   if (document.querySelector(doms[i]))
     document.querySelector(doms[i]).innerHTML = pngName;
 }
