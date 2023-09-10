@@ -290,8 +290,8 @@ let chosenName = "";
 let domindex = 0;
 //first & second digits of domino
 let order = 0;
-let chosen1 = 0;
-let chosen2 = 0;
+let lettersWord1 = 0;
+let lettersWord2 = 0;
 //values that define whether grid is full or no
 let chosenValues = [];
 let chosenNums = [];
@@ -318,8 +318,8 @@ let blockPlaceTile = true;
 let turns = 1;
 let dominoesPlaced = 0;
 let rotated = false;
-let chosen1Temp = 0;
-let chosen2Temp = 0;
+let lettersWord1Temp = 0;
+let lettersWord2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
 
@@ -639,11 +639,13 @@ let selDomValue = function () {
           chosenKey.push(...Object.keys(dominoHand[j]));
           dominoHand.splice(j, 1);
           domKey = String(chosenKey);
-          chosen1 = String(domHandValues[0])[0];
-          chosen2 = String(domHandValues[0])[1];
+          //shows amount of letters for word 1
+          lettersWord1 = String(domHandValues[0])[0];
+          //shows amount of letters for word 2
+          lettersWord2 = String(domHandValues[0])[1];
           document.querySelector(
             ".word1Instruct"
-          ).innerHTML = `Make a Word With ${chosen1} Letters`;
+          ).innerHTML = `Make a Word With ${lettersWord1} Letters`;
           if (rotated == false) {
             chosenName =
               "<img src = Images/" +
@@ -665,11 +667,11 @@ let selDomValue = function () {
 
           document.querySelector(
             ".word1Instruct"
-          ).innerHTML = `Make a word with ${chosen1} letters`;
+          ).innerHTML = `Make a word with ${lettersWord1} letters`;
 
           document.querySelector(
             ".word2Instruct"
-          ).innerHTML = `Make a word with ${chosen2} letters`;
+          ).innerHTML = `Make a word with ${lettersWord2} letters`;
 
           showLetters();
 
@@ -678,8 +680,8 @@ let selDomValue = function () {
           selectedDomino = true;
         });
   }
-  chosenValues.push(chosen1);
-  chosenValues.push(chosen2);
+  chosenValues.push(lettersWord1);
+  chosenValues.push(lettersWord2);
 };
 
 selDomValue();
@@ -753,7 +755,7 @@ function redo1() {
       "Select letter tiles below to make the word";
     document.querySelector(
       ".word1Instruct"
-    ).innerHTML = `Make a word with ${chosen1} letters`;
+    ).innerHTML = `Make a word with ${lettersWord1} letters`;
 
     lettersUsed1.forEach((item) =>
       document.querySelector(`${item}`).classList.remove("inactive")
@@ -794,7 +796,7 @@ function redo2() {
   document.querySelector(".redo2But").addEventListener("click", function () {
     document.querySelector(
       ".word2Instruct"
-    ).innerHTML = `Make a word with ${chosen2} letters`;
+    ).innerHTML = `Make a word with ${lettersWord2} letters`;
     document.querySelector(".wordText2").classList.add("placeholder");
     document.querySelector(".wordText2").innerHTML =
       "Select letter tiles below to make the word";
@@ -830,7 +832,7 @@ xhr.addEventListener("readystatechange", function () {
     if (
       (this.responseText.length != 14 ||
         dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
-      document.querySelector(".wordText1").innerHTML.length == chosen1
+      document.querySelector(".wordText1").innerHTML.length == lettersWord1
     ) {
       firstWordValid = true;
       document.querySelector(".word1Instruct").innerHTML = "Valid Word";
@@ -841,11 +843,11 @@ xhr.addEventListener("readystatechange", function () {
 
       wordNumber = 2;
     } else if (
-      document.querySelector(".wordText1").innerHTML.length !== Number(chosen1)
+      document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
     ) {
       document.querySelector(
         ".word1Instruct"
-      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${chosen1} letters. Try Again.`;
+      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
       document.querySelector(".wordText1").innerHTML = "";
       lettersUsed1.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive")
@@ -885,7 +887,7 @@ if (document.querySelector(".submit1"))
     //make text for 2nd word appear
     document.querySelector(
       ".word2Instruct"
-    ).innerHTML = `Make a word with ${chosen2} letters`;
+    ).innerHTML = `Make a word with ${lettersWord2} letters`;
     document.querySelector(".word2Instruct").style["display"] = "Inline-block";
     document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
 
@@ -920,7 +922,7 @@ xhr2.addEventListener("readystatechange", function () {
     if (
       (this.responseText.length != 14 ||
         dictionary.includes(document.querySelector(".wordText2").innerHTML)) &&
-      document.querySelector(".wordText2").innerHTML.length == chosen2
+      document.querySelector(".wordText2").innerHTML.length == lettersWord2
     ) {
       secondWordValid = true;
       scrollToTop();
@@ -967,16 +969,16 @@ xhr2.addEventListener("readystatechange", function () {
       //flag to ensure domino can't be placed twice
       blockPlaceTile = false;
     } else if (
-      document.querySelector(".wordText2").innerHTML.length !== Number(chosen2)
+      document.querySelector(".wordText2").innerHTML.length !== Number(lettersWord2)
     ) {
       console.log(
-        "wordtext1length, chosen1.length",
+        "wordtext1length, lettersWord1.length",
         document.querySelector(".wordText2").innerHTML.length,
-        chosen2
+        lettersWord2
       );
       document.querySelector(
         ".word2Instruct"
-      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${chosen2} letters. Try Again.`;
+      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord2} letters. Try Again.`;
       document.querySelector(".word2Instruct").style["display"] =
         "inline-block";
       document.querySelector(".wordText2").innerHTML = "";
@@ -1057,23 +1059,23 @@ if (document.querySelector(".chosenDom"))
             '.png style="width:60px;height:120px;transform:rotate(180deg)">';
         }
         document.querySelector(".chosenDom").style["display"] = "inline-block";
-        chosen1Temp = chosen1;
-        chosen2Temp = chosen2;
-        chosen1 = chosen2Temp;
-        chosen2 = chosen1Temp;
+        lettersWord1Temp = lettersWord1;
+        lettersWord2Temp = lettersWord2;
+        lettersWord1 = lettersWord2Temp;
+        lettersWord2 = lettersWord1Temp;
         rotated = true;
       } else {
         console.log("else statement rotated is false");
         rotated = false;
-        if ((chosen1 = chosen2Temp)) {
+        if ((lettersWord1 = lettersWord2Temp)) {
           if (domKey != "") {
             document.querySelector(".chosenDom").innerHTML =
               "<img src = Images/" +
               domKey +
               '.png style="width:60px;height:120px;">';
           }
-          chosen1 = chosen1Temp;
-          chosen2 = chosen2Temp;
+          lettersWord1 = lettersWord1Temp;
+          lettersWord2 = lettersWord2Temp;
           rotated = false;
         }
       }
@@ -1089,8 +1091,8 @@ function pushGridValues(i) {
     console.log("tile not first or last");
     if (gridValueCompare.length < 4) {
       gridValueCompare.push(Number(gridValues[i - 1][1]));
-      gridValueCompare.push(Number(chosen1));
-      gridValueCompare.push(Number(chosen2));
+      gridValueCompare.push(Number(lettersWord1));
+      gridValueCompare.push(Number(lettersWord2));
       gridValueCompare.push(Number(gridValues[i + 1][0]));
       console.log("gridValueCompare between 0 and 3", gridValueCompare);
       i = "";
@@ -1098,67 +1100,67 @@ function pushGridValues(i) {
   } else if (i == 4) {
     console.log("i is 4");
     gridValueCompare.push(Number(gridValues[i - 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i + 1][0]));
     console.log("gridValueCompare 4", gridValueCompare);
     i = "";
   } else if (i == 5) {
     console.log("i is 5");
     gridValueCompare.push(Number(gridValues[i - 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i + 1][1]));
     console.log("gridValueCompare 4", gridValueCompare);
     i = "";
   } else if (i == 6) {
     console.log("i is 6");
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][1]));
     console.log("gridValueCompare between 6", gridValueCompare);
     i = "";
   } else if (i == 7) {
     console.log("i is 7");
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("gridValueCompare between 6 and 7", gridValueCompare);
     i = "";
   } else if (i == 8) {
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("gridValueCompare between 6 and 9", i, gridValueCompare);
     i = "";
   } else if (i == 9) {
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("gridValueCompare 9", i, gridValueCompare);
     i = "";
   } else if (i == 10) {
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("gridValueCompare between 6 and 9", gridValueCompare);
     i = "";
   } else if (i == 0) {
     gridValueCompare.push(Number(gridValues[gridValues.length - 1][0]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i + 1][0]));
     console.log("i=0", gridValueCompare);
     i = "";
   } else if (i == gridValues.length - 1) {
     gridValueCompare.push(Number(gridValues[0][0]));
-    gridValueCompare.push(Number(chosen1));
-    gridValueCompare.push(Number(chosen2));
+    gridValueCompare.push(Number(lettersWord1));
+    gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("i=11", gridValueCompare);
     i = "";
@@ -1220,8 +1222,8 @@ function evaluateGrid(i) {
     secondWordValid = false;
     gridValueCompare = [];
 
-    gridValues[i][0] = Number(chosen1);
-    gridValues[i][1] = Number(chosen2);
+    gridValues[i][0] = Number(lettersWord1);
+    gridValues[i][1] = Number(lettersWord2);
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
     firstGo = false;
@@ -1307,8 +1309,8 @@ function displayTile(i) {
     blockPlaceTile = true;
     domKey = "";
     rotated = false;
-    chosen1 = chosen1;
-    chosen2 = chosen2;
+    lettersWord1 = lettersWord1;
+    lettersWord2 = lettersWord2;
   }
 }
 
