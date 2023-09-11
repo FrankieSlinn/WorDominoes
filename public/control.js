@@ -758,21 +758,22 @@ function makeWordProcessLetters() {
         document.querySelector(".wordText2").innerHTML = secondWordText;
         makeWordDisplay(wordText2,".wordText2", tileNum, ".buttons2")
         lettersUsed2.push(tiles[tileNum]);
+        redoWord();
       }
     }
     }
     );
   }
 }
-redo1();
-function redoGeneric(){
+redoWord();
 
-}
 
-//redo first word
-function redo1() {
+//redo word
+function redoWord(){
   console.log("new redo running");
+  console.log("wordNumber in redo")
   let redoButton=`.redo${wordNumber}But`
+  console.log("redoButton", redoButton)
   let letterText=`.wordText${wordNumber}`
   document.querySelector(redoButton).addEventListener("click", function () {
     console.log("redo clicked");
@@ -792,30 +793,30 @@ function redo1() {
     secondWordText="";
     lettersUsed1 =[];
     lettersUsed2=[];
-  });
-}
-
-redo2();
-function redo2() {
-  document.querySelector(".redo2But").addEventListener("click", function () {
-    document.querySelector(
-      ".word2Instruct"
-    ).innerHTML = `Make a word with ${lettersWord2} letters`;
-    document.querySelector(".wordText2").classList.add("placeholder");
-    document.querySelector(".wordText2").innerHTML =
-      "Select letter tiles below to make the word";
-
-    console.log("lettersused2 in function for it", lettersUsed2);
+  });}
 
 
-    lettersUsed2.forEach((item) =>
-      document.querySelector(`${item}`).classList.remove("inactive")
-    );
-    secondWordText= "";
-    lettersUsed2 = [];
-    wordNumber = 2;
-  });
-}
+
+// function redo2() {
+//   document.querySelector(".redo2But").addEventListener("click", function () {
+//     document.querySelector(
+//       ".word2Instruct"
+//     ).innerHTML = `Make a word with ${lettersWord2} letters`;
+//     document.querySelector(".wordText2").classList.add("placeholder");
+//     document.querySelector(".wordText2").innerHTML =
+//       "Select letter tiles below to make the word";
+
+//     console.log("lettersused2 in function for it", lettersUsed2);
+
+
+//     lettersUsed2.forEach((item) =>
+//       document.querySelector(`${item}`).classList.remove("inactive")
+//     );
+//     secondWordText= "";
+//     lettersUsed2 = [];
+//     wordNumber = 2;
+//   });
+// }
 
 //Word API from Wiktionary
 
@@ -845,7 +846,6 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").style["visibility"] = "visible";
       document.querySelector(".wordText2").classList.add("placeholder");
       secondWordText="";
-
       wordNumber = 2;
     } else if (
       document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
