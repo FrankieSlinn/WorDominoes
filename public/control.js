@@ -800,32 +800,6 @@ function redoWord(){
     }
 
 
-
-// function redo2() {
-//   document.querySelector(".redo2But").addEventListener("click", function () {
-//     document.querySelector(
-//       ".word2Instruct"
-//     ).innerHTML = `Make a word with ${lettersWord2} letters`;
-//     document.querySelector(".wordText2").classList.add("placeholder");
-//     document.querySelector(".wordText2").innerHTML =
-//       "Select letter tiles below to make the word";
-
-//     console.log("lettersused2 in function for it", lettersUsed2);
-
-
-//     lettersUsed2.forEach((item) =>
-//       document.querySelector(`${item}`).classList.remove("inactive")
-//     );
-//     secondWordText= "";
-//     lettersUsed2 = [];
-//     wordNumber = 2;
-//   });
-// }
-
-//Word API from Wiktionary
-
-//Word1
-
 const data = null;
 
 const xhr = new XMLHttpRequest();
@@ -858,12 +832,8 @@ xhr.addEventListener("readystatechange", function () {
         ".word1Instruct"
       ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
       document.querySelector(".wordText1").innerHTML = "";
-      lettersUsed1.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive")
-      );
-      firstWordText = "";
-      lettersUsed1 = [];
       wordNumber = 1;
+      clearLetters();
       document.querySelector(".word2Instruct").style["display"] = "none";
     } else {
       firstWordValid = false;
@@ -873,24 +843,17 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText1").classList.add(".placeholder");
 
       document.querySelector(".wordText1").innerHTML = "";
-      lettersUsed1.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive")
-      );
-      firstWordText = "";
-      lettersUsed1 = [];
       wordNumber = 1;
-      console.log("wordNumber", wordNumber);
+      clearLetters();
+ 
     }
   }
 });
 
-console.log("firstWord", firstWord);
 
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
     firstWord = document.querySelector(".wordText1").value;
-    console.log("firstWord after 1st defined", firstWord);
-    console.log("submit1 clicked");
     wordText1 = 0;
     wordNumber = 2;
     //make text for 2nd word appear
@@ -996,25 +959,15 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".word2Instruct").style["display"] =
         "inline-block";
       document.querySelector(".wordText2").innerHTML = "";
-
-      lettersUsed2.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive")
-      );
-      secondWordText= "";
-      lettersUsed2 = [];
       wordNumber = 2;
+      clearLetters();
     } else {
       secondWordValid = false;
       document.querySelector(".word2Instruct").innerHTML =
         "Not a Valid Word. Try Again.";
       document.querySelector(".wordText2").innerHTML = "";
       console.log("lettersused2 in function for it", lettersUsed2);
-      secondWordText = "";
-
-      lettersUsed2.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive")
-      );
-      lettersUsed2 = [];
+      clearLetters();
       wordNumber = 2;
     }
   }
@@ -1290,7 +1243,6 @@ function evaluateGrid(i) {
 
     document.querySelector(".chosenDom").style["display"] = "none";
   } else {
-    console.log(" no fits");
     document.querySelector(".instruction").innerHTML =
       "It looks like this tile doesn't fit, try somwhere else";
     gridValueCompare = [];
