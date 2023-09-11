@@ -322,8 +322,7 @@ let lettersWord1Temp = 0;
 let lettersWord2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
-let dominoPlaced=false;
-
+let dominoPlaced = false;
 
 //**DOM Shortcuts***//
 
@@ -516,9 +515,7 @@ function displayScoresInStatsPopup() {
         ]
       : 0
   }
-  </strong><br><br>Games Played: <strong>${
-    gamesPlayed
-  }</strong><br><br>Average Score: <strong>${averageScore.toFixed(
+  </strong><br><br>Games Played: <strong>${gamesPlayed}</strong><br><br>Average Score: <strong>${averageScore.toFixed(
     0
   )}</strong><br/><br><a href="https://www.wordominoes.net">wordominoes.net</a>`;
 }
@@ -594,7 +591,11 @@ for (let i = 0; i < dominoHand.length; i++) {
   if (document.querySelector(dominoHandDisplayClasses[i]))
     document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
 }
-function initialDisplayChangeAfterDominoSelected(j, lettersWord1, lettersWord2) {
+function initialDisplayChangeAfterDominoSelected(
+  j,
+  lettersWord1,
+  lettersWord2
+) {
   document.querySelector(".instructionCenter").innerHTML =
     "Now make two words with the same amount of letters as the domino dots so you can place this domino";
   //remove rows from grid
@@ -618,39 +619,34 @@ function initialDisplayChangeAfterDominoSelected(j, lettersWord1, lettersWord2) 
   document.querySelector(".wordText2").classList.add("placeholder");
   document.querySelector(".wordText").style["background-color"] = "#ABABAB";
   document.querySelector(".wordText2").innerHTML =
-  "Select letter tiles below to make the word";
-  document.querySelector(".chosenDom").style["display"] =
-  "inline-block";
-document.querySelector(".handLetters").style["display"] =
-  "inline-block";
-  document.querySelector(dominoHandDisplayClasses[j]).style["display"] =
-  "none";
-document.querySelector(
-  ".word1Instruct"
-).innerHTML = `Make a word with ${lettersWord1} letters`;
-document.querySelector(
-  ".word2Instruct"
-).innerHTML = `Make a word with ${lettersWord2} letters`;
+    "Select letter tiles below to make the word";
+  document.querySelector(".chosenDom").style["display"] = "inline-block";
+  document.querySelector(".handLetters").style["display"] = "inline-block";
+  document.querySelector(dominoHandDisplayClasses[j]).style["display"] = "none";
+  document.querySelector(
+    ".word1Instruct"
+  ).innerHTML = `Make a word with ${lettersWord1} letters`;
+  document.querySelector(
+    ".word2Instruct"
+  ).innerHTML = `Make a word with ${lettersWord2} letters`;
 }
-function displaySelectedDomino(domKey){
- //ensure tile has correct orientation settings
- rotated=false;
- //create HTML for domino image and style
-   chosenName =
-     "<img src = Images/" +
-     domKey +
-     '.png style="width:60px;height:120px;">';
+function displaySelectedDomino(domKey) {
+  //ensure tile has correct orientation settings
+  rotated = false;
+  //create HTML for domino image and style
+  chosenName =
+    "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
   //populate chosen domino element with the HTML
- document.querySelector(".chosenDom").innerHTML = chosenName;
+  document.querySelector(".chosenDom").innerHTML = chosenName;
 }
 
-function getWordLengths(domHandValues){
-    //shows amount of letters for word 1
-    lettersWord1 = String(domHandValues[0])[0];
-    //shows amount of letters for word 2
-    lettersWord2 = String(domHandValues[0])[1];
+function getWordLengths(domHandValues) {
+  //shows amount of letters for word 1
+  lettersWord1 = String(domHandValues[0])[0];
+  //shows amount of letters for word 2
+  lettersWord2 = String(domHandValues[0])[1];
 }
-function selectedDominoParameterChanges(j){
+function selectedDominoParameterChanges(j) {
   //Create array of word lengths from domino for each side
   domHandValues.push(...Object.values(dominoHand[j]));
   //domino name
@@ -658,8 +654,7 @@ function selectedDominoParameterChanges(j){
   dominoHand.splice(j, 1);
   domKey = String(chosenKey);
   //flag that a dominoe has been selected
-selectedDomino = true;
-
+  selectedDomino = true;
 }
 
 //user selects domino
@@ -673,17 +668,20 @@ let manageDominoSelectedChanges = function () {
         .querySelector(dominoHandDisplayClasses[j])
         .addEventListener("click", function () {
           //run parameter changes needed after domino selected
-          selectedDominoParameterChanges(j)
+          selectedDominoParameterChanges(j);
           //display the chosen domino above the word creation section
-          displaySelectedDomino(domKey)
+          displaySelectedDomino(domKey);
           getWordLengths(domHandValues);
           //layout changes to enable word creation
-          initialDisplayChangeAfterDominoSelected(j, lettersWord1, lettersWord2);
+          initialDisplayChangeAfterDominoSelected(
+            j,
+            lettersWord1,
+            lettersWord2
+          );
           //display letter tiles
           showLetters();
           //move screen down where words can be created
           scrollToMiddleThird();
-
         });
   }
 };
@@ -713,17 +711,13 @@ function showLetters() {
 
 //Make Word 1st field
 
-
 makeWordProcessLetters();
 
-
-function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons){
-
+function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons) {
   document.querySelector(wordTextElement).classList.remove("placeholder");
-  document.querySelector(".createWordGrid").style["display"] =
-  "inline-block";
+  document.querySelector(".createWordGrid").style["display"] = "inline-block";
   document.querySelector(".instructionCenter").innerHTML =
-  "Now make two words with the same amount of letters as the domino dots so you can place this domino";
+    "Now make two words with the same amount of letters as the domino dots so you can place this domino";
   document.querySelector(buttons).style["display"] = "inline-block";
 
   // document.querySelector(tiles[i]).style["display"] = "none";
@@ -732,96 +726,105 @@ function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons){
 
 function makeWordProcessLetters() {
   //ensure input text starts blank
-  firstWordText=""
-  secondWordText=""
+  firstWordText = "";
+  secondWordText = "";
   for (let tileNum = 0; tileNum < 15; tileNum++) {
     if (document.querySelector(tiles[tileNum]))
-    document.querySelector(tiles[tileNum]).addEventListener("click", function () {
-  //as a safety check make sure no tiles are inactive.
-      if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
-        //wordNumber indicates if the word is the first or second
-        if (wordNumber == 1) {
-          //letter selected added to placeholder text
-          firstWordText+=letterHand[tileNum]
-          //placeholder text added to wordText1innerHTML
-          document.querySelector(".wordText1").innerHTML = firstWordText;
-          //function for display changes
-          makeWordDisplay(wordText1,".wordText1", tileNum, ".buttons1")
-          //push letters used(now inactive) to array. If word needs to be redone the array can be 
-          //processed to remove inactive class from these
-          lettersUsed1.push(tiles[tileNum]);
-        }
-      if (wordNumber == 2) {
-        console.log("wordNumber 2")
-        secondWordText+=letterHand[tileNum]
-        document.querySelector(".wordText2").innerHTML = secondWordText;
-        makeWordDisplay(wordText2,".wordText2", tileNum, ".buttons2")
-        lettersUsed2.push(tiles[tileNum]);
-        redoWord();
-      }
-    }
-    }
-    );
+      document
+        .querySelector(tiles[tileNum])
+        .addEventListener("click", function () {
+          //as a safety check make sure no tiles are inactive.
+          if (
+            !document
+              .querySelector(tiles[tileNum])
+              .classList.contains("inactive")
+          ) {
+            //wordNumber indicates if the word is the first or second
+            if (wordNumber == 1) {
+              //letter selected added to placeholder text
+              firstWordText += letterHand[tileNum];
+              //placeholder text added to wordText1innerHTML
+              document.querySelector(".wordText1").innerHTML = firstWordText;
+              //function for display changes
+              makeWordDisplay(wordText1, ".wordText1", tileNum, ".buttons1");
+              //push letters used(now inactive) to array. If word needs to be redone the array can be
+              //processed to remove inactive class from these
+              lettersUsed1.push(tiles[tileNum]);
+            }
+            if (wordNumber == 2) {
+              console.log("wordNumber 2");
+              secondWordText += letterHand[tileNum];
+              document.querySelector(".wordText2").innerHTML = secondWordText;
+              makeWordDisplay(wordText2, ".wordText2", tileNum, ".buttons2");
+              lettersUsed2.push(tiles[tileNum]);
+              redoWord();
+            }
+          }
+        });
   }
 }
 redoWord();
 
-
 //redo word
-function redoWord(){
-  let redoButton=`.redo${wordNumber}But`
+function redoWord() {
+  let redoButton = `.redo${wordNumber}But`;
 
-  let letterText=`.wordText${wordNumber}`
+  let letterText = `.wordText${wordNumber}`;
   document.querySelector(redoButton).addEventListener("click", function () {
     document.querySelector(letterText).classList.add("placeholder");
     document.querySelector(letterText).innerHTML =
       "Select letter tiles below to make the word";
-    if (wordNumber==1){
-    document.querySelector(
-      ".word1Instruct"
-    ).innerHTML = `Make a word with ${lettersWord1} letters`;}
-    else{
+    if (wordNumber == 1) {
+      document.querySelector(
+        ".word1Instruct"
+      ).innerHTML = `Make a word with ${lettersWord1} letters`;
+    } else {
       document.querySelector(
         ".word2Instruct"
-      ).innerHTML = `Make a word with ${lettersWord2} letters`;}
-    
-    clearLetters();
-  })
+      ).innerHTML = `Make a word with ${lettersWord2} letters`;
+    }
 
+    clearLetters();
+  });
 }
 
 //remove inactive class from letters, set letter string to empty and clear lettersUsed arrays
-  function clearLetters(){
-    console.log("clearLetters running")
-    console.log("word number", wordNumber)
-    if(wordNumber==1){
-      lettersUsed1.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive"))
-        firstWordText = "";
-        document.querySelector(".wordText1").innerHTML=firstWordText;
-        lettersUsed1 =[];}
-        else if(wordNumber==2){
-          lettersUsed2.forEach((item) =>
-          document.querySelector(`${item}`).classList.remove("inactive"));
-          secondWordText="";
-          document.querySelector(".wordText2").innerHTML=secondWordText;
-          lettersUsed2=[];}   
-    }
+function clearLetters() {
+  console.log("clearLetters running");
+  console.log("word number", wordNumber);
+  if (wordNumber == 1) {
+    lettersUsed1.forEach((item) =>
+      document.querySelector(`${item}`).classList.remove("inactive")
+    );
+    firstWordText = "";
+    document.querySelector(".wordText1").innerHTML = firstWordText;
+    lettersUsed1 = [];
+  } else if (wordNumber == 2) {
+    lettersUsed2.forEach((item) =>
+      document.querySelector(`${item}`).classList.remove("inactive")
+    );
+    secondWordText = "";
+    document.querySelector(".wordText2").innerHTML = secondWordText;
+    lettersUsed2 = [];
+  }
+}
 
 //display after first word successfully validated
-function firstWordCompleteDisplayChanges(){
+function firstWordCompleteDisplayChanges() {
   document.querySelector(".word1Instruct").innerHTML = "Valid Word";
   document.querySelector(".buttons1").style["display"] = "none";
   document.querySelector(".buttons2").style["display"] = "inline-block";
   document.querySelector(".wordText2").style["display"] = "inline-block";
   document.querySelector(".wordText2").style["visibility"] = "visible";
   document.querySelector(".wordText2").classList.add("placeholder");
-  document.querySelector(".word2Instruct").innerHTML = `Make a word with ${lettersWord2} letters`;
+  document.querySelector(
+    ".word2Instruct"
+  ).innerHTML = `Make a word with ${lettersWord2} letters`;
   document.querySelector(".word2Instruct").style["display"] = "Inline-block";
-  secondWordText="";
+  secondWordText = "";
 }
 //display after both words validated - word area disappears and user is navigated to the domino grid.
-function secondWordCompleteDisplayChanges(){
+function secondWordCompleteDisplayChanges() {
   document.querySelector(".wordInstruct").style["display"] = "none";
   document.querySelector(".redo").style["display"] = "none";
   document.querySelector(".submit").style["display"] = "none";
@@ -831,59 +834,67 @@ function secondWordCompleteDisplayChanges(){
   createWordGrid.style["display"] = "none";
   document.querySelector(".instructionCenter").innerHTML =
     "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
-    scrollToTop();
-    //for instructions to show appropriate messages 
-    //around domino needing to be placed
-      dominoPlaced=false;
-    //Ensures domino tile selected is displayed under the grid
-      reverseOrder.style["flex-direction"] = "column-reverse";
-    reverseOrder.style["margin-top"] = "-0.8rem";
-    chosenDom.style["margin-bottom"] = "-1.5rem";
-    firstWordText=""; 
-    secondWordText="";
-    document.querySelector(".buttons2").style["display"] = "none";
-    document.querySelector(".handLetters").style["display"] = "none";
-  }
-  //generic changes required if a word is not correct for any reason
-  function wordNotCorrect(wordNumber){
-    let inputText=`.wordText${wordNumber}`;
-    document.querySelector(inputText).innerHTML = "";
-    clearLetters();
-  }
-  //Displays word length not correct message
-  function wordLengthIncorrect(wordNumber){
-    let wordInstructText= `.word${wordNumber}Instruct`;
-    document.querySelector(
-      wordInstructText
-    ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
-  }
+  scrollToTop();
+  //for instructions to show appropriate messages
+  //around domino needing to be placed
+  dominoPlaced = false;
+  //Ensures domino tile selected is displayed under the grid
+  reverseOrder.style["flex-direction"] = "column-reverse";
+  reverseOrder.style["margin-top"] = "-0.8rem";
+  chosenDom.style["margin-bottom"] = "-1.5rem";
+  firstWordText = "";
+  secondWordText = "";
+  document.querySelector(".buttons2").style["display"] = "none";
+  document.querySelector(".handLetters").style["display"] = "none";
+}
+//generic changes required if a word is not correct for any reason
+function wordNotCorrect(wordNumber) {
+  let inputText = `.wordText${wordNumber}`;
+  document.querySelector(inputText).innerHTML = "";
+  clearLetters();
+}
+//Displays word length not correct message
+function wordLengthIncorrect(wordNumber) {
+  let wordInstructText = `.word${wordNumber}Instruct`;
+  document.querySelector(
+    wordInstructText
+  ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
+  //display changes for incorrect word
+  wordNotCorrect(wordNumber);
+}
+function invalidWord(wordNumber){
+  let wordInstructText=`.word${wordNumber}Instruct`;
+  document.querySelector(wordInstructText).innerHTML =
+  "Not a Valid Word. Try Again.";
+  wordNotCorrect(wordNumber);
+}
 
-function validateWord(validationInformation){
+function validateWord(validationInformation) {
   if (
     //check valid word(length of response isn't equal to error message length) - valid word
     // or check that word in exception words(is / be) dictionary - valid word
-    //check number of letters is correct  
+    //check number of letters is correct
     (validationInformation != 14 ||
       dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
     document.querySelector(".wordText1").innerHTML.length == lettersWord1
   ) {
     //if conditions met the word is valid
-    firstWordCompleteDisplayChanges()
+    firstWordCompleteDisplayChanges();
     wordNumber = 2;
   } else if (
     //check if first word has the same amount of letters as the side of the domino tile(lettersWord1)
-    document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
+    document.querySelector(".wordText1").innerHTML.length !==
+    Number(lettersWord1)
   ) {
     //scenario letter numbers entered doesn't match domino value
-    wordLengthIncorrect(1)
+    wordLengthIncorrect(1);
     wordNumber = 1;
-    wordNotCorrect(1);
+    // wordNotCorrect(1);
   } else {
     //The first word isn't valid
-    document.querySelector(".word1Instruct").innerHTML =
-      "Not a Valid Word. Try Again.";
-      wordNumber = 1;
-      wordNotCorrect(1);
+    invalidWord(1)
+    wordNumber = 1;
+    // wordNotCorrect(1);
   }
 }
 
@@ -897,13 +908,12 @@ xhr.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
-    //length to determine if error message 
-    let validationInformation= this.responseText.length
+    //length to determine if error message
+    let validationInformation = this.responseText.length;
     //validate word
     validateWord(validationInformation);
   }
 });
-
 
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
@@ -947,21 +957,19 @@ xhr2.addEventListener("readystatechange", function () {
       blockPlaceTile = false;
     } else if (
       //if wrong number of letters
-      document.querySelector(".wordText2").innerHTML.length !== Number(lettersWord2)
+      document.querySelector(".wordText2").innerHTML.length !==
+      Number(lettersWord2)
     ) {
       wordNumber = 2;
-      wordLengthIncorrect(2)
+      wordLengthIncorrect(2);
       //Perform reset where word not correct
-      wordNotCorrect(2);
+      // wordNotCorrect(2);
       // document.querySelector(".word2Instruct").style["display"] =
       //   "inline-block";
-
     } else {
       secondWordValid = false;
-      document.querySelector(".word2Instruct").innerHTML =
-        "Not a Valid Word. Try Again.";
+      invalidWord(2)
       wordNumber = 2;
-      wordNotCorrect(2)
     }
   }
 });
@@ -987,28 +995,36 @@ if (document.querySelector(".submit2"))
 //selectDomGrid();
 //select a tile on the board
 for (let i = 0; i < gridTiles.length; i++) {
-  
   if (document.querySelector(gridTiles[i]))
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
       console.log("selectDomGrid running");
       console.log("blockPlaceTile", blockPlaceTile);
-      console.log("gridValues[i]", gridValues[i])
-      //Ensure a grid space is empty before it can be processed. When a domino is placed 
+      console.log("gridValues[i]", gridValues[i]);
+      //Ensure a grid space is empty before it can be processed. When a domino is placed
       //the gridValues array is populated with the numbers of domino spots on each side
-      document.querySelector(".instruction").innerText=""
-      console.log("(gridValues[i][0]==0&&gridValues[i][1]==0)", (gridValues[i][0]==0&&gridValues[i][1]==0))
-      if(dominoPlaced==true){
-        document.querySelector(".instruction").innerText="You can't place a tile now. Win a domino so you can place one."
-   
+      document.querySelector(".instruction").innerText = "";
+      console.log(
+        "(gridValues[i][0]==0&&gridValues[i][1]==0)",
+        gridValues[i][0] == 0 && gridValues[i][1] == 0
+      );
+      if (dominoPlaced == true) {
+        document.querySelector(".instruction").innerText =
+          "You can't place a tile now. Win a domino so you can place one.";
       }
       //check the values of the grid space haven't been populated
-      else if((!gridValues[i][0]==0&&!gridValues[i][1]==0)&&dominoPlaced==false){
-       
-        document.querySelector(".instruction").innerText="This space is already taken. Try somewhere else."
-        instruction.style['display']="inline-block";
-      }
-
-     else if (blockPlaceTile == false&& (gridValues[i][0]==0&&gridValues[i][1]==0)) {
+      else if (
+        !gridValues[i][0] == 0 &&
+        !gridValues[i][1] == 0 &&
+        dominoPlaced == false
+      ) {
+        document.querySelector(".instruction").innerText =
+          "This space is already taken. Try somewhere else.";
+        instruction.style["display"] = "inline-block";
+      } else if (
+        blockPlaceTile == false &&
+        gridValues[i][0] == 0 &&
+        gridValues[i][1] == 0
+      ) {
         //domino tile number
         currentGridValue = i;
         console.log("in in selectDomGrid", i);
@@ -1019,7 +1035,7 @@ for (let i = 0; i < gridTiles.length; i++) {
 }
 //handle rotation after words made
 if (document.querySelector(".chosenDom"))
-//When the user clicks on the chosen domino it changes its rotation state
+  //When the user clicks on the chosen domino it changes its rotation state
   document.querySelector(".chosenDom").addEventListener("click", function () {
     if (secondWordValid == true) {
       //below the domino will be rotated as the initial state was that the domino wasn't rotated
@@ -1035,56 +1051,62 @@ if (document.querySelector(".chosenDom"))
             '.png style="width:60px;height:120px;transform:rotate(180deg)">';
         }
         document.querySelector(".chosenDom").style["display"] = "inline-block";
-       // The domino values need to be swapped here before being passed for validation
+        // The domino values need to be swapped here before being passed for validation
         lettersWord1Temp = lettersWord1;
         lettersWord2Temp = lettersWord2;
         lettersWord1 = lettersWord2Temp;
         lettersWord2 = lettersWord1Temp;
-        console.log(" rotated lettersWord1, lettersWord2", lettersWord2Temp, lettersWord1Temp)
+        console.log(
+          " rotated lettersWord1, lettersWord2",
+          lettersWord2Temp,
+          lettersWord1Temp
+        );
         rotated = true;
-      } else 
+      }
       //The domino is not rotated
-      {
+      else {
         console.log("else statement rotated is false");
         //reset rotate
         rotated = false;
 
-          if (domKey != "") {
-            document.querySelector(".chosenDom").innerHTML =
-              "<img src = Images/" +
-              domKey +
-              '.png style="width:60px;height:120px;">';
-          }
-          lettersWord1 = lettersWord1Temp;
-           lettersWord2 = lettersWord2Temp;
-
-          rotated = false;
-        
+        if (domKey != "") {
+          document.querySelector(".chosenDom").innerHTML =
+            "<img src = Images/" +
+            domKey +
+            '.png style="width:60px;height:120px;">';
+        }
+        lettersWord1 = lettersWord1Temp;
+        lettersWord2 = lettersWord2Temp;
+        rotated = false;
       }
     }
   });
-  function handleLetterHandChangesAfterDominoWon(){
-    console.log("secondWordValid", secondWordValid, secondWord);
-    console.log("letterHand before splice", letterHand);
-    console.log("lettersUsed1, lettersUsed2 before processed", lettersUsed1, lettersUsed2);
-    for (let i = 0; i < lettersUsed1.length; i++) {
-      letterHand.splice(
-        letterHand.indexOf(document.querySelector(lettersUsed1[i]).innerHTML),
-        1
-      );
-    }
-    console.log("letterhand 1 after splice", letterHand);
-    for (let i = 0; i < lettersUsed2.length; i++) {
-      letterHand.splice(
-        letterHand.indexOf(document.querySelector(lettersUsed2[i]).innerHTML),
-        1
-      );
-    }
-    console.log("letterhand 2 after splice", letterHand);
+function handleLetterHandChangesAfterDominoWon() {
+  console.log("secondWordValid", secondWordValid, secondWord);
+  console.log("letterHand before splice", letterHand);
+  console.log(
+    "lettersUsed1, lettersUsed2 before processed",
+    lettersUsed1,
+    lettersUsed2
+  );
+  for (let i = 0; i < lettersUsed1.length; i++) {
+    letterHand.splice(
+      letterHand.indexOf(document.querySelector(lettersUsed1[i]).innerHTML),
+      1
+    );
   }
+  console.log("letterhand 1 after splice", letterHand);
+  for (let i = 0; i < lettersUsed2.length; i++) {
+    letterHand.splice(
+      letterHand.indexOf(document.querySelector(lettersUsed2[i]).innerHTML),
+      1
+    );
+  }
+  console.log("letterhand 2 after splice", letterHand);
+}
 
 function pushGridValues(i) {
-  //currentGridValue is latest selected domino tile 
+  //currentGridValue is latest selected domino tile
   currentGridValue = i;
   console.log("pushGridValues Running");
   console.log("i in pushGridValues", i);
@@ -1092,7 +1114,6 @@ function pushGridValues(i) {
   //Second value shows value first domino side of current dominno
   //Third value shows value of second domino side of current domino
   //Forth valud shows value of next domino's adjacent side
-
 
   if (1 <= i && i <= 3) {
     console.log("tile not first or last");
@@ -1215,7 +1236,6 @@ function evaluateGrid(i) {
     (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
     (gridValueCompare[0] == gridValueCompare[1] &&
       gridValueCompare[2] == gridValueCompare[3])
-
   ) {
     console.log("tile successfully placed");
     document.querySelector(".instruction").style["display"] = "inline-block";
@@ -1227,21 +1247,20 @@ function evaluateGrid(i) {
     giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
     //To stop rotation
-    console.log("rotated before?", rotated)
+    console.log("rotated before?", rotated);
     console.log("lettersWord1 before placed", lettersWord1);
-    console.log("lettersWord2 before placed", lettersWord2)
+    console.log("lettersWord2 before placed", lettersWord2);
     secondWordValid = false;
     gridValueCompare = [];
     //grid values are populated based on the word value and if they are rotated
-   
-      gridValues[i][0] = Number(lettersWord1);
-      gridValues[i][1] = Number(lettersWord2);
 
-  
-    console.log("rotated?", rotated)
+    gridValues[i][0] = Number(lettersWord1);
+    gridValues[i][1] = Number(lettersWord2);
+
+    console.log("rotated?", rotated);
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
-    console.log("gridValues", gridValues)
+    console.log("gridValues", gridValues);
     firstGo = false;
 
     i = "";
@@ -1265,12 +1284,15 @@ function evaluateGrid(i) {
           currentGridValue = i;
           //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
           //and tile placement not blocked for any reason
-          if(blockPlaceTile == false&& (gridValues[i][0]==0&&gridValues[i][1]==0)){
-          pushGridValues(currentGridValue);
+          if (
+            blockPlaceTile == false &&
+            gridValues[i][0] == 0 &&
+            gridValues[i][1] == 0
+          ) {
+            pushGridValues(currentGridValue);
           }
         });
     }
-
   }
 }
 //issue too many dominoes spliced only happens with wrong tile placed
@@ -1302,16 +1324,15 @@ function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
     let rotation = 0;
     let margin = 0;
-  
-      //determine rotation and display of tile depending on grid location
-      if (i <= 3 || (6 <= i && i <= 9)) {
-        rotation = rotated ? 90 : -90;
-        margin = -15;
-      } else if (4 <= i && i<= 5 || 10 <= i && i<= 11) {
-        console.log("rotated before oriented in grid for 45 1011", rotated)
-        rotation = rotated ? 180 : 0;
-      }
-    
+
+    //determine rotation and display of tile depending on grid location
+    if (i <= 3 || (6 <= i && i <= 9)) {
+      rotation = rotated ? 90 : -90;
+      margin = -15;
+    } else if ((4 <= i && i <= 5) || (10 <= i && i <= 11)) {
+      console.log("rotated before oriented in grid for 45 1011", rotated);
+      rotation = rotated ? 180 : 0;
+    }
 
     const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
     const imgSrc = `Images/${domKey}.png`;
@@ -1336,9 +1357,9 @@ function displayTile(i) {
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
-    //to ensure it is known that the domino has already been placed to provide 
+    //to ensure it is known that the domino has already been placed to provide
     //correct messages in instructions when the user tries to click
-    dominoPlaced=true
+    dominoPlaced = true;
     document.querySelector(".wordText").classList.add("placeholder");
     wordText1.innerHTML = "Select letter tiles below to make the word";
     document.querySelector(".wordText2").style["display"] = "none";
