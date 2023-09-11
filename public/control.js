@@ -770,30 +770,34 @@ redoWord();
 
 //redo word
 function redoWord(){
-  console.log("new redo running");
-  console.log("wordNumber in redo")
   let redoButton=`.redo${wordNumber}But`
   console.log("redoButton", redoButton)
   let letterText=`.wordText${wordNumber}`
   document.querySelector(redoButton).addEventListener("click", function () {
-    console.log("redo clicked");
     document.querySelector(letterText).classList.add("placeholder");
     document.querySelector(letterText).innerHTML =
       "Select letter tiles below to make the word";
     document.querySelector(
       ".word1Instruct"
     ).innerHTML = `Make a word with ${wordNumber==1?lettersWord1:lettersWord2} letters`;
+    clearLetters();
+  })
+
+}
+
+//remove inactive class from letters, set letter string to empty and clear lettersUsed arrays
+  function clearLetters(){
     if(wordNumber==1){
-    lettersUsed1.forEach((item) =>
-      document.querySelector(`${item}`).classList.remove("inactive"))}
-      else if(wordNumber==2){
-        lettersUsed2.forEach((item) =>
+      lettersUsed1.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive"))}
-    firstWordText = "";
-    secondWordText="";
-    lettersUsed1 =[];
-    lettersUsed2=[];
-  });}
+        else if(wordNumber==2){
+          lettersUsed2.forEach((item) =>
+          document.querySelector(`${item}`).classList.remove("inactive"))}
+      firstWordText = "";
+      secondWordText="";
+      lettersUsed1 =[];
+      lettersUsed2=[];
+    }
 
 
 
