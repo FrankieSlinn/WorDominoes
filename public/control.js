@@ -830,7 +830,19 @@ function secondWordCompleteDisplayChanges(){
   createWordGrid.style["display"] = "none";
   document.querySelector(".instructionCenter").innerHTML =
     "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
-}
+    scrollToTop();
+    //for instructions to show appropriate messages 
+    //around domino needing to be placed
+      dominoPlaced=false;
+    //Ensures domino tile selected is displayed under the grid
+      reverseOrder.style["flex-direction"] = "column-reverse";
+    reverseOrder.style["margin-top"] = "-0.8rem";
+    chosenDom.style["margin-bottom"] = "-1.5rem";
+    firstWordText=""; 
+    secondWordText="";
+    document.querySelector(".buttons2").style["display"] = "none";
+    document.querySelector(".handLetters").style["display"] = "none";
+  }
 
 function validateWord(validationInformation){
   if (
@@ -862,7 +874,6 @@ function validateWord(validationInformation){
       wordNumber = 1;
     clearLetters();
   }
-
 }
 
 const data = null;
@@ -885,13 +896,7 @@ xhr.addEventListener("readystatechange", function () {
 
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
-
-    // wordNumber = 2;
-    // //make text for 2nd word appear
-    //
-    // document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
-    // document.querySelector(".buttons2").style["display"] = "inline-block";
-    //run validation API
+    //Run validation API after first word submit button clicked
     xhr.open(
       "GET",
       `https://lingua-robot.p.rapidapi.com/language/v1/entries/en/${
@@ -909,54 +914,21 @@ if (document.querySelector(".submit1"))
 
 //API Submit 2nd word
 const data2 = null;
-
 const xhr2 = new XMLHttpRequest();
 xhr2.withCredentials = true;
-
 xhr2.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
-
-    doc = parser.parseFromString(this.responseText, "text/xml");
-
+    //Check if first word valid
     if (
       (this.responseText.length != 14 ||
         dictionary.includes(document.querySelector(".wordText2").innerHTML)) &&
       document.querySelector(".wordText2").innerHTML.length == lettersWord2
     ) {
       secondWordValid = true;
-      scrollToTop();
-      secondWordCompleteDisplayChanges()
-      //for instructions to show appropriate messages 
-      //around domino needing to be placed
-        dominoPlaced=false;
-        reverseOrder.style["flex-direction"] = "column-reverse";
-      reverseOrder.style["margin-top"] = "-0.8rem";
-      chosenDom.style["margin-bottom"] = "-1.5rem";
-      firstWordText=""; 
-      secondWordText="";
-
-      document.querySelector(".buttons2").style["display"] = "none";
-      document.querySelector(".handLetters").style["display"] = "none";
-
-      console.log("secondWordValid", secondWordValid, secondWord);
-      console.log("letterHand before splice", letterHand);
-      for (let i = 0; i < lettersUsed1.length; i++) {
-        letterHand.splice(
-          letterHand.indexOf(document.querySelector(lettersUsed1[i]).innerHTML),
-          1
-        );
-      }
-      console.log("letterhand 1 after splice", letterHand);
-      for (let i = 0; i < lettersUsed2.length; i++) {
-        letterHand.splice(
-          letterHand.indexOf(document.querySelector(lettersUsed2[i]).innerHTML),
-          1
-        );
-      }
-      console.log("letterhand 2 after splice", letterHand);
-
+      secondWordCompleteDisplayChanges();
+      handleLetterHandChangesAfterDominoWon();
       //selectDomGrid();
       //reset for user to be able to place 1st tile
       wordNumber = 1;
@@ -1092,6 +1064,25 @@ if (document.querySelector(".chosenDom"))
       }
     }
   });
+  function handleLetterHandChangesAfterDominoWon(){
+    console.log("secondWordValid", secondWordValid, secondWord);
+    console.log("letterHand before splice", letterHand);
+    console.log("lettersUsed1, lettersUsed2 before processed", lettersUsed1, lettersUsed2);
+    for (let i = 0; i < lettersUsed1.length; i++) {
+      letterHand.splice(
+        letterHand.indexOf(document.querySelector(lettersUsed1[i]).innerHTML),
+        1
+      );
+    }
+    console.log("letterhand 1 after splice", letterHand);
+    for (let i = 0; i < lettersUsed2.length; i++) {
+      letterHand.splice(
+        letterHand.indexOf(document.querySelector(lettersUsed2[i]).innerHTML),
+        1
+      );
+    }
+    console.log("letterhand 2 after splice", letterHand);
+  }
 
 function pushGridValues(i) {
   //currentGridValue is latest selected domino tile 
