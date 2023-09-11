@@ -799,18 +799,27 @@ function redoWord(){
       lettersUsed2=[];
     }
 
-
+function firstWordCompleteDisplayChanges(){
+  document.querySelector(".word1Instruct").innerHTML = "Valid Word";
+  document.querySelector(".buttons1").style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "inline-block";
+  document.querySelector(".wordText2").style["visibility"] = "visible";
+  document.querySelector(".wordText2").classList.add("placeholder");
+  secondWordText="";
+}
 const data = null;
 
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
+//run api to check word
 xhr.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
 
-    doc = parser.parseFromString(this.responseText, "text/xml");
+    // doc = parser.parseFromString(this.responseText, "text/xml");
+    
 
     if (
       (this.responseText.length != 14 ||
@@ -818,12 +827,8 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText1").innerHTML.length == lettersWord1
     ) {
       firstWordValid = true;
-      document.querySelector(".word1Instruct").innerHTML = "Valid Word";
-      document.querySelector(".buttons1").style["display"] = "none";
-      document.querySelector(".wordText2").style["display"] = "inline-block";
-      document.querySelector(".wordText2").style["visibility"] = "visible";
-      document.querySelector(".wordText2").classList.add("placeholder");
-      secondWordText="";
+      firstWordCompleteDisplayChanges()
+
       wordNumber = 2;
     } else if (
       document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
