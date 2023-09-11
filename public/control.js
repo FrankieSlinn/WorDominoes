@@ -731,24 +731,26 @@ function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons){
 }
 
 function makeWordProcessLetters() {
+  //ensure input text starts blank
   firstWordText=""
   secondWordText=""
-
-
   for (let tileNum = 0; tileNum < 15; tileNum++) {
     if (document.querySelector(tiles[tileNum]))
-
-
     document.querySelector(tiles[tileNum]).addEventListener("click", function () {
+  //as a safety check make sure no tiles are inactive.
       if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
+        //wordNumber indicates if the word is the first or second
         if (wordNumber == 1) {
+          //letter selected added to placeholder text
           firstWordText+=letterHand[tileNum]
-          console.log("wordLetters in generic", wordText1)
+          //placeholder text added to wordText1innerHTML
           document.querySelector(".wordText1").innerHTML = firstWordText;
+          //function for display changes
           makeWordDisplay(wordText1,".wordText1", tileNum, ".buttons1")
+          //push letters used(now inactive) to array. If word needs to be redone the array can be 
+          //processed to remove inactive class from these
           lettersUsed1.push(tiles[tileNum]);
         }
-      
       if (wordNumber == 2) {
         console.log("wordNumber 2")
         secondWordText+=letterHand[tileNum]
@@ -762,6 +764,9 @@ function makeWordProcessLetters() {
   }
 }
 redo1();
+function redoGeneric(){
+
+}
 
 //redo first word
 function redo1() {
