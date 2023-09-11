@@ -844,10 +844,18 @@ function secondWordCompleteDisplayChanges(){
     document.querySelector(".buttons2").style["display"] = "none";
     document.querySelector(".handLetters").style["display"] = "none";
   }
+  //generic changes required if a word is not correct for any reason
   function wordNotCorrect(wordNumber){
     let inputText=`.wordText${wordNumber}`;
     document.querySelector(inputText).innerHTML = "";
     clearLetters();
+  }
+  //Displays word length not correct message
+  function wordLengthIncorrect(wordNumber){
+    let wordInstructText= `.word${wordNumber}Instruct`;
+    document.querySelector(
+      wordInstructText
+    ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
   }
 
 function validateWord(validationInformation){
@@ -867,9 +875,7 @@ function validateWord(validationInformation){
     document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
   ) {
     //scenario letter numbers entered doesn't match domino value
-    document.querySelector(
-      ".word1Instruct"
-    ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
+    wordLengthIncorrect(1)
     wordNumber = 1;
     wordNotCorrect(1);
   } else {
@@ -944,13 +950,11 @@ xhr2.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").innerHTML.length !== Number(lettersWord2)
     ) {
       wordNumber = 2;
-      document.querySelector(
-        ".word2Instruct"
-      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord2} letters. Try Again.`;
+      wordLengthIncorrect(2)
       //Perform reset where word not correct
       wordNotCorrect(2);
-      document.querySelector(".word2Instruct").style["display"] =
-        "inline-block";
+      // document.querySelector(".word2Instruct").style["display"] =
+      //   "inline-block";
 
     } else {
       secondWordValid = false;
@@ -966,11 +970,6 @@ if (document.querySelector(".submit2"))
   document.querySelector(".submit2").addEventListener("click", function () {
     //document.querySelector(".submit2").innerHTML = "Do word again"
     secondWord = document.querySelector(".wordText2").value;
-
-    console.log("second Word after 1st defined", secondWord);
-    console.log("submit2 clicked");
-    wordText2 = 0;
-
     xhr2.open(
       "GET",
       `https://lingua-robot.p.rapidapi.com/language/v1/entries/en/${
