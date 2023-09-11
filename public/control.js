@@ -807,14 +807,29 @@ function redoWord(){
           document.querySelector(".wordText2").innerHTML=secondWordText;
           lettersUsed2=[];}   
     }
-
+//display after first word successfully validated
 function firstWordCompleteDisplayChanges(){
   document.querySelector(".word1Instruct").innerHTML = "Valid Word";
   document.querySelector(".buttons1").style["display"] = "none";
+  document.querySelector(".buttons2").style["display"] = "inline-block";
   document.querySelector(".wordText2").style["display"] = "inline-block";
   document.querySelector(".wordText2").style["visibility"] = "visible";
   document.querySelector(".wordText2").classList.add("placeholder");
+  document.querySelector(".word2Instruct").innerHTML = `Make a word with ${lettersWord2} letters`;
+  document.querySelector(".word2Instruct").style["display"] = "Inline-block";
   secondWordText="";
+}
+//display after both words validated - word area disappears and user is navigated to the domino grid.
+function secondWordCompleteDisplayChanges(){
+  document.querySelector(".wordInstruct").style["display"] = "none";
+  document.querySelector(".redo").style["display"] = "none";
+  document.querySelector(".submit").style["display"] = "none";
+  wordText.style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "none";
+  word2Instruct.style["display"] = "none";
+  createWordGrid.style["display"] = "none";
+  document.querySelector(".instructionCenter").innerHTML =
+    "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
 }
 
 function validateWord(validationInformation){
@@ -871,14 +886,11 @@ xhr.addEventListener("readystatechange", function () {
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
 
-    wordNumber = 2;
-    //make text for 2nd word appear
-    document.querySelector(
-      ".word2Instruct"
-    ).innerHTML = `Make a word with ${lettersWord2} letters`;
-    document.querySelector(".word2Instruct").style["display"] = "Inline-block";
-    document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
-    document.querySelector(".buttons2").style["display"] = "inline-block";
+    // wordNumber = 2;
+    // //make text for 2nd word appear
+    //
+    // document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
+    // document.querySelector(".buttons2").style["display"] = "inline-block";
     //run validation API
     xhr.open(
       "GET",
@@ -915,18 +927,7 @@ xhr2.addEventListener("readystatechange", function () {
     ) {
       secondWordValid = true;
       scrollToTop();
-
-      document.querySelector(".word1Instruct").style["display"] = "none";
-      document.querySelector(".redo").style["display"] = "none";
-      document.querySelector(".submit").style["display"] = "none";
-      wordText.style["display"] = "none";
-      document.querySelector(".wordText2").style["display"] = "none";
-      word2Instruct.style["display"] = "none";
-      //wordText2.style["display"] = "none";
-      createWordGrid.style["display"] = "none";
-
-      document.querySelector(".instructionCenter").innerHTML =
-        "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
+      secondWordCompleteDisplayChanges()
       //for instructions to show appropriate messages 
       //around domino needing to be placed
         dominoPlaced=false;
@@ -937,7 +938,6 @@ xhr2.addEventListener("readystatechange", function () {
       secondWordText="";
 
       document.querySelector(".buttons2").style["display"] = "none";
-      //document.querySelector(".rotate").style["display"] = "inline-block";
       document.querySelector(".handLetters").style["display"] = "none";
 
       console.log("secondWordValid", secondWordValid, secondWord);
@@ -1075,7 +1075,7 @@ if (document.querySelector(".chosenDom"))
       //The domino is not rotated
       {
         console.log("else statement rotated is false");
-        //reset rotat
+        //reset rotate
         rotated = false;
 
           if (domKey != "") {
