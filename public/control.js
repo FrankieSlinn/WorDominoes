@@ -807,6 +807,7 @@ function redoWord(){
           document.querySelector(".wordText2").innerHTML=secondWordText;
           lettersUsed2=[];}   
     }
+
 //display after first word successfully validated
 function firstWordCompleteDisplayChanges(){
   document.querySelector(".word1Instruct").innerHTML = "Valid Word";
@@ -843,17 +844,22 @@ function secondWordCompleteDisplayChanges(){
     document.querySelector(".buttons2").style["display"] = "none";
     document.querySelector(".handLetters").style["display"] = "none";
   }
+  function wordNotCorrect(wordNumber){
+    let inputText=`.wordText${wordNumber}`;
+    document.querySelector(inputText).innerHTML = "";
+    clearLetters();
+  }
 
 function validateWord(validationInformation){
   if (
     //check valid word(length of response isn't equal to error message length) - valid word
     // or check that word in exception words(is / be) dictionary - valid word
-    //check number of letters is correct 
-    
+    //check number of letters is correct  
     (validationInformation != 14 ||
       dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
     document.querySelector(".wordText1").innerHTML.length == lettersWord1
   ) {
+    //if conditions met the word is valid
     firstWordCompleteDisplayChanges()
     wordNumber = 2;
   } else if (
@@ -865,14 +871,13 @@ function validateWord(validationInformation){
       ".word1Instruct"
     ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
     wordNumber = 1;
-    clearLetters();
-    document.querySelector(".word2Instruct").style["display"] = "none";
+    wordNotCorrect(1);
   } else {
     //The first word isn't valid
     document.querySelector(".word1Instruct").innerHTML =
       "Not a Valid Word. Try Again.";
       wordNumber = 1;
-    clearLetters();
+      wordNotCorrect(1);
   }
 }
 
@@ -935,29 +940,24 @@ xhr2.addEventListener("readystatechange", function () {
       //flag to ensure domino can't be placed twice
       blockPlaceTile = false;
     } else if (
+      //if wrong number of letters
       document.querySelector(".wordText2").innerHTML.length !== Number(lettersWord2)
     ) {
-      console.log(
-        "wordtext1length, lettersWord1.length",
-        document.querySelector(".wordText2").innerHTML.length,
-        lettersWord2
-      );
+      wordNumber = 2;
       document.querySelector(
         ".word2Instruct"
       ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord2} letters. Try Again.`;
+      //Perform reset where word not correct
+      wordNotCorrect(2);
       document.querySelector(".word2Instruct").style["display"] =
         "inline-block";
-      document.querySelector(".wordText2").innerHTML = "";
-      wordNumber = 2;
-      clearLetters();
+
     } else {
       secondWordValid = false;
       document.querySelector(".word2Instruct").innerHTML =
         "Not a Valid Word. Try Again.";
-      document.querySelector(".wordText2").innerHTML = "";
-      console.log("lettersused2 in function for it", lettersUsed2);
-      clearLetters();
       wordNumber = 2;
+      wordNotCorrect(2)
     }
   }
 });
