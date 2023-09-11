@@ -862,6 +862,7 @@ function wordLengthIncorrect(wordNumber) {
   //display changes for incorrect word
   wordNotCorrect(wordNumber);
 }
+//display when word not found in dictionaries
 function invalidWord(wordNumber){
   let wordInstructText=`.word${wordNumber}Instruct`;
   document.querySelector(wordInstructText).innerHTML =
@@ -899,7 +900,6 @@ function validateWord(validationInformation) {
 }
 
 const data = null;
-
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
@@ -914,7 +914,7 @@ xhr.addEventListener("readystatechange", function () {
     validateWord(validationInformation);
   }
 });
-
+//after submit button clicked api get request initiated for word validation
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
     //Run validation API after first word submit button clicked
@@ -962,10 +962,6 @@ xhr2.addEventListener("readystatechange", function () {
     ) {
       wordNumber = 2;
       wordLengthIncorrect(2);
-      //Perform reset where word not correct
-      // wordNotCorrect(2);
-      // document.querySelector(".word2Instruct").style["display"] =
-      //   "inline-block";
     } else {
       secondWordValid = false;
       invalidWord(2)
@@ -974,9 +970,10 @@ xhr2.addEventListener("readystatechange", function () {
   }
 });
 console.log("secondWord", secondWord);
+
+//After 2nd word submitted run api get request to validate word
 if (document.querySelector(".submit2"))
   document.querySelector(".submit2").addEventListener("click", function () {
-    //document.querySelector(".submit2").innerHTML = "Do word again"
     secondWord = document.querySelector(".wordText2").value;
     xhr2.open(
       "GET",
@@ -989,16 +986,14 @@ if (document.querySelector(".submit2"))
       "9befc1d2a6msh43bf070da1abde6p1d37c1jsn616d294fe695"
     );
     xhr2.setRequestHeader("X-RapidAPI-Host", "lingua-robot.p.rapidapi.com");
-
     xhr2.send(data2);
   });
-//selectDomGrid();
-//select a tile on the board
+
+
+//select a tile on the board checks
 for (let i = 0; i < gridTiles.length; i++) {
   if (document.querySelector(gridTiles[i]))
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
-      console.log("selectDomGrid running");
-      console.log("blockPlaceTile", blockPlaceTile);
       console.log("gridValues[i]", gridValues[i]);
       //Ensure a grid space is empty before it can be processed. When a domino is placed
       //the gridValues array is populated with the numbers of domino spots on each side
@@ -1007,11 +1002,12 @@ for (let i = 0; i < gridTiles.length; i++) {
         "(gridValues[i][0]==0&&gridValues[i][1]==0)",
         gridValues[i][0] == 0 && gridValues[i][1] == 0
       );
+      //Check if there is a domino to place
       if (dominoPlaced == true) {
         document.querySelector(".instruction").innerText =
           "You can't place a tile now. Win a domino so you can place one.";
       }
-      //check the values of the grid space haven't been populated
+      //check the values of the grid space hasn't been populated
       else if (
         !gridValues[i][0] == 0 &&
         !gridValues[i][1] == 0 &&
@@ -1021,15 +1017,16 @@ for (let i = 0; i < gridTiles.length; i++) {
           "This space is already taken. Try somewhere else.";
         instruction.style["display"] = "inline-block";
       } else if (
+        //if the user is allowed to place a tile and the grid space is empty
         blockPlaceTile == false &&
         gridValues[i][0] == 0 &&
         gridValues[i][1] == 0
       ) {
-        //domino tile number
+        // currentGridValue is domino tile number
         currentGridValue = i;
         console.log("in in selectDomGrid", i);
         console.log("pngName", pngName);
-        pushGridValues(currentGridValue);
+        pushtoGridValidationHelp(currentGridValue);
       }
     });
 }
@@ -1081,6 +1078,7 @@ if (document.querySelector(".chosenDom"))
       }
     }
   });
+  //ensure letters not used are kept for the next hand
 function handleLetterHandChangesAfterDominoWon() {
   console.log("secondWordValid", secondWordValid, secondWord);
   console.log("letterHand before splice", letterHand);
@@ -1104,8 +1102,12 @@ function handleLetterHandChangesAfterDominoWon() {
   }
   console.log("letterhand 2 after splice", letterHand);
 }
+function pushWordLetterAmountsIntoValidationArray(){
+  gridValueCompare.push(Number(lettersWord1));
+  gridValueCompare.push(Number(lettersWord2));
 
-function pushGridValues(i) {
+}
+function pushtoGridValidationHelp(i) {
   //currentGridValue is latest selected domino tile
   currentGridValue = i;
   console.log("pushGridValues Running");
@@ -1115,29 +1117,19 @@ function pushGridValues(i) {
   //Third value shows value of second domino side of current domino
   //Forth valud shows value of next domino's adjacent side
 
-  if (1 <= i && i <= 3) {
+  if (1 <= i && i <= 4) {
     console.log("tile not first or last");
     if (gridValueCompare.length < 4) {
       gridValueCompare.push(Number(gridValues[i - 1][1]));
-      gridValueCompare.push(Number(lettersWord1));
-      gridValueCompare.push(Number(lettersWord2));
+      pushWordLetterAmountsIntoValidationArray();
       gridValueCompare.push(Number(gridValues[i + 1][0]));
       console.log("gridValueCompare between 0 and 3", gridValueCompare);
       i = "";
     }
-  } else if (i == 4) {
-    console.log("i is 4");
-    gridValueCompare.push(Number(gridValues[i - 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
-    gridValueCompare.push(Number(gridValues[i + 1][0]));
-    console.log("gridValueCompare 4", gridValueCompare);
-    i = "";
   } else if (i == 5) {
     console.log("i is 5");
     gridValueCompare.push(Number(gridValues[i - 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
+    pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i + 1][1]));
     console.log("gridValueCompare 4", gridValueCompare);
     i = "";
