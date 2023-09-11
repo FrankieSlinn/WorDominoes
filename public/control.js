@@ -770,15 +770,21 @@ redoWord();
 //redo word
 function redoWord(){
   let redoButton=`.redo${wordNumber}But`
-  console.log("redoButton", redoButton)
+
   let letterText=`.wordText${wordNumber}`
   document.querySelector(redoButton).addEventListener("click", function () {
     document.querySelector(letterText).classList.add("placeholder");
     document.querySelector(letterText).innerHTML =
       "Select letter tiles below to make the word";
+    if (wordNumber==1){
     document.querySelector(
       ".word1Instruct"
-    ).innerHTML = `Make a word with ${wordNumber==1?lettersWord1:lettersWord2} letters`;
+    ).innerHTML = `Make a word with ${lettersWord1} letters`;}
+    else{
+      document.querySelector(
+        ".word2Instruct"
+      ).innerHTML = `Make a word with ${lettersWord2} letters`;}
+    
     clearLetters();
   })
 
@@ -787,18 +793,19 @@ function redoWord(){
 //remove inactive class from letters, set letter string to empty and clear lettersUsed arrays
   function clearLetters(){
     console.log("clearLetters running")
+    console.log("word number", wordNumber)
     if(wordNumber==1){
       lettersUsed1.forEach((item) =>
-        document.querySelector(`${item}`).classList.remove("inactive"))}
+        document.querySelector(`${item}`).classList.remove("inactive"))
+        firstWordText = "";
+        document.querySelector(".wordText1").innerHTML=firstWordText;
+        lettersUsed1 =[];}
         else if(wordNumber==2){
           lettersUsed2.forEach((item) =>
-          document.querySelector(`${item}`).classList.remove("inactive"))}
-      firstWordText = "";
-      secondWordText="";
-      document.querySelector(".wordText1").innerHTML=firstWordText;
-      document.querySelector(".wordText2").innerHTML=firstWordText;
-      lettersUsed1 =[];
-      lettersUsed2=[];
+          document.querySelector(`${item}`).classList.remove("inactive"));
+          secondWordText="";
+          document.querySelector(".wordText2").innerHTML=secondWordText;
+          lettersUsed2=[];}   
     }
 
 function firstWordCompleteDisplayChanges(){
