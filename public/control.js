@@ -714,12 +714,10 @@ function showLetters() {
 //Make Word 1st field
 
 
-makeFirstWord();
+makeWordProcessLetters();
 
-function clearTextBeforeFirstWord(wordLetters) {
-  wordLetters="";
-}
-function makeWordGeneric(wordLetters, wordTextElement, tileNum, buttons){
+
+function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons){
 
   document.querySelector(wordTextElement).classList.remove("placeholder");
   document.querySelector(".createWordGrid").style["display"] =
@@ -732,8 +730,9 @@ function makeWordGeneric(wordLetters, wordTextElement, tileNum, buttons){
   document.querySelector(tiles[tileNum]).classList.add("inactive");
 }
 
-function makeFirstWord() {
-  clearTextBeforeFirstWord(firstWordText);
+function makeWordProcessLetters() {
+  firstWordText=""
+  secondWordText=""
 
 
   for (let tileNum = 0; tileNum < 15; tileNum++) {
@@ -746,11 +745,20 @@ function makeFirstWord() {
           firstWordText+=letterHand[tileNum]
           console.log("wordLetters in generic", wordText1)
           document.querySelector(".wordText1").innerHTML = firstWordText;
-          makeWordGeneric(wordText1,".wordText1", tileNum, ".buttons1")
+          makeWordDisplay(wordText1,".wordText1", tileNum, ".buttons1")
           lettersUsed1.push(tiles[tileNum]);
         }
+      
+      if (wordNumber == 2) {
+        console.log("wordNumber 2")
+        secondWordText+=letterHand[tileNum]
+        document.querySelector(".wordText2").innerHTML = secondWordText;
+        makeWordDisplay(wordText2,".wordText2", tileNum, ".buttons2")
+        lettersUsed2.push(tiles[tileNum]);
       }
-    });
+    }
+    }
+    );
   }
 }
 redo1();
@@ -773,32 +781,6 @@ function redo1() {
     firstWordText = "";
     lettersUsed1 = [];
   });
-}
-
-//Create 2nd Word
-
-console.log("wordNumber in function two", wordNumber);
-clearTextBeforeFirstWord(secondWordText);
-
-for (let tileNum = 0; tileNum < 15; tileNum++) {
-  if (document.querySelector(tiles[tileNum]))
-    document.querySelector(tiles[tileNum]).addEventListener("click", function () {
-      if (!document.querySelector(tiles[tileNum]).classList.contains("inactive")) {
-        if (wordNumber == 2) {
-          makeWordGeneric(wordText2,".wordText2", tileNum, ".buttons2")
-          secondWordText += letterHand[tileNum];
-
-          lettersUsed2.push(tiles[tileNum]);
-          console.log("lettersUsed2");
-          document.querySelector(".wordText2").innerHTML = secondWordText;
-
-          document.querySelector(tiles[tileNum]).classList.add("inactive");
-          //if undo display all tiles, reset everything
-
-          //check if answer 1 submitted
-        }
-      }
-    });
 }
 
 redo2();
@@ -850,6 +832,7 @@ xhr.addEventListener("readystatechange", function () {
       document.querySelector(".wordText2").style["display"] = "inline-block";
       document.querySelector(".wordText2").style["visibility"] = "visible";
       document.querySelector(".wordText2").classList.add("placeholder");
+      secondWordText="";
 
       wordNumber = 2;
     } else if (
@@ -862,7 +845,7 @@ xhr.addEventListener("readystatechange", function () {
       lettersUsed1.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive")
       );
-      wordText1 = "";
+      firstWordText = "";
       lettersUsed1 = [];
       wordNumber = 1;
       document.querySelector(".word2Instruct").style["display"] = "none";
@@ -998,7 +981,7 @@ xhr2.addEventListener("readystatechange", function () {
       lettersUsed2.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive")
       );
-      wordText2 = "";
+      secondWordText= "";
       lettersUsed2 = [];
       wordNumber = 2;
     } else {
@@ -1007,7 +990,7 @@ xhr2.addEventListener("readystatechange", function () {
         "Not a Valid Word. Try Again.";
       document.querySelector(".wordText2").innerHTML = "";
       console.log("lettersused2 in function for it", lettersUsed2);
-      wordText2 = "";
+      secondWordText = "";
 
       lettersUsed2.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive")
@@ -1098,6 +1081,8 @@ function pushGridValues(i) {
   currentGridValue = i;
   console.log("pushGridValues Running");
   console.log("i in pushGridValues", i);
+  //First value shows value of previous domino bordering it
+  //second value shows value of domino side
 
   if (1 <= i && i <= 3) {
     console.log("tile not first or last");
