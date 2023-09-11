@@ -1112,6 +1112,7 @@ function pushtoGridValidationHelp(i) {
   currentGridValue = i;
   console.log("pushGridValues Running");
   console.log("i in pushGridValues", i);
+  //Creates an array of four values to check the tile next to the tile can be placed or not
   //First value shows value of previous domino bordering it
   //Second value shows value first domino side of current dominno
   //Third value shows value of second domino side of current domino
@@ -1136,51 +1137,27 @@ function pushtoGridValidationHelp(i) {
   } else if (i == 6) {
     console.log("i is 6");
     gridValueCompare.push(Number(gridValues[i - 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
+    pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i - 1][1]));
     console.log("gridValueCompare between 6", gridValueCompare);
     i = "";
-  } else if (i == 7) {
-    console.log("i is 7");
+  } else if (7<=i && i<=10) {
+
     gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
+    pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i - 1][0]));
-    console.log("gridValueCompare between 6 and 7", gridValueCompare);
     i = "";
-  } else if (i == 8) {
-    gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
-    gridValueCompare.push(Number(gridValues[i - 1][0]));
-    console.log("gridValueCompare between 6 and 9", i, gridValueCompare);
-    i = "";
-  } else if (i == 9) {
-    gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
-    gridValueCompare.push(Number(gridValues[i - 1][0]));
-    console.log("gridValueCompare 9", i, gridValueCompare);
-    i = "";
-  } else if (i == 10) {
-    gridValueCompare.push(Number(gridValues[i + 1][1]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
-    gridValueCompare.push(Number(gridValues[i - 1][0]));
-    console.log("gridValueCompare between 6 and 9", gridValueCompare);
-    i = "";
+    console.log("i=0", gridValueCompare);
+ 
   } else if (i == 0) {
     gridValueCompare.push(Number(gridValues[gridValues.length - 1][0]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
+    pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i + 1][0]));
     console.log("i=0", gridValueCompare);
     i = "";
   } else if (i == gridValues.length - 1) {
     gridValueCompare.push(Number(gridValues[0][0]));
-    gridValueCompare.push(Number(lettersWord1));
-    gridValueCompare.push(Number(lettersWord2));
+    pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     console.log("i=11", gridValueCompare);
     i = "";
