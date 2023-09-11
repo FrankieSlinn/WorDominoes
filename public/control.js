@@ -323,6 +323,7 @@ let lettersWord1Temp = 0;
 let lettersWord2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
+let dominoPlaced=false;
 
 
 //**DOM Shortcuts***//
@@ -770,21 +771,27 @@ function redoGeneric(){
 
 //redo first word
 function redo1() {
-  console.log("redo1 running");
-  document.querySelector(".redo1But").addEventListener("click", function () {
+  console.log("new redo running");
+  let redoButton=`.redo${wordNumber}But`
+  let letterText=`.wordText${wordNumber}`
+  document.querySelector(redoButton).addEventListener("click", function () {
     console.log("redo clicked");
-    document.querySelector(".wordText1").classList.add("placeholder");
-    document.querySelector(".wordText1").innerHTML =
+    document.querySelector(letterText).classList.add("placeholder");
+    document.querySelector(letterText).innerHTML =
       "Select letter tiles below to make the word";
     document.querySelector(
       ".word1Instruct"
-    ).innerHTML = `Make a word with ${lettersWord1} letters`;
-
+    ).innerHTML = `Make a word with ${wordNumber==1?lettersWord1:lettersWord2} letters`;
+    if(wordNumber==1){
     lettersUsed1.forEach((item) =>
-      document.querySelector(`${item}`).classList.remove("inactive")
-    );
+      document.querySelector(`${item}`).classList.remove("inactive"))}
+      else if(wordNumber==2){
+        lettersUsed2.forEach((item) =>
+        document.querySelector(`${item}`).classList.remove("inactive"))}
     firstWordText = "";
-    lettersUsed1 = [];
+    secondWordText="";
+    lettersUsed1 =[];
+    lettersUsed2=[];
   });
 }
 
@@ -865,7 +872,7 @@ xhr.addEventListener("readystatechange", function () {
       lettersUsed1.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive")
       );
-      wordText1 = "";
+      firstWordText = "";
       lettersUsed1 = [];
       wordNumber = 1;
       console.log("wordNumber", wordNumber);
@@ -936,7 +943,10 @@ xhr2.addEventListener("readystatechange", function () {
 
       document.querySelector(".instructionCenter").innerHTML =
         "<strong>Congratulations, you won a tile! <br><br>Click on a space in the domino grid on the top to place your tile. Remember: dominoes can only be placed next to each other if they have the same number of dots on their connecting sides.<br><br><p>To rotate, click on the domino above.</p></strong>";
-      reverseOrder.style["flex-direction"] = "column-reverse";
+      //for instructions to show appropriate messages 
+      //around domino needing to be placed
+        dominoPlaced=false;
+        reverseOrder.style["flex-direction"] = "column-reverse";
       reverseOrder.style["margin-top"] = "-0.8rem";
       chosenDom.style["margin-bottom"] = "-1.5rem";
       firstWordText=""; 
@@ -1030,13 +1040,31 @@ if (document.querySelector(".submit2"))
     xhr2.send(data2);
   });
 //selectDomGrid();
-
+//select a tile on the board
 for (let i = 0; i < gridTiles.length; i++) {
+  
   if (document.querySelector(gridTiles[i]))
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
       console.log("selectDomGrid running");
       console.log("blockPlaceTile", blockPlaceTile);
-      if (blockPlaceTile == false) {
+      console.log("gridValues[i]", gridValues[i])
+      //Ensure a grid space is empty before it can be processed. When a domino is placed 
+      //the gridValues array is populated with the numbers of domino spots on each side
+      document.querySelector(".instruction").innerText=""
+      console.log("(gridValues[i][0]==0&&gridValues[i][1]==0)", (gridValues[i][0]==0&&gridValues[i][1]==0))
+      if(dominoPlaced==true){
+        document.querySelector(".instruction").innerText="You can't place a tile now. Win a domino so you can place one."
+   
+      }
+      //check the values of the grid space haven't been populated
+      else if((!gridValues[i][0]==0&&!gridValues[i][1]==0)&&dominoPlaced==false){
+       
+        document.querySelector(".instruction").innerText="This space is already taken. Try somewhere else."
+        instruction.style['display']="inline-block";
+      }
+
+     else if (blockPlaceTile == false&& (gridValues[i][0]==0&&gridValues[i][1]==0)) {
+        //domino tile number
         currentGridValue = i;
         console.log("in in selectDomGrid", i);
         console.log("pngName", pngName);
@@ -1044,30 +1072,38 @@ for (let i = 0; i < gridTiles.length; i++) {
       }
     });
 }
-
+//handle rotation after words made
 if (document.querySelector(".chosenDom"))
+//When the user clicks on the chosen domino it changes its rotation state
   document.querySelector(".chosenDom").addEventListener("click", function () {
     if (secondWordValid == true) {
-      console.log("rotated ==false", rotated == false);
+      //below the domino will be rotated as the initial state was that the domino wasn't rotated
+
       if (rotated == false) {
         console.log("rotated is true.chosendom html should change");
-        //ensure the domKey is present or will show "image not found"
+        //ensure the domKey is present
         if (domKey != "") {
+          //display the rotated domino
           document.querySelector(".chosenDom").innerHTML =
             "<img src = Images/" +
             domKey +
             '.png style="width:60px;height:120px;transform:rotate(180deg)">';
         }
         document.querySelector(".chosenDom").style["display"] = "inline-block";
+       // The domino values need to be swapped here before being passed for validation
         lettersWord1Temp = lettersWord1;
         lettersWord2Temp = lettersWord2;
         lettersWord1 = lettersWord2Temp;
         lettersWord2 = lettersWord1Temp;
+        console.log(" rotated lettersWord1, lettersWord2", lettersWord2Temp, lettersWord1Temp)
         rotated = true;
-      } else {
+      } else 
+      //The domino is not rotated
+      {
         console.log("else statement rotated is false");
+        //reset rotat
         rotated = false;
-        if ((lettersWord1 = lettersWord2Temp)) {
+
           if (domKey != "") {
             document.querySelector(".chosenDom").innerHTML =
               "<img src = Images/" +
@@ -1075,19 +1111,24 @@ if (document.querySelector(".chosenDom"))
               '.png style="width:60px;height:120px;">';
           }
           lettersWord1 = lettersWord1Temp;
-          lettersWord2 = lettersWord2Temp;
+           lettersWord2 = lettersWord2Temp;
+
           rotated = false;
-        }
+        
       }
     }
   });
 
 function pushGridValues(i) {
+  //currentGridValue is latest selected domino tile 
   currentGridValue = i;
   console.log("pushGridValues Running");
   console.log("i in pushGridValues", i);
   //First value shows value of previous domino bordering it
-  //second value shows value of domino side
+  //Second value shows value first domino side of current dominno
+  //Third value shows value of second domino side of current domino
+  //Forth valud shows value of next domino's adjacent side
+
 
   if (1 <= i && i <= 3) {
     console.log("tile not first or last");
@@ -1117,7 +1158,7 @@ function pushGridValues(i) {
     i = "";
   } else if (i == 6) {
     console.log("i is 6");
-    gridValueCompare.push(Number(gridValues[i + 1][1]));
+    gridValueCompare.push(Number(gridValues[i - 1][1]));
     gridValueCompare.push(Number(lettersWord1));
     gridValueCompare.push(Number(lettersWord2));
     gridValueCompare.push(Number(gridValues[i - 1][1]));
@@ -1210,6 +1251,7 @@ function evaluateGrid(i) {
     (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
     (gridValueCompare[0] == gridValueCompare[1] &&
       gridValueCompare[2] == gridValueCompare[3])
+
   ) {
     console.log("tile successfully placed");
     document.querySelector(".instruction").style["display"] = "inline-block";
@@ -1221,13 +1263,21 @@ function evaluateGrid(i) {
     giveUp.removeAttribute("hidden");
     displayTile(currentGridValue);
     //To stop rotation
+    console.log("rotated before?", rotated)
+    console.log("lettersWord1 before placed", lettersWord1);
+    console.log("lettersWord2 before placed", lettersWord2)
     secondWordValid = false;
     gridValueCompare = [];
+    //grid values are populated based on the word value and if they are rotated
+   
+      gridValues[i][0] = Number(lettersWord1);
+      gridValues[i][1] = Number(lettersWord2);
 
-    gridValues[i][0] = Number(lettersWord1);
-    gridValues[i][1] = Number(lettersWord2);
+  
+    console.log("rotated?", rotated)
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
+    console.log("gridValues", gridValues)
     firstGo = false;
 
     i = "";
@@ -1250,11 +1300,14 @@ function evaluateGrid(i) {
         .querySelector(gridTiles[i])
         .addEventListener("click", function () {
           currentGridValue = i;
-
+          //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
+          //and tile placement not blocked for any reason
+          if(blockPlaceTile == false&& (gridValues[i][0]==0&&gridValues[i][1]==0)){
           pushGridValues(currentGridValue);
+          }
         });
     }
-    //document.querySelector(gridTiles[i]).addEventListener("click", pushGridValues());
+
   }
 }
 //issue too many dominoes spliced only happens with wrong tile placed
@@ -1286,15 +1339,16 @@ function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
     let rotation = 0;
     let margin = 0;
-    if (i <= 3 || (6 <= i && i <= 9)) {
+  
       //determine rotation and display of tile depending on grid location
       if (i <= 3 || (6 <= i && i <= 9)) {
         rotation = rotated ? 90 : -90;
         margin = -15;
-      } else if (4 <= i <= 5 || 10 <= i <= 11) {
+      } else if (4 <= i && i<= 5 || 10 <= i && i<= 11) {
+        console.log("rotated before oriented in grid for 45 1011", rotated)
         rotation = rotated ? 180 : 0;
       }
-    }
+    
 
     const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
     const imgSrc = `Images/${domKey}.png`;
@@ -1319,6 +1373,9 @@ function displayTile(i) {
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
+    //to ensure it is known that the domino has already been placed to provide 
+    //correct messages in instructions when the user tries to click
+    dominoPlaced=true
     document.querySelector(".wordText").classList.add("placeholder");
     wordText1.innerHTML = "Select letter tiles below to make the word";
     document.querySelector(".wordText2").style["display"] = "none";
