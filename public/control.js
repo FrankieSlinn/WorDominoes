@@ -256,7 +256,6 @@ let domRight = "";
 let selectedDomino = false;
 let dominoesUsed = [];
 let letterHand = [];
-let firstWord = "";
 let secondWord = "";
 let firstWordText = "";
 let secondWordText = "";
@@ -787,6 +786,7 @@ function redoWord(){
 
 //remove inactive class from letters, set letter string to empty and clear lettersUsed arrays
   function clearLetters(){
+    console.log("clearLetters running")
     if(wordNumber==1){
       lettersUsed1.forEach((item) =>
         document.querySelector(`${item}`).classList.remove("inactive"))}
@@ -795,6 +795,8 @@ function redoWord(){
           document.querySelector(`${item}`).classList.remove("inactive"))}
       firstWordText = "";
       secondWordText="";
+      document.querySelector(".wordText1").innerHTML=firstWordText;
+      document.querySelector(".wordText2").innerHTML=firstWordText;
       lettersUsed1 =[];
       lettersUsed2=[];
     }
@@ -807,59 +809,61 @@ function firstWordCompleteDisplayChanges(){
   document.querySelector(".wordText2").classList.add("placeholder");
   secondWordText="";
 }
+
+function validateWord(validationInformation){
+  if (
+    //check valid word(length of response isn't equal to error message length) - valid word
+    // or check that word in exception words(is / be) dictionary - valid word
+    //check number of letters is correct 
+    
+    (validationInformation != 14 ||
+      dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
+    document.querySelector(".wordText1").innerHTML.length == lettersWord1
+  ) {
+    firstWordCompleteDisplayChanges()
+    wordNumber = 2;
+  } else if (
+    //check if first word has the same amount of letters as the side of the domino tile(lettersWord1)
+    document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
+  ) {
+    //scenario letter numbers entered doesn't match domino value
+    document.querySelector(
+      ".word1Instruct"
+    ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
+    wordNumber = 1;
+    clearLetters();
+    document.querySelector(".word2Instruct").style["display"] = "none";
+  } else {
+    //The first word isn't valid
+    document.querySelector(".word1Instruct").innerHTML =
+      "Not a Valid Word. Try Again.";
+      wordNumber = 1;
+    clearLetters();
+  }
+
+}
+
 const data = null;
 
 const xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
-//run api to check word
+//use api response to check word
 xhr.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
-
-    // doc = parser.parseFromString(this.responseText, "text/xml");
-    
-
-    if (
-      (this.responseText.length != 14 ||
-        dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
-      document.querySelector(".wordText1").innerHTML.length == lettersWord1
-    ) {
-      firstWordValid = true;
-      firstWordCompleteDisplayChanges()
-
-      wordNumber = 2;
-    } else if (
-      document.querySelector(".wordText1").innerHTML.length !== Number(lettersWord1)
-    ) {
-      document.querySelector(
-        ".word1Instruct"
-      ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
-      document.querySelector(".wordText1").innerHTML = "";
-      wordNumber = 1;
-      clearLetters();
-      document.querySelector(".word2Instruct").style["display"] = "none";
-    } else {
-      firstWordValid = false;
-      document.querySelector(".word1Instruct").innerHTML =
-        "Not a Valid Word. Try Again.";
-      wordText1.innerHTML = "Select letter tiles below to make the word";
-      document.querySelector(".wordText1").classList.add(".placeholder");
-
-      document.querySelector(".wordText1").innerHTML = "";
-      wordNumber = 1;
-      clearLetters();
- 
-    }
+    //length to determine if error message 
+    let validationInformation= this.responseText.length
+    //validate word
+    validateWord(validationInformation);
   }
 });
 
 
 if (document.querySelector(".submit1"))
   document.querySelector(".submit1").addEventListener("click", function () {
-    firstWord = document.querySelector(".wordText1").value;
-    wordText1 = 0;
+
     wordNumber = 2;
     //make text for 2nd word appear
     document.querySelector(
@@ -867,7 +871,8 @@ if (document.querySelector(".submit1"))
     ).innerHTML = `Make a word with ${lettersWord2} letters`;
     document.querySelector(".word2Instruct").style["display"] = "Inline-block";
     document.querySelector(".wordText2").style["background-color"] = "#ABABAB";
-
+    document.querySelector(".buttons2").style["display"] = "inline-block";
+    //run validation API
     xhr.open(
       "GET",
       `https://lingua-robot.p.rapidapi.com/language/v1/entries/en/${
