@@ -1390,6 +1390,17 @@ function newTilesDominoesDisplayChanges(pngName, domCount){
   wordText1.innerHTML = "Select letter tiles below to make the word";
   document.querySelector(".wordText2").style["display"] = "none";
   }
+  //define html for image and style initiate all layout changes
+  function newTilesDominoDefineLayoutChanges(){
+    for (let domCount = 0; domCount < dominoHand.length; domCount++) {
+      //domHandKeys1.push(...Object.keys(dominoHand[i]));
+      let pngName =
+        "<img src = Images/" +
+        String(Object.keys(dominoHand[domCount])) +
+        '.png  style="width:30px;height:60px;">';
+        newTilesDominoesDisplayChanges(pngName, domCount);
+    }
+  }
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
@@ -1400,32 +1411,8 @@ function newTilesDominoes() {
     if (dominoHand.length < 4) {
       dominoHand.push(dominoes[rand1]);
     }
-    console.log(
-      "dominoes length before refill splice",
-      dominoes,
-      dominoes.length
-    );
     dominoes.splice(rand1, 1);
-    //console.log("dominoes.indexOf(rand1)", dominoes.indexOf(rand1))
-    console.log(
-      "dominoes length before refill splice",
-      dominoes,
-      dominoes.length
-    );
-    // console.log("dominoes after splice add", dominoHand);
-    for (let domCount = 0; domCount < dominoHand.length; domCount++) {
-      //domHandKeys1.push(...Object.keys(dominoHand[i]));
-      console.log(
-        "key in pngNam New Dom Tiles",
-        String(Object.keys(dominoHand[domCount]))
-      );
-
-      let pngName =
-        "<img src = Images/" +
-        String(Object.keys(dominoHand[domCount])) +
-        '.png  style="width:30px;height:60px;">';
-        newTilesDominoesDisplayChanges(pngName, domCount);
-    }
+    newTilesDominoDefineLayoutChanges();
     //ensure a tile cannot be plaecd
     blockPlaceTile = true;
   }
