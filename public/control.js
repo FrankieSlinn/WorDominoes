@@ -470,9 +470,8 @@ function calcScore(gridValues) {
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
     score += gridValues[i][1];
-    
   }
-  wordDomination=true?score=score+30:score=score
+  wordDomination = true ? (score = score + 30) : (score = score);
   //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
@@ -866,10 +865,10 @@ function wordLengthIncorrect(wordNumber) {
   wordNotCorrect(wordNumber);
 }
 //display when word not found in dictionaries
-function invalidWord(wordNumber){
-  let wordInstructText=`.word${wordNumber}Instruct`;
+function invalidWord(wordNumber) {
+  let wordInstructText = `.word${wordNumber}Instruct`;
   document.querySelector(wordInstructText).innerHTML =
-  "Not a Valid Word. Try Again.";
+    "Not a Valid Word. Try Again.";
   wordNotCorrect(wordNumber);
 }
 
@@ -896,7 +895,7 @@ function validateWord(validationInformation) {
     // wordNotCorrect(1);
   } else {
     //The first word isn't valid
-    invalidWord(1)
+    invalidWord(1);
     wordNumber = 1;
     // wordNotCorrect(1);
   }
@@ -967,7 +966,7 @@ xhr2.addEventListener("readystatechange", function () {
       wordLengthIncorrect(2);
     } else {
       secondWordValid = false;
-      invalidWord(2)
+      invalidWord(2);
       wordNumber = 2;
     }
   }
@@ -991,7 +990,6 @@ if (document.querySelector(".submit2"))
     xhr2.setRequestHeader("X-RapidAPI-Host", "lingua-robot.p.rapidapi.com");
     xhr2.send(data2);
   });
-
 
 //select a tile on the board checks
 for (let i = 0; i < gridTiles.length; i++) {
@@ -1081,7 +1079,7 @@ if (document.querySelector(".chosenDom"))
       }
     }
   });
-  //ensure letters not used are kept for the next hand
+//ensure letters not used are kept for the next hand
 function handleLetterHandChangesAfterDominoWon() {
   console.log("secondWordValid", secondWordValid, secondWord);
   console.log("letterHand before splice", letterHand);
@@ -1105,10 +1103,9 @@ function handleLetterHandChangesAfterDominoWon() {
   }
   console.log("letterhand 2 after splice", letterHand);
 }
-function pushWordLetterAmountsIntoValidationArray(){
+function pushWordLetterAmountsIntoValidationArray() {
   gridValueCompare.push(Number(lettersWord1));
   gridValueCompare.push(Number(lettersWord2));
-
 }
 function pushtoGridValidationHelp(i) {
   //currentGridValue is latest selected domino tile
@@ -1144,14 +1141,12 @@ function pushtoGridValidationHelp(i) {
     gridValueCompare.push(Number(gridValues[i - 1][1]));
     console.log("gridValueCompare between 6", gridValueCompare);
     i = "";
-  } else if (7<=i && i<=10) {
-
+  } else if (7 <= i && i <= 10) {
     gridValueCompare.push(Number(gridValues[i + 1][1]));
     pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i - 1][0]));
     i = "";
     console.log("i=0", gridValueCompare);
- 
   } else if (i == 0) {
     gridValueCompare.push(Number(gridValues[gridValues.length - 1][0]));
     pushWordLetterAmountsIntoValidationArray();
@@ -1170,27 +1165,28 @@ function pushtoGridValidationHelp(i) {
   evaluateGrid(currentGridValue);
 }
 
-function wordDominationDisplayChanges(score){
+function wordDominationDisplayChanges(score) {
   instruction.style["display"] = "inline-block";
-    document.querySelector(
-      ".instruction"
-    ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
-    addBlankLine();
-    instructionCenter.innerText = "WORD DOMINATION!!!";
-    document.querySelector(".hallOfFame").style["display"] = "inline-block";
-    updateScores();
-    localStorage.setItem("gameScore", JSON.stringify(score));
-    finishGameDisplay();
-    document.querySelector(".chosenDom").style["display"] = "none";
-    giveUp.style["display"] = "none";
-    document.querySelector(".instruction").style["font-size"] = "1rem";
-    document.querySelector(".instruction").style["line-height"] = "1.5rem";
-    document.querySelector(".instruction").style["font-weight"] = "700";
-    document.querySelector(".instruction").style["margin-top"] = "0.3";
-    document.querySelector(".instructionCenter").style["margin"] = "1rem 0 -2rem 0";
-    document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
+  document.querySelector(
+    ".instruction"
+  ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
+  addBlankLine();
+  instructionCenter.innerText = "WORD DOMINATION!!!";
+  document.querySelector(".hallOfFame").style["display"] = "inline-block";
+  updateScores();
+  localStorage.setItem("gameScore", JSON.stringify(score));
+  finishGameDisplay();
+  document.querySelector(".chosenDom").style["display"] = "none";
+  giveUp.style["display"] = "none";
+  document.querySelector(".instruction").style["font-size"] = "1rem";
+  document.querySelector(".instruction").style["line-height"] = "1.5rem";
+  document.querySelector(".instruction").style["font-weight"] = "700";
+  document.querySelector(".instruction").style["margin-top"] = "0.3";
+  document.querySelector(".instructionCenter").style["margin"] =
+    "1rem 0 -2rem 0";
+  document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
 }
-function tilePlacedDisplayChanges(){
+function tilePlacedDisplayChanges() {
   document.querySelector(".instruction").style["display"] = "inline-block";
   document.querySelector(
     ".instruction"
@@ -1198,29 +1194,28 @@ function tilePlacedDisplayChanges(){
 
   addBlankLine();
   giveUp.removeAttribute("hidden");
-
 }
-function processWordDominationScore(gridValues){
-  console.log("process word domination score running")
+function processWordDominationScore(gridValues) {
+  console.log("process word domination score running");
   let score = 0;
   calcScore(gridValues);
-  console.log("score after calcScore", score)
-  console.log("score after 30 added to score", score)
+  console.log("score after calcScore", score);
+  console.log("score after 30 added to score", score);
   //ensure score populated
-  console.log("score value", document.getElementById("score").value)
+  console.log("score value", document.getElementById("score").value);
 }
-function assignDominoValuesToGridAfterPlaceTile(currentGridValue){
+function assignDominoValuesToGridAfterPlaceTile(currentGridValue) {
   gridValues[currentGridValue][0] = Number(lettersWord1);
   gridValues[currentGridValue][1] = Number(lettersWord2);
 }
-function resetAfterPlaceTile(){
+function resetAfterPlaceTile() {
   secondWordValid = false;
   gridValueCompare = [];
   firstGo = false;
   i = "";
   tilesPlaced = true;
 }
-function layoutAfterPlaceTile(){
+function layoutAfterPlaceTile() {
   document.querySelector(".instruction").style["display"] = "inline-block";
   document.querySelector(
     ".instruction"
@@ -1229,7 +1224,41 @@ function layoutAfterPlaceTile(){
   giveUp.removeAttribute("hidden");
   displayTile(currentGridValue);
   document.querySelector(".chosenDom").style["display"] = "none";
+}
+function resetsAfterTileCannotBePlaced(currentGridValue) {
+  gridValueCompare = [];
+  gridValues[currentGridValue][0] = 0;
+  gridValues[currentGridValue][1] = 0;
+  tilesPlaced = false;
+  i = "";
+}
+function nextGridSpaceSelectedEvaluation(){
+  //When the user clicks on another tile 
+  //Submit the values to the grid evaluation array assembly so that
+  //these values can be evaluated
+
+  for (let i = 0; i < gridTiles.length; i++) {
+    document
+      .querySelector(gridTiles[i])
+      .addEventListener("click", function () {
+        currentGridValue = i;
+        //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
+        //and tile placement not blocked for any reason
+        if (
+          blockPlaceTile == false &&
+          gridValues[i][0] == 0 &&
+          gridValues[i][1] == 0
+        ) {
+          pushtoGridValidationHelp(currentGridValue);
+        }
+      });
   }
+}
+function displayChangesAfterTileCannotBePlaced(){
+  document.querySelector(".instruction").innerHTML =
+  "It looks like this tile doesn't fit, try somwhere else";
+  instruction.style['display']="inline-block"
+}
 
 function evaluateGrid(i) {
   currentGridValue = i;
@@ -1237,9 +1266,10 @@ function evaluateGrid(i) {
   //Word Domination scenario - all tiles placed
   if (
     //check all tiiles have been placed
-    dominoesPlaced == gridTiles.length) {
+    dominoesPlaced == gridTiles.length
+  ) {
     console.log("WordDomination!!!!!");
-    wordDomination=true;
+    wordDomination = true;
     //process word domination score
     processWordDominationScore(gridValues);
     //Display for Word Domination
@@ -1255,43 +1285,23 @@ function evaluateGrid(i) {
       gridValueCompare[2] == gridValueCompare[3])
   ) {
     console.log("tile successfully placed");
-    layoutAfterPlaceTile()
-    console.log("rotated before?", rotated)
+    layoutAfterPlaceTile();
+    console.log("rotated before?", rotated);
     console.log("lettersWord1 before placed", lettersWord1);
-    console.log("lettersWord2 before placed", lettersWord2)
-    resetAfterPlaceTile()
+    console.log("lettersWord2 before placed", lettersWord2);
+    resetAfterPlaceTile();
     //grid values are populated based on the word value and if they are rotated
-    assignDominoValuesToGridAfterPlaceTile(currentGridValue)
-    console.log("rotated?", rotated)
+    assignDominoValuesToGridAfterPlaceTile(currentGridValue);
+    console.log("rotated?", rotated);
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
-    console.log("gridValues", gridValues)
-
+    console.log("gridValues", gridValues);
   } else {
-    document.querySelector(".instruction").innerHTML =
-      "It looks like this tile doesn't fit, try somwhere else";
-    gridValueCompare = [];
-    gridValues[i][0] = 0;
-    gridValues[i][1] = 0;
-    tilesPlaced = false;
-    i = "";
-
-    for (let i = 0; i < gridTiles.length; i++) {
-      document
-        .querySelector(gridTiles[i])
-        .addEventListener("click", function () {
-          currentGridValue = i;
-          //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
-          //and tile placement not blocked for any reason
-          if (
-            blockPlaceTile == false &&
-            gridValues[i][0] == 0 &&
-            gridValues[i][1] == 0
-          ) {
-            pushtoGridValidationHelp(currentGridValue);
-          }
-        });
-    }
+    //the tile cannot be placed handle changes
+    console.log("word can't be placed running");
+    displayChangesAfterTileCannotBePlaced()
+    resetsAfterTileCannotBePlaced(currentGridValue);
+    nextGridSpaceSelectedEvaluation();
   }
 }
 //issue too many dominoes spliced only happens with wrong tile placed
@@ -1362,7 +1372,6 @@ function newTilesDominoes() {
     document.querySelector(".wordText").classList.add("placeholder");
     wordText1.innerHTML = "Select letter tiles below to make the word";
     document.querySelector(".wordText2").style["display"] = "none";
-
     let rand1 = randomNumberDom();
     if (dominoHand.length < 4) {
       dominoHand.push(dominoes[rand1]);
