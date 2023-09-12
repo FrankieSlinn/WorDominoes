@@ -1,4 +1,4 @@
-//***GAME SETUP***/
+//***GAME SETUP***//
 
 let dominoes = [
   { d1: 22 },
@@ -352,10 +352,10 @@ let chosenDom = document.querySelector(".chosenDom");
 let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let instructionCenter = document.querySelector(".instructionCenter");
-let scores = document.querySelector(".scores");
+let scoresStats = document.querySelector(".scoresStats");
 
 //***SET DISPLAY IN THE BEGINNING***//
-
+console.log("HOF", hallOfFame)
 hallOfFame.style["display"] = "none";
 createWordGrid.style["display"] = "none";
 document.querySelectorAll(".wordText").forEach((item) => {
@@ -472,9 +472,9 @@ function calcScore(gridValues) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
-  console.log("wordDomination", wordDomination)
+  console.log("wordDomination", wordDomination);
   wordDomination == true ? (score = score + 30) : (score = score);
-  console.log("score", score)
+  console.log("score", score);
   //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
@@ -513,7 +513,7 @@ function addBlankLine() {
 
 //***NAVIGATION REGION BUTTONS***//
 function displayScoresInStatsPopup() {
-  scores.innerHTML = `WorDominoes Game Score: <strong>${
+  scoresStats.innerHTML = `WorDominoes Game Score: <strong>${
     JSON.parse(localStorage.getItem("longGameScores"))
       ? JSON.parse(localStorage.getItem("longGameScores"))[
           JSON.parse(localStorage.getItem("longGameScores")).length - 1
@@ -693,7 +693,7 @@ let manageDominoSelectedChanges = function () {
 
 manageDominoSelectedChanges();
 //push letter selected from random letter into letter hand
-function pushLettersIntoHand(){
+function pushLettersIntoHand() {
   let randLetter = randomNumLetters();
   letterHand.push(letters[randLetter]);
   letters.splice(randLetter, 1);
@@ -703,7 +703,7 @@ function pushLettersIntoHand(){
 function randomNumLetters() {
   return Math.abs(Math.floor(Math.random() * letters.length) - 1);
 }
-for (let i = 0; i < letterHandLength ; i++) {
+for (let i = 0; i < letterHandLength; i++) {
   pushLettersIntoHand();
 }
 console.log("letterHandin beginning", letterHand);
@@ -1238,32 +1238,30 @@ function resetsAfterTileCannotBePlaced(currentGridValue) {
   tilesPlaced = false;
   i = "";
 }
-function nextGridSpaceSelectedEvaluation(){
-  //When the user clicks on another tile 
+function nextGridSpaceSelectedEvaluation() {
+  //When the user clicks on another tile
   //Submit the values to the grid evaluation array assembly so that
   //these values can be evaluated
 
   for (let i = 0; i < gridTiles.length; i++) {
-    document
-      .querySelector(gridTiles[i])
-      .addEventListener("click", function () {
-        currentGridValue = i;
-        //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
-        //and tile placement not blocked for any reason
-        if (
-          blockPlaceTile == false &&
-          gridValues[i][0] == 0 &&
-          gridValues[i][1] == 0
-        ) {
-          pushtoGridValidationHelp(currentGridValue);
-        }
-      });
+    document.querySelector(gridTiles[i]).addEventListener("click", function () {
+      currentGridValue = i;
+      //make sure the user cannot click on a tile that has already been pouplated(gridValues for that tie updated)
+      //and tile placement not blocked for any reason
+      if (
+        blockPlaceTile == false &&
+        gridValues[i][0] == 0 &&
+        gridValues[i][1] == 0
+      ) {
+        pushtoGridValidationHelp(currentGridValue);
+      }
+    });
   }
 }
-function displayChangesAfterTileCannotBePlaced(){
+function displayChangesAfterTileCannotBePlaced() {
   document.querySelector(".instruction").innerHTML =
-  "It looks like this tile doesn't fit, try somwhere else";
-  instruction.style['display']="inline-block"
+    "It looks like this tile doesn't fit, try somwhere else";
+  instruction.style["display"] = "inline-block";
 }
 
 function evaluateGrid(i) {
@@ -1305,7 +1303,7 @@ function evaluateGrid(i) {
   } else {
     //the tile cannot be placed handle changes
     console.log("word can't be placed running");
-    displayChangesAfterTileCannotBePlaced()
+    displayChangesAfterTileCannotBePlaced();
     resetsAfterTileCannotBePlaced(currentGridValue);
     nextGridSpaceSelectedEvaluation();
   }
@@ -1336,11 +1334,11 @@ function finishGameDisplay() {
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
   instruction.style["display"] = "inline-block";
-    //add a space line height
-    document.querySelector(".instructionCenter").style["font-size"] = "1rem";
+  //add a space line height
+  document.querySelector(".instructionCenter").style["font-size"] = "1rem";
 }
 //handle display after domino placed on grid
-function displayTileLayoutChanges(rotation, margin, gridTile){
+function displayTileLayoutChanges(rotation, margin, gridTile) {
   const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
   const imgSrc = `Images/${domKey}.png`;
   const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
@@ -1349,30 +1347,30 @@ function displayTileLayoutChanges(rotation, margin, gridTile){
   //name for chosenDom, ensure not impacted by rotation
   chosenName =
     "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
-  }
-  //handle resets after domino placed on grid
-  function displayTileResetParameters(){
-    newTilesDominoes();
-    refillLetters();
-    dominoesPlaced += 1;
-    blockPlaceTile = true;
-    domKey = "";
-    rotated = false;
-    // lettersWord1 = lettersWord1;
-    // lettersWord2 = lettersWord2;
-    }
+}
+//handle resets after domino placed on grid
+function displayTileResetParameters() {
+  newTilesDominoes();
+  refillLetters();
+  dominoesPlaced += 1;
+  blockPlaceTile = true;
+  domKey = "";
+  rotated = false;
+  // lettersWord1 = lettersWord1;
+  // lettersWord2 = lettersWord2;
+}
 
 function displayTile(i) {
   if (firstGo == false && blockPlaceTile == false) {
     let rotation = 0;
     let margin = 0;
-    let gridTile=i;
+    let gridTile = i;
     //determine rotation and display of tile depending on grid location
     //for horizontal tiles
     if (i <= 3 || (6 <= i && i <= 9)) {
       rotation = rotated ? 90 : -90;
       margin = -15;
-    } 
+    }
     //for vertical tiles
     else if ((4 <= i && i <= 5) || (10 <= i && i <= 11)) {
       console.log("rotated before oriented in grid for 45 1011", rotated);
@@ -1383,8 +1381,9 @@ function displayTile(i) {
     displayTileResetParameters();
   }
 }
-function newTilesDominoesDisplayChanges(pngName, domCount){
-  document.querySelector(dominoHandDisplayClasses[domCount]).innerHTML = pngName;
+function newTilesDominoesDisplayChanges(pngName, domCount) {
+  document.querySelector(dominoHandDisplayClasses[domCount]).innerHTML =
+    pngName;
   document.querySelector(dominoHandDisplayClasses[domCount]).style["display"] =
     "inline-block";
   document.querySelector(".instructionCenter").innerHTML =
@@ -1399,18 +1398,18 @@ function newTilesDominoesDisplayChanges(pngName, domCount){
   document.querySelector(".wordText").classList.add("placeholder");
   wordText1.innerHTML = "Select letter tiles below to make the word";
   document.querySelector(".wordText2").style["display"] = "none";
+}
+//define html for image and style initiate all layout changes
+function newTilesDominoDefineLayoutChanges() {
+  for (let domCount = 0; domCount < dominoHand.length; domCount++) {
+    //domHandKeys1.push(...Object.keys(dominoHand[i]));
+    let pngName =
+      "<img src = Images/" +
+      String(Object.keys(dominoHand[domCount])) +
+      '.png  style="width:30px;height:60px;">';
+    newTilesDominoesDisplayChanges(pngName, domCount);
   }
-  //define html for image and style initiate all layout changes
-  function newTilesDominoDefineLayoutChanges(){
-    for (let domCount = 0; domCount < dominoHand.length; domCount++) {
-      //domHandKeys1.push(...Object.keys(dominoHand[i]));
-      let pngName =
-        "<img src = Images/" +
-        String(Object.keys(dominoHand[domCount])) +
-        '.png  style="width:30px;height:60px;">';
-        newTilesDominoesDisplayChanges(pngName, domCount);
-    }
-  }
+}
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
@@ -1427,13 +1426,14 @@ function newTilesDominoes() {
     blockPlaceTile = true;
   }
 }
-function refillLettersResets(){
+function refillLettersResets() {
   //increase the turns
   turns += 1;
   resetNextTurn();
-    //make sure can start with empty letters from word
-    letters1Used = [];
-    letters2Used = [];}
+  //make sure can start with empty letters from word
+  letters1Used = [];
+  letters2Used = [];
+}
 
 function refillLetters() {
   //Unallocated tiles is different between original letter hand length and length after tiles used
@@ -1461,7 +1461,7 @@ function resetNextTurn() {
   document.querySelector(".word1Instruct").innerHTML = "";
   document.querySelector(".word2Instruct").innerHTML = "";
   wordText.classList.add("placeholder");
-  wordDomination=false;
+  wordDomination = false;
   ///make sure not too many letters get removed
   lettersUsed1 = [];
   lettersUsed2 = [];
@@ -1473,7 +1473,7 @@ function resetNextTurn() {
   //only compare latest letters
   gridValueCompare = [];
 }
-function checkQualifyForHOF(){
+function checkQualifyForHOF() {
   //Check if the score qualifies for the Hall of Fame
   if (score >= Number(minHOFScore) && score > 0) {
     //Display the Hall of Fame Form
@@ -1492,10 +1492,8 @@ if (document.querySelector(".giveUp"))
 document.querySelector(".giveUp").addEventListener("click", function () {
   //After the giveUp button is clicked calculate the current score based on domino values in the grid.
   calcScore(gridValues);
- 
-
   updateScores();
-  checkQualifyForHOF()
+  checkQualifyForHOF();
   finishGameDisplay();
 });
 

@@ -15,7 +15,7 @@ let newestScore = 0
 //to populate minimum score in HoF to see if newest score eligioble for HoF
 let minimum
 //number of records in the HoF
-let numRec = 50
+let numRec = 70
 //array of IDs to be deleted
 let DBdel = []
 //to find minimum score
@@ -133,7 +133,9 @@ console.log(names, scores)
       }
     }
 //populate scores and names from the sortArray into the HTML elements to be displayed on the page. 
-    for (var i = 0; i < numTemp.length; i++) {
+console.log("scores in HOF before populated", document.querySelector(scores))
+console.log("numTemp before populated", numTemp)
+    for (var i = 0; i < scores.length; i++) {
       document.querySelector(scores[i]).innerHTML = numTemp[i];
       document.querySelector(names[i]).innerHTML = nameTemp[i];
     }
@@ -171,9 +173,11 @@ console.log(names, scores)
             document.getElementById("result").innerHTML = `Minimum updated: ${JSON.stringify(updatedMinimum)}`;
         })
         .catch(error => {
-          if(error){
-            console.log(error(error));
-            document.getElementById("result").innerHTML = "Error: An error occurred while updating.";}
+          if (error) {
+    console.log(error); // Log the error message
+    
+  }
+
         });
         }
         console.log("test")
