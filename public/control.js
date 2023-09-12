@@ -1490,11 +1490,14 @@ function checkQualifyForHOF() {
 if (document.querySelector(".giveUp"))
   console.log("minHOFScore in giveup", minHOFScore);
 document.querySelector(".giveUp").addEventListener("click", function () {
+  const isSure = window.confirm("Are you sure you want to give up?");
+  if (isSure) {
   //After the giveUp button is clicked calculate the current score based on domino values in the grid.
   calcScore(gridValues);
   updateScores();
   checkQualifyForHOF();
   finishGameDisplay();
+  }
 });
 
 //Make HOF Form section disappear after button clicked.
