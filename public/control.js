@@ -1314,7 +1314,10 @@ function evaluateGrid(i) {
 
 //Doesn't contain other functions
 function finishGameDisplay() {
-  console.log("giveup button clicked");
+  addBlankLine();
+  document.querySelector(
+    ".instructionCenter"
+  ).innerHTML = `You Have Scored ${score} Points`;
   document.querySelector(".createWordGrid").style["z-index"] = "-1";
   document.querySelector(".createWordGrid").style["display"] = "none";
   document.querySelector(".createWordGrid").style["opacity"] = "none";
@@ -1489,11 +1492,8 @@ if (document.querySelector(".giveUp"))
 document.querySelector(".giveUp").addEventListener("click", function () {
   //After the giveUp button is clicked calculate the current score based on domino values in the grid.
   calcScore(gridValues);
-  //add blank line below
-  addBlankLine();
-  document.querySelector(
-    ".instructionCenter"
-  ).innerHTML = `You Have Scored ${score} Points`;
+ 
+
   updateScores();
   checkQualifyForHOF()
   finishGameDisplay();
