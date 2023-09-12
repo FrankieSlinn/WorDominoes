@@ -1139,7 +1139,7 @@ function pushtoGridValidationHelp(i) {
     i = "";
   } else if (i == 6) {
     console.log("i is 6");
-    gridValueCompare.push(Number(gridValues[i - 1][1]));
+    gridValueCompare.push(Number(gridValues[i + 1][1]));
     pushWordLetterAmountsIntoValidationArray();
     gridValueCompare.push(Number(gridValues[i - 1][1]));
     console.log("gridValueCompare between 6", gridValueCompare);
@@ -1195,6 +1195,9 @@ function tilePlacedDisplayChanges(){
   document.querySelector(
     ".instruction"
   ).innerHTML = `Congratulations, you placed a tile!`;
+  // document.querySelector(
+  //   ".instruction"
+  // ).style['margin-top'] = "2rem";
   addBlankLine();
   giveUp.removeAttribute("hidden");
 
@@ -1208,8 +1211,10 @@ function processWordDominationScore(gridValues){
   //ensure score populated
   console.log("score value", document.getElementById("score").value)
 }
+function assignDominoValuesToGridAfterPlaceTile(currentGridValue){
 
-let wd=true;
+}
+
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
@@ -1217,7 +1222,7 @@ function evaluateGrid(i) {
   if (
  
     //check all tiiles have been placed
-    dominoesPlaced == gridTiles.length || wd==true) {
+    dominoesPlaced == gridTiles.length) {
     console.log("WordDomination!!!!!");
     wordDomination=true;
  
@@ -1231,35 +1236,43 @@ function evaluateGrid(i) {
   //tile placed but game not yet completed
   else if (
     (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-    //side on previous tilei matches and the next grid space is empty
     (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
-    //side on next tile matches and grid space before is empty
     (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
-    //The tile before matches and the tile after matches the domino sides
     (gridValueCompare[0] == gridValueCompare[1] &&
       gridValueCompare[2] == gridValueCompare[3])
-      &&!(dominoesPlaced == gridTiles.length)
+
   ) {
-    tilePlacedDisplayChanges();
+    console.log("tile successfully placed");
+    document.querySelector(".instruction").style["display"] = "inline-block";
+    document.querySelector(
+      ".instruction"
+    ).innerHTML = `Congratulations, you placed a tile!`;
+    addBlankLine();
+
+    giveUp.removeAttribute("hidden");
+    displayTile(currentGridValue);
     //To stop rotation
-    console.log("rotated before?", rotated);
+    console.log("rotated before?", rotated)
     console.log("lettersWord1 before placed", lettersWord1);
-    console.log("lettersWord2 before placed", lettersWord2);
+    console.log("lettersWord2 before placed", lettersWord2)
     secondWordValid = false;
     gridValueCompare = [];
     //grid values are populated based on the word value and if they are rotated
+   
+      gridValues[i][0] = Number(lettersWord1);
+      gridValues[i][1] = Number(lettersWord2);
 
-    gridValues[i][0] = Number(lettersWord1);
-    gridValues[i][1] = Number(lettersWord2);
-
-    console.log("rotated?", rotated);
+  
+    console.log("rotated?", rotated)
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
-    console.log("gridValues", gridValues);
+    console.log("gridValues", gridValues)
     firstGo = false;
+
     i = "";
 
     tilesPlaced = true;
+
     document.querySelector(".chosenDom").style["display"] = "none";
   } else {
     document.querySelector(".instruction").innerHTML =
@@ -1282,7 +1295,7 @@ function evaluateGrid(i) {
             gridValues[i][0] == 0 &&
             gridValues[i][1] == 0
           ) {
-            pushGridValues(currentGridValue);
+            pushtoGridValidationHelp(currentGridValue);
           }
         });
     }
@@ -1413,7 +1426,6 @@ function refillLetters() {
     let randLetter1 = randomNumLetters();
     letterHand.push(letters[randLetter1]);
     letters.splice(randLetter1, 1);
-
     secondWordValid = false;
   }
   for (let j = 0; j < tiles.length; j++) {
