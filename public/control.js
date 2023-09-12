@@ -1195,9 +1195,7 @@ function tilePlacedDisplayChanges(){
   document.querySelector(
     ".instruction"
   ).innerHTML = `Congratulations, you placed a tile!`;
-  // document.querySelector(
-  //   ".instruction"
-  // ).style['margin-top'] = "2rem";
+
   addBlankLine();
   giveUp.removeAttribute("hidden");
 
@@ -1212,26 +1210,41 @@ function processWordDominationScore(gridValues){
   console.log("score value", document.getElementById("score").value)
 }
 function assignDominoValuesToGridAfterPlaceTile(currentGridValue){
-
+  gridValues[currentGridValue][0] = Number(lettersWord1);
+  gridValues[currentGridValue][1] = Number(lettersWord2);
 }
+function resetAfterPlaceTile(){
+  secondWordValid = false;
+  gridValueCompare = [];
+  firstGo = false;
+  i = "";
+  tilesPlaced = true;
+}
+function layoutAfterPlaceTile(){
+  document.querySelector(".instruction").style["display"] = "inline-block";
+  document.querySelector(
+    ".instruction"
+  ).innerHTML = `Congratulations, you placed a tile!`;
+  addBlankLine();
+  giveUp.removeAttribute("hidden");
+  displayTile(currentGridValue);
+  document.querySelector(".chosenDom").style["display"] = "none";
+  }
 
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
   if (
- 
     //check all tiiles have been placed
     dominoesPlaced == gridTiles.length) {
     console.log("WordDomination!!!!!");
     wordDomination=true;
- 
     //process word domination score
     processWordDominationScore(gridValues);
     //Display for Word Domination
     wordDominationDisplayChanges(score);
     displayTile(currentGridValue);
-
   }
   //tile placed but game not yet completed
   else if (
@@ -1240,40 +1253,20 @@ function evaluateGrid(i) {
     (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
     (gridValueCompare[0] == gridValueCompare[1] &&
       gridValueCompare[2] == gridValueCompare[3])
-
   ) {
     console.log("tile successfully placed");
-    document.querySelector(".instruction").style["display"] = "inline-block";
-    document.querySelector(
-      ".instruction"
-    ).innerHTML = `Congratulations, you placed a tile!`;
-    addBlankLine();
-
-    giveUp.removeAttribute("hidden");
-    displayTile(currentGridValue);
-    //To stop rotation
+    layoutAfterPlaceTile()
     console.log("rotated before?", rotated)
     console.log("lettersWord1 before placed", lettersWord1);
     console.log("lettersWord2 before placed", lettersWord2)
-    secondWordValid = false;
-    gridValueCompare = [];
+    resetAfterPlaceTile()
     //grid values are populated based on the word value and if they are rotated
-   
-      gridValues[i][0] = Number(lettersWord1);
-      gridValues[i][1] = Number(lettersWord2);
-
-  
+    assignDominoValuesToGridAfterPlaceTile(currentGridValue)
     console.log("rotated?", rotated)
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
     console.log("gridValues", gridValues)
-    firstGo = false;
 
-    i = "";
-
-    tilesPlaced = true;
-
-    document.querySelector(".chosenDom").style["display"] = "none";
   } else {
     document.querySelector(".instruction").innerHTML =
       "It looks like this tile doesn't fit, try somwhere else";
