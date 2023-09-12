@@ -991,7 +991,7 @@ if (document.querySelector(".submit2"))
     xhr2.send(data2);
   });
 
-//select a tile on the board checks
+//process an attempt to place tile on the board
 for (let i = 0; i < gridTiles.length; i++) {
   if (document.querySelector(gridTiles[i]))
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
@@ -1019,6 +1019,7 @@ for (let i = 0; i < gridTiles.length; i++) {
         instruction.style["display"] = "inline-block";
       } else if (
         //if the user is allowed to place a tile and the grid space is empty
+        //move domino tile values to evaluation grid
         blockPlaceTile == false &&
         gridValues[i][0] == 0 &&
         gridValues[i][1] == 0
@@ -1031,7 +1032,7 @@ for (let i = 0; i < gridTiles.length; i++) {
       }
     });
 }
-//handle rotation after words made
+//handle rotation of selected domino after words made
 if (document.querySelector(".chosenDom"))
   //When the user clicks on the chosen domino it changes its rotation state
   document.querySelector(".chosenDom").addEventListener("click", function () {
@@ -1328,50 +1329,73 @@ function finishGameDisplay() {
   giveUp.style["display"] = "none";
   instruction.style["display"] = "inline-block";
 }
-
-function displayTile(i) {
-  if (firstGo == false && blockPlaceTile == false) {
-    let rotation = 0;
-    let margin = 0;
-
-    //determine rotation and display of tile depending on grid location
-    if (i <= 3 || (6 <= i && i <= 9)) {
-      rotation = rotated ? 90 : -90;
-      margin = -15;
-    } else if ((4 <= i && i <= 5) || (10 <= i && i <= 11)) {
-      console.log("rotated before oriented in grid for 45 1011", rotated);
-      rotation = rotated ? 180 : 0;
-    }
-
-    const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
-    const imgSrc = `Images/${domKey}.png`;
-    const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
-    document.querySelector(gridTiles[i]).innerHTML = pngNameGrid;
-    document.querySelector(".chosenDom").innerHTML = "";
-    //name for chosenDom, ensure not impacted by rotation
-    chosenName =
-      "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
-    console.log("gridtilesi in displaytile", gridTiles[i]);
+//handle display after domino placed on grid
+function displayTileLayoutChanges(rotation, margin, gridTile){
+  const rotationStyle = `style="width:30px;height:60px;transform:rotate(${rotation}deg);margin-top:${margin}px;"`;
+  const imgSrc = `Images/${domKey}.png`;
+  const pngNameGrid = `<img src="${imgSrc}" ${rotationStyle}>`;
+  document.querySelector(gridTiles[gridTile]).innerHTML = pngNameGrid;
+  document.querySelector(".chosenDom").innerHTML = "";
+  //name for chosenDom, ensure not impacted by rotation
+  chosenName =
+    "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
+  }
+  //handle resets after domino placed on grid
+  function displayTileResetParameters(){
     newTilesDominoes();
     refillLetters();
     dominoesPlaced += 1;
     blockPlaceTile = true;
     domKey = "";
     rotated = false;
-    lettersWord1 = lettersWord1;
-    lettersWord2 = lettersWord2;
+    // lettersWord1 = lettersWord1;
+    // lettersWord2 = lettersWord2;
+    }
+
+function displayTile(i) {
+  if (firstGo == false && blockPlaceTile == false) {
+    let rotation = 0;
+    let margin = 0;
+    let gridTile=i;
+    //determine rotation and display of tile depending on grid location
+    //for horizontal tiles
+    if (i <= 3 || (6 <= i && i <= 9)) {
+      rotation = rotated ? 90 : -90;
+      margin = -15;
+    } 
+    //for vertical tiles
+    else if ((4 <= i && i <= 5) || (10 <= i && i <= 11)) {
+      console.log("rotated before oriented in grid for 45 1011", rotated);
+      rotation = rotated ? 180 : 0;
+    }
+    displayTileLayoutChanges(rotation, margin, gridTile);
+    console.log("gridtilesi in displaytile", gridTiles[i]);
+    displayTileResetParameters();
   }
 }
-
+function newTilesDominoesDisplayChanges(pngName, domCount){
+  document.querySelector(dominoHandDisplayClasses[domCount]).innerHTML = pngName;
+  document.querySelector(dominoHandDisplayClasses[domCount]).style["display"] =
+    "inline-block";
+  document.querySelector(".instructionCenter").innerHTML =
+    "Now select another domino above that will fit in the grid";
+  //change the order of selected domino and instruction back
+  reverseOrder.style["flex-direction"] = "column";
+  reverseOrder.style["margin-top"] = "0";
+  chosenDom.style["margin-bottom"] = "-5rem";
+  document.querySelector(".wordText").style["display"] = "none";
+  document.querySelector(".wordText2").style["display"] = "none";
+  document.querySelector(".createWordGrid").style["display"] = "none";
+  document.querySelector(".wordText").classList.add("placeholder");
+  wordText1.innerHTML = "Select letter tiles below to make the word";
+  document.querySelector(".wordText2").style["display"] = "none";
+  }
 //give new word tiles and domino after first go
 function newTilesDominoes() {
   if (firstGo == false) {
     //to ensure it is known that the domino has already been placed to provide
     //correct messages in instructions when the user tries to click
     dominoPlaced = true;
-    document.querySelector(".wordText").classList.add("placeholder");
-    wordText1.innerHTML = "Select letter tiles below to make the word";
-    document.querySelector(".wordText2").style["display"] = "none";
     let rand1 = randomNumberDom();
     if (dominoHand.length < 4) {
       dominoHand.push(dominoes[rand1]);
@@ -1389,32 +1413,20 @@ function newTilesDominoes() {
       dominoes.length
     );
     // console.log("dominoes after splice add", dominoHand);
-    for (let i = 0; i < dominoHand.length; i++) {
+    for (let domCount = 0; domCount < dominoHand.length; domCount++) {
       //domHandKeys1.push(...Object.keys(dominoHand[i]));
       console.log(
         "key in pngNam New Dom Tiles",
-        String(Object.keys(dominoHand[i]))
+        String(Object.keys(dominoHand[domCount]))
       );
 
       let pngName =
         "<img src = Images/" +
-        String(Object.keys(dominoHand[i])) +
+        String(Object.keys(dominoHand[domCount])) +
         '.png  style="width:30px;height:60px;">';
-
-      document.querySelector(dominoHandDisplayClasses[i]).innerHTML = pngName;
-      document.querySelector(dominoHandDisplayClasses[i]).style["display"] =
-        "inline-block";
-
-      document.querySelector(".instructionCenter").innerHTML =
-        "Now select another domino above that will fit in the grid";
-      //change the order of selected domino and instruction back
-      reverseOrder.style["flex-direction"] = "column";
-      reverseOrder.style["margin-top"] = "0";
-      chosenDom.style["margin-bottom"] = "-5rem";
-      document.querySelector(".wordText").style["display"] = "none";
-      document.querySelector(".wordText2").style["display"] = "none";
-      document.querySelector(".createWordGrid").style["display"] = "none";
+        newTilesDominoesDisplayChanges(pngName, domCount);
     }
+    //ensure a tile cannot be plaecd
     blockPlaceTile = true;
   }
 }
