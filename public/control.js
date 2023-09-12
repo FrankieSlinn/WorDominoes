@@ -323,6 +323,7 @@ let lettersWord2Temp = 0;
 let testExport = "testExport works!!!";
 let score = 0;
 let dominoPlaced = false;
+let wordDomination = false;
 
 //**DOM Shortcuts***//
 
@@ -469,7 +470,9 @@ function calcScore(gridValues) {
   for (let i = 0; i < gridValues.length; i++) {
     score += gridValues[i][0];
     score += gridValues[i][1];
+    
   }
+  wordDomination=true?score=score+30:score=score
   //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
@@ -1180,45 +1183,53 @@ function wordDominationDisplayChanges(score){
     finishGameDisplay();
     document.querySelector(".chosenDom").style["display"] = "none";
     giveUp.style["display"] = "none";
-    document.querySelector(".instruction").style["font-size"] = "2rem";
+    document.querySelector(".instruction").style["font-size"] = "1rem";
+    document.querySelector(".instruction").style["line-height"] = "1.5rem";
+    document.querySelector(".instruction").style["font-weight"] = "700";
+    document.querySelector(".instruction").style["margin-top"] = "0.3";
+    document.querySelector(".instructionCenter").style["margin"] = "1rem 0 -2rem 0";
+    document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
+}
+function tilePlacedDisplayChanges(){
+  document.querySelector(".instruction").style["display"] = "inline-block";
+  document.querySelector(
+    ".instruction"
+  ).innerHTML = `Congratulations, you placed a tile!`;
+  addBlankLine();
+  giveUp.removeAttribute("hidden");
+
 }
 function processWordDominationScore(gridValues){
+  console.log("process word domination score running")
   let score = 0;
   calcScore(gridValues);
-  score = score + 30;
+  console.log("score after calcScore", score)
+  console.log("score after 30 added to score", score)
   //ensure score populated
-  document.getElementById("score").value = score;
-  score.value = score;
-  console.log("scorevalue", score.value);
+  console.log("score value", document.getElementById("score").value)
 }
 
+let wd=true;
 function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
   if (
-        //tile on either side are blank
-        (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-        //side on previous tilei matches and the next grid space is empty
-        (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
-        //side on next tile matches and grid space before is empty
-        (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
-        //The tile before matches and the tile after matches the domino sides
-        (gridValueCompare[0] == gridValueCompare[1] &&
-          gridValueCompare[2] == gridValueCompare[3])
-          &&
-    dominoesPlaced == gridTiles.length) {
+ 
+    //check all tiiles have been placed
+    dominoesPlaced == gridTiles.length || wd==true) {
     console.log("WordDomination!!!!!");
+    wordDomination=true;
+ 
     //process word domination score
-    processWordDominationScore(gridValues)
+    processWordDominationScore(gridValues);
     //Display for Word Domination
-    wordDominationDisplayChanges(score)
-    
-   
+    wordDominationDisplayChanges(score);
+    displayTile(currentGridValue);
+
   }
-  //tile placed
+  //tile placed but game not yet completed
   else if (
-    //tile on either side are blank
     (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
     //side on previous tilei matches and the next grid space is empty
     (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
@@ -1229,15 +1240,7 @@ function evaluateGrid(i) {
       gridValueCompare[2] == gridValueCompare[3])
       &&!(dominoesPlaced == gridTiles.length)
   ) {
-  
-    document.querySelector(".instruction").style["display"] = "inline-block";
-    document.querySelector(
-      ".instruction"
-    ).innerHTML = `Congratulations, you placed a tile!`;
-    addBlankLine();
-
-    giveUp.removeAttribute("hidden");
-    displayTile(currentGridValue);
+    tilePlacedDisplayChanges();
     //To stop rotation
     console.log("rotated before?", rotated);
     console.log("lettersWord1 before placed", lettersWord1);
@@ -1254,11 +1257,9 @@ function evaluateGrid(i) {
     console.log("new gridvalues", gridValues[i][1]);
     console.log("gridValues", gridValues);
     firstGo = false;
-
     i = "";
 
     tilesPlaced = true;
-
     document.querySelector(".chosenDom").style["display"] = "none";
   } else {
     document.querySelector(".instruction").innerHTML =
