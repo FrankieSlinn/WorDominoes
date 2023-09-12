@@ -472,7 +472,9 @@ function calcScore(gridValues) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
-  wordDomination = true ? (score = score + 30) : (score = score);
+  console.log("wordDomination", wordDomination)
+  wordDomination == true ? (score = score + 30) : (score = score);
+  console.log("score", score)
   //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
@@ -1331,6 +1333,8 @@ function finishGameDisplay() {
   document.querySelector(".domHand").style["display"] = "none";
   giveUp.style["display"] = "none";
   instruction.style["display"] = "inline-block";
+    //add a space line height
+    document.querySelector(".instructionCenter").style["font-size"] = "1rem";
 }
 //handle display after domino placed on grid
 function displayTileLayoutChanges(rotation, margin, gridTile){
@@ -1454,6 +1458,7 @@ function resetNextTurn() {
   document.querySelector(".word1Instruct").innerHTML = "";
   document.querySelector(".word2Instruct").innerHTML = "";
   wordText.classList.add("placeholder");
+  wordDomination=false;
   ///make sure not too many letters get removed
   lettersUsed1 = [];
   lettersUsed2 = [];
@@ -1465,6 +1470,18 @@ function resetNextTurn() {
   //only compare latest letters
   gridValueCompare = [];
 }
+function checkQualifyForHOF(){
+  //Check if the score qualifies for the Hall of Fame
+  if (score >= Number(minHOFScore) && score > 0) {
+    //Display the Hall of Fame Form
+    document.querySelector(".hallOfFame").style["display"] = "inline-block";
+  } else if (score < Number(minHOFScore)) {
+    //If the user doesn't qualify for the Hall of Fame display message in instruction.
+    instruction.innerHTML =
+      "You have not made it into the Hall of Fame in this game. Better luck next time.";
+    instruction.style["display"] = "inline-block";
+  }
+}
 
 //The user has selected the giveUp button
 if (document.querySelector(".giveUp"))
@@ -1474,27 +1491,12 @@ document.querySelector(".giveUp").addEventListener("click", function () {
   calcScore(gridValues);
   //add blank line below
   addBlankLine();
-
   document.querySelector(
     ".instructionCenter"
   ).innerHTML = `You Have Scored ${score} Points`;
-  //Check if the score qualifies for the Hall of Fame
   updateScores();
-  if (score >= minHOFScore && score > 0) {
-    //Display the Hall of Fame Form
-    document.querySelector(".hallOfFame").style["display"] = "inline-block";
-  } else if (score < Number(JSON.parse(localStorage.getItem("minimum")))) {
-    //If the user doesn't qualify for the Hall of Fame display message in instruction.
-    instruction.innerHTML =
-      "You have not made it into the Hall of Fame in this game. Better luck next time.";
-
-    instruction.style["display"] = "inline-block";
-  }
-  //Update scores in statistics
-
+  checkQualifyForHOF()
   finishGameDisplay();
-  //add a space line height
-  document.querySelector(".instructionCenter").style["font-size"] = "1rem";
 });
 
 //Make HOF Form section disappear after button clicked.
