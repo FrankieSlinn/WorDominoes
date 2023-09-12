@@ -481,6 +481,9 @@ button:active {
   margin-top: -6rem;
   z-index: 1;
 }
+#lname{
+  text-align: center;
+}
 
 .HOFMessage {
   font-size: 1.25rem;
