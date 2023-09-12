@@ -324,6 +324,7 @@ let testExport = "testExport works!!!";
 let score = 0;
 let dominoPlaced = false;
 let wordDomination = false;
+let letterHandLength = 15;
 
 //**DOM Shortcuts***//
 
@@ -689,20 +690,22 @@ let manageDominoSelectedChanges = function () {
 };
 
 manageDominoSelectedChanges();
+//push letter selected from random letter into letter hand
+function pushLettersIntoHand(){
+  let randLetter = randomNumLetters();
+  letterHand.push(letters[randLetter]);
+  letters.splice(randLetter, 1);
+}
 
 //generate first letter hand
 function randomNumLetters() {
   return Math.abs(Math.floor(Math.random() * letters.length) - 1);
 }
-
-for (let i = 0; i < 15; i++) {
-  let randLetter = randomNumLetters();
-  letterHand.push(letters[randLetter]);
-  letters.splice(randLetter, 1);
+for (let i = 0; i < letterHandLength ; i++) {
+  pushLettersIntoHand();
 }
 console.log("letterHandin beginning", letterHand);
 console.log("letters after splice", letters);
-
 //populate letter tiles
 function showLetters() {
   for (let i = 0; i < letterHand.length; i++) {
@@ -1418,23 +1421,24 @@ function newTilesDominoes() {
   }
 }
 function refillLetters() {
-  //make sure can start with empty letters from word
-  letters1Used = [];
-  letters2Used = [];
-
-  let unallocatedTiles = 15 - letterHand.length;
+  //Unallocated tiles is different between original letter hand length and length after tiles used
+  let unallocatedTiles = letterHandLength - letterHand.length;
   for (let i = 0; i < unallocatedTiles; i++) {
-    let randLetter1 = randomNumLetters();
-    letterHand.push(letters[randLetter1]);
-    letters.splice(randLetter1, 1);
+    //randomNumLetters generates random number that can be used to select a tile
+    pushLettersIntoHand();
     secondWordValid = false;
   }
+  //populate letter elements with letter content
   for (let j = 0; j < tiles.length; j++) {
     document.querySelector(tiles[j]).innerHTML = `${letterHand[j]}`;
     document.querySelector(tiles[j]).style["display"] = "inline-block";
   }
+  //increase the turns
   turns += 1;
   resetNextTurn();
+    //make sure can start with empty letters from word
+    letters1Used = [];
+    letters2Used = [];
 }
 
 function resetNextTurn() {
