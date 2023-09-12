@@ -1420,6 +1420,14 @@ function newTilesDominoes() {
     blockPlaceTile = true;
   }
 }
+function refillLettersResets(){
+  //increase the turns
+  turns += 1;
+  resetNextTurn();
+    //make sure can start with empty letters from word
+    letters1Used = [];
+    letters2Used = [];}
+
 function refillLetters() {
   //Unallocated tiles is different between original letter hand length and length after tiles used
   let unallocatedTiles = letterHandLength - letterHand.length;
@@ -1433,12 +1441,7 @@ function refillLetters() {
     document.querySelector(tiles[j]).innerHTML = `${letterHand[j]}`;
     document.querySelector(tiles[j]).style["display"] = "inline-block";
   }
-  //increase the turns
-  turns += 1;
-  resetNextTurn();
-    //make sure can start with empty letters from word
-    letters1Used = [];
-    letters2Used = [];
+  refillLettersResets();
 }
 
 function resetNextTurn() {
@@ -1451,8 +1454,6 @@ function resetNextTurn() {
   document.querySelector(".word1Instruct").innerHTML = "";
   document.querySelector(".word2Instruct").innerHTML = "";
   wordText.classList.add("placeholder");
-  //document.querySelector(".rotate").style['display']= "none";
-
   ///make sure not too many letters get removed
   lettersUsed1 = [];
   lettersUsed2 = [];
