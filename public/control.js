@@ -329,7 +329,7 @@ let score = 0;
 let dominoPlaced = false;
 let wordDomination = false;
 let letterHandLength = 15;
-let delButtonActive=false;
+let delButtonActive = false;
 let delLength;
 
 //**DOM Shortcuts***//
@@ -359,7 +359,7 @@ let reverseOrder = document.querySelector(".reverseOrder");
 let instruction = document.querySelector(".instruction");
 let instructionCenter = document.querySelector(".instructionCenter");
 let scoresStats = document.querySelector(".scoresStats");
-let deleteButton=document.querySelector(".deleteButton");
+let deleteButton = document.querySelector(".deleteButton");
 
 //***SET DISPLAY IN THE BEGINNING***//
 
@@ -705,7 +705,6 @@ function pushLettersIntoHand() {
   let randLetter = randomNumLetters();
   letterHand.push(letters[randLetter]);
   letters.splice(randLetter, 1);
-
 }
 
 //generate first letter hand
@@ -720,7 +719,9 @@ console.log("letters after splice", letters);
 //populate letter tiles
 function showLetters() {
   for (let i = 0; i < letterHand.length; i++) {
-    document.querySelector(tiles[i]).innerHTML = `${letterHand[i].toUpperCase()}`;
+    document.querySelector(tiles[i]).innerHTML = `${letterHand[
+      i
+    ].toUpperCase()}`;
     document.querySelector(tiles[i]).classList.remove("inactive");
   }
 }
@@ -739,17 +740,16 @@ function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons) {
   // document.querySelector(tiles[i]).style["display"] = "none";
   document.querySelector(tiles[tileNum]).classList.add("inactive");
 }
-document.querySelector(".deleteButton").addEventListener('click', (e) => {
-  console.log("thinks delete button clicked,original length", delLength)
-  deleteClicked(e);
- 
-  })
+//Delete last letter functionality
+document.querySelector(".deleteButton").addEventListener("click", (e) => {
+  deleteClicked();
+});
 
 function makeWordProcessLetters() {
   //ensure input text starts blank
   firstWordText = "";
   secondWordText = "";
- 
+
   for (let tileNum = 0; tileNum < 15; tileNum++) {
     if (document.querySelector(tiles[tileNum]))
       document
@@ -765,22 +765,23 @@ function makeWordProcessLetters() {
             if (wordNumber == 1) {
               //letter selected added to placeholder text
               firstWordText += letterHand[tileNum];
-              console.log("firstWordText.length just after letter tile added", firstWordText.length)
-        
+              console.log(
+                "firstWordText.length just after letter tile added",
+                firstWordText.length
+              );
+
               // console.log("in createword b4 function delete button false", delButtonActive)
-              
-              delLength=firstWordText.length;
+
+              delLength = firstWordText.length;
               //this looks to work
-              console.log("delLength before eventlistener", delLength)
+              console.log("delLength before eventlistener", delLength);
 
               // deleteButton.removeEventListener("click", deleteClicked())
-           
 
-              
               //placeholder text added to wordText1innerHTML
               document.querySelector(".wordText1").innerHTML = firstWordText;
 
-              console.log("firstWordText in make word", firstWordText)
+              console.log("firstWordText in make word", firstWordText);
               //function for display changes
               makeWordDisplay(wordText1, ".wordText1", tileNum, ".buttons1");
               //push letters used(now inactive) to array. If word needs to be redone the array can be
@@ -796,84 +797,57 @@ function makeWordProcessLetters() {
               redoWord();
             }
           }
-
         });
-      
   }
 }
-function deleteClicked(e){
-  console.log()
-
-  // console.log("e.target", e.target);
-  //Should originally be the same length
-  console.log("original text length", delLength)
-  //delLength length stays
-  console.log("to be amended text length", firstWordText.length)
-  //make sure the text to be amended(firstWordText doesn't decrease by more than one)
-
-    console.log("(firstWordText.length>delLength-1)", (firstWordText.length>delLength-1))
-  //event target now deleteButton, not tile
-
-
-
-
-  console.log("first delete function running")
-    if(wordNumber==1){
-      console.log("firstword in delete", firstWordText)
-     
-
-        console.log("will runn delete function")
- 
-        makeDeleteLetterChanges(wordNumber, firstWordText, lettersUsed1)
-        // e.target=null;   
-    }
-    else if(wordNumber==2){
-      if(secondWordText.length>0){
-        secondWordTextTemp=secondWordText.slice(0, -1);
-        secondWordText=secondWordTemp
-        lettersUsed2.pop();
-      }
-    }
-  
-  
-  // deleteButtonActive=false;
-   
+function deleteClicked() {
+  console.log("first delete function running");
+  //process depending which word being handled(first or second)
+  if (wordNumber == 1) {
+    console.log("firstword in delete", firstWordText);
+    makeDeleteLetterChanges(wordNumber, firstWordText, lettersUsed1, wordText1);
+  } else if (wordNumber == 2) {
+    makeDeleteLetterChanges(
+      wordNumber,
+      secondWordText,
+      lettersUsed2,
+      wordText2
+    );
   }
+}
 
-  
-function makeDeleteLetterChanges(wordNumber, numWordText, lettersUsedNum){
-
+function makeDeleteLetterChanges(
+  wordNumber,
+  numWordText,
+  lettersUsedNum,
+  wordTextSelector
+) {
   console.log("run makeDeleteLetterChanges");
-  wordTextTemp=numWordText.slice(0, -1);
-  numWordText=wordTextTemp; 
-  console.log("numWordText", numWordText)
-  console.log("firstWordText", firstWordText)
-  wordText1.innerHTML=numWordText;
-  wordTextTemp="";
-  //get the last letter in the lettersUsed array if the array is not empty
-  lettersUsedNum!=null?lastLetter = lettersUsedNum[lettersUsedNum.length - 1]:lastLetter="";
-
-  console.log("lastLetter", lastLetter);
-  if(lastLetter){
-  document.querySelector(lastLetter).classList.remove("inactive");}
-  lettersUsedNum.pop();
-  console.log(lettersUsedNum)
-  lastLetter = "";
-  wordNumber==1?firstWordText=numWordText:secondWordText=numWordText;
-
-
+  //remove last letter from string and assign to temp value
+  wordTextTemp = numWordText.slice(0, -1);
+  //from temp value create new string
+  numWordText = wordTextTemp;
+  //display string in input field element as innerHTML
+  wordTextSelector.innerHTML = numWordText;
+  //empty temp value so this can be reused
+  wordTextTemp = "";
+  //If array of letters used not empty assign the "last letter" variable to the
+  //letter tile for the last letter of the array
+  lettersUsedNum != null
+    ? (lastLetter = lettersUsedNum[lettersUsedNum.length - 1])
+    : (lastLetter = "");
+  //if the last letter in the array exists remove the inactive class from it.
+  if (lastLetter) {
+    document.querySelector(lastLetter).classList.remove("inactive");
   }
-  // delButtonActive=false;
-  // console.log("delButtonActive after all functions run", delButtonActive)
-  // e=null;
-  // deleteButton.removeEventListener('click',deleteClicked(e))
-
-    
-
-
-
-
-
+  //remove the last letter in the letters used array
+  lettersUsedNum.pop();
+  console.log(lettersUsedNum);
+  //reset last letter variable
+  lastLetter = "";
+  //assign shortened text to text variable for first and second words
+  wordNumber==1?firstWordText=numWordText:secondWordText=numWordText;
+}
 redoWord();
 
 //redo word
@@ -909,7 +883,7 @@ function clearLetters() {
     );
     firstWordText = "";
     document.querySelector(".wordText1").innerHTML = firstWordText;
-    
+
     lettersUsed1 = [];
   } else if (wordNumber == 2) {
     lettersUsed2.forEach((item) =>
@@ -983,12 +957,12 @@ function invalidWord(wordNumber) {
 }
 
 function validateWord(validationInformation) {
-  console.log("response in 1", this.responseText)
+  console.log("response in 1", this.responseText);
   if (
     //check valid word(length of response isn't equal to error message length) - valid word
     // or check that word in exception words(is / be) dictionary - valid word
     //check number of letters is correct
- 
+
     (validationInformation != 14 ||
       dictionary.includes(document.querySelector(".wordText1").innerHTML)) &&
     document.querySelector(".wordText1").innerHTML.length == lettersWord1
@@ -1055,7 +1029,7 @@ xhr2.addEventListener("readystatechange", function () {
   if (this.readyState === this.DONE) {
     var parser = new DOMParser();
     doc = parser.parseFromString(this.responseText, "text/xml");
-    console.log("response in 2", this.responseText)
+    console.log("response in 2", this.responseText);
     //Check if first word valid
     if (
       (this.responseText.length != 14 ||
