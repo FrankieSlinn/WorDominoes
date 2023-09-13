@@ -404,23 +404,24 @@ button:active {
   width: 100%;
   margin: auto;
 }
-
-.tile {
+.tile{
+  background-color: #eae6e6;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.tile, .deleteButton {
   display: inline-block;
   flex-direction: column;
   text-align: center;
-
   height: auto;
   min-width: 0.9rem;
-  background-color: #eae6e6;
   border-radius: 5px;
-  font-size: 1.2rem;
-  font-weight: 700;
   padding: 1rem;
   margin: auto;
   border: #333 solid 3px;
   margin-top: 0.25rem;
 }
+
 .inactive{
   color: #999;
   border: #888 dotted 3px;
