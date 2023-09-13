@@ -1617,10 +1617,13 @@ submitHOFBut.addEventListener("click", function () {
   hallOfFame.style["display"] = "none";
 });
 
-document.querySelector(".newGame").addEventListener("click", startNewGame);
+document.querySelector(".newGame").addEventListener("click", function () {
+  // Refresh the page when the button is clicked
+  window.location.reload();
+});
 
 
-function startNewGame(){
-  console.log("start new game running");
-  setInitialDisplay()
-}
+// function startNewGame(){
+//   console.log("start new game running");
+//   setInitialDisplay()
+// }
