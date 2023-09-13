@@ -604,8 +604,6 @@ if (firstGo) {
 
 //displayDominoes
 for (let i = 0; i < dominoHand.length; i++) {
-  //No domino has yet been selected so all four displayed
-  selectedDomino = false;
   //dominoes set up as objects in game setup. The key is the domino name. The value is the amount of dominoes on each side.
   domHandKeys.push(...Object.keys(dominoHand[i]));
 
@@ -688,12 +686,17 @@ function selectedDominoParameterChanges(j) {
 
 //get selectedDominoValue/
 let manageDominoSelectedChanges = function () {
+
   for (let j = 0; j < dominoHand.length; j++) {
+    console.log("selectedDomino", selectedDomino);
+    console.log(dominoHandDisplayClasses[j])
     if (document.querySelector(dominoHandDisplayClasses[j]))
       //check if a domino has been selected from the hand by a user
       document
         .querySelector(dominoHandDisplayClasses[j])
         .addEventListener("click", function () {
+          if(selectedDomino==false){
+          selectedDomino=true;
           //run parameter changes needed after domino selected
           selectedDominoParameterChanges(j);
           //display the chosen domino above the word creation section
@@ -709,11 +712,14 @@ let manageDominoSelectedChanges = function () {
           showLetters();
           //move screen down where words can be created
           scrollToMiddleThird();
+          }
+          
         });
   }
-};
+}
 
-manageDominoSelectedChanges();
+
+if (selectedDomino==false){manageDominoSelectedChanges()};
 //push letter selected from random letter into letter hand
 function pushLettersIntoHand() {
   let randLetter = randomNumLetters();
@@ -943,6 +949,7 @@ function secondWordCompleteDisplayChanges() {
   //for instructions to show appropriate messages
   //around domino needing to be placed
   dominoPlaced = false;
+  dominoSelected=false;
   //Ensures domino tile selected is displayed under the grid
   reverseOrder.style["flex-direction"] = "column-reverse";
   reverseOrder.style["margin-top"] = "-0.8rem";
