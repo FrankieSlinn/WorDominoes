@@ -273,6 +273,10 @@ let tiles = [
   ".tile14",
   ".tile15",
 ];
+let dominoHandDisplayClasses = [".dom1", ".dom2", ".dom3", ".dom4"];
+
+//Define Initial Parameters
+
 //dictionary for words the dictionary api doesn't validate
 let dictionary = ["is", "be", "was"];
 //current tile
@@ -288,7 +292,6 @@ let domHandKeys1 = [];
 let chosenKey = [];
 let domKey = "";
 let domHandFirst = [];
-let dominoHandDisplayClasses = [".dom1", ".dom2", ".dom3", ".dom4"];
 let domLeft = "";
 let domRight = "";
 let selectedDomino = false;
@@ -344,6 +347,7 @@ let wordText2 = document.querySelector(".wordText2");
 let buttons1 = document.querySelector(".buttons1");
 let buttons2 = document.querySelector(".buttons1");
 let giveUp = document.querySelector(".giveUp");
+let giveUpContainer = document.querySelector(".giveUpContainer");
 let submit = document.querySelector(".submit");
 let submit1 = document.querySelector(".submit1");
 let submit2 = document.querySelector(".submit2");
@@ -360,10 +364,13 @@ let instruction = document.querySelector(".instruction");
 let instructionCenter = document.querySelector(".instructionCenter");
 let scoresStats = document.querySelector(".scoresStats");
 let deleteButton = document.querySelector(".deleteButton");
+let newGame = document.querySelector(".newGame");
+let newGameContainer=document.querySelector(".newGameContainer");
 
 //***SET DISPLAY IN THE BEGINNING***//
-
-console.log("HOF", hallOfFame);
+setInitialDisplay()
+function setInitialDisplay(){
+  console.log("set initial display running")
 hallOfFame.style["display"] = "none";
 createWordGrid.style["display"] = "none";
 document.querySelectorAll(".wordText").forEach((item) => {
@@ -373,6 +380,14 @@ document.querySelector(".wordText1").classList.add("placeholder");
 document.querySelector(".wordText2").classList.add("placeholder");
 buttons1.style["display"] = "none";
 buttons2.style["display"] = "none";
+instruction.innerText="Follow the instructions below and fill the grid with dominoes to achieve Word Domination."
+instruction.style["display"] = "inline-block";
+addBlankLine();
+instructionCenter.innerText="Choose a domino above. You'll create 2 words for this tile: the word length is the number of dots on its side of the domino."
+newGameContainer.style["display"] = "none";
+firstGo=true;
+
+}
 
 //***SCROLLING BEHAVIOURS***//
 
@@ -1414,7 +1429,9 @@ function finishGameDisplay() {
   chosenDom.style["display"] = "none";
   document.querySelector(".buttons").style["display"] = "none";
   document.querySelector(".domHand").style["display"] = "none";
-  giveUp.style["display"] = "none";
+  giveUpContainer.style["display"] = "none";
+  giveUp.style['display'] = "none";
+  newGameContainer.style['display'] = "inline-block";
   instruction.style["display"] = "inline-block";
   //add a space line height
   document.querySelector(".instructionCenter").style["font-size"] = "1rem";
@@ -1588,3 +1605,11 @@ submitHOFBut.addEventListener("click", function () {
   createWordGrid.style["display"] = "none";
   hallOfFame.style["display"] = "none";
 });
+
+document.querySelector(".newGame").addEventListener("click", startNewGame);
+
+
+function startNewGame(){
+  console.log("start new game running");
+  setInitialDisplay()
+}

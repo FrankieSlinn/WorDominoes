@@ -524,6 +524,13 @@ input {
   border-radius: 10px;
 }
 
+.newGameContainer{
+
+  display: none;
+}
+.newGame{
+  margin: -4.5rem 0 2rem 0;
+}
 @media (max-width: 922px) {
   .giveUp{
     margin-top: 3rem;
