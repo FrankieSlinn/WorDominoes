@@ -386,7 +386,6 @@ addBlankLine();
 instructionCenter.innerText="Choose a domino above. You'll create 2 words for this tile: the word length is the number of dots on its side of the domino."
 newGameContainer.style["display"] = "none";
 firstGo=true;
-
 }
 
 //***SCROLLING BEHAVIOURS***//
@@ -757,7 +756,7 @@ function makeWordDisplay(wordLetters, wordTextElement, tileNum, buttons) {
 }
 //Delete last letter functionality
 document.querySelector(".deleteButton").addEventListener("click", (e) => {
-  deleteClicked();
+  deleteClicked()
 });
 
 function makeWordProcessLetters() {
@@ -820,13 +819,13 @@ function deleteClicked() {
   //process depending which word being handled(first or second)
   if (wordNumber == 1) {
     console.log("firstword in delete", firstWordText);
-    makeDeleteLetterChanges(wordNumber, firstWordText, lettersUsed1, wordText1);
+    makeDeleteLetterChanges(wordNumber, firstWordText, lettersUsed1, ".wordText1");
   } else if (wordNumber == 2) {
     makeDeleteLetterChanges(
       wordNumber,
       secondWordText,
       lettersUsed2,
-      wordText2
+      ".wordText2"
     );
   }
 }
@@ -839,13 +838,17 @@ function makeDeleteLetterChanges(
 ) {
   console.log("run makeDeleteLetterChanges");
   //remove last letter from string and assign to temp value
-  wordTextTemp = numWordText.slice(0, -1);
+  let wordTextTemp = numWordText.slice(0, -1);
+  console.log("wordTextTemp", wordTextTemp);
   //from temp value create new string
   numWordText = wordTextTemp;
+  console.log("numWordText", numWordText);
   //display string in input field element as innerHTML
-  wordTextSelector.innerHTML = numWordText;
+  document.querySelector(wordTextSelector).innerHTML = numWordText;
+  console.log("wordTextSelector.innerHTML", wordTextSelector.innerHTML);
   //empty temp value so this can be reused
   wordTextTemp = "";
+ 
   //If array of letters used not empty assign the "last letter" variable to the
   //letter tile for the last letter of the array
   lettersUsedNum != null
@@ -861,7 +864,8 @@ function makeDeleteLetterChanges(
   //reset last letter variable
   lastLetter = "";
   //assign shortened text to text variable for first and second words
-  wordNumber==1?firstWordText=numWordText:secondWordText=numWordText;
+   wordNumber==1?firstWordText=numWordText:secondWordText=numWordText;
+  // wordTextSelector.innerHTML = numWordText;
 }
 redoWord();
 
