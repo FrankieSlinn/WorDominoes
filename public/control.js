@@ -28,202 +28,17 @@ let dominoes = [
   { d23: 66 },
 ];
 let letters = [
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "b",
-  "b",
-  "c",
-  "c",
-  "d",
-  "d",
-  "d",
-  "d",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "f",
-  "f",
-  "g",
-  "g",
-  "g",
-  "h",
-  "h",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "j",
-  "k",
-  "l",
-  "l",
-  "l",
-  "l",
-  "m",
-  "m",
-  "n",
-  "n",
-  "n",
-  "n",
-  "n",
-  "n",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "p",
-  "p",
-  "q",
-  "r",
-  "r",
-  "r",
-  "r",
-  "r",
-  "r",
-  "s",
-  "s",
-  "s",
-  "s",
-  "t",
-  "t",
-  "t",
-  "t",
-  "t",
-  "t",
-  "u",
-  "u",
-  "u",
-  "u",
-  "v",
-  "v",
-  "w",
-  "w",
-  "x",
-  "y",
-  "y",
-  "z",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "a",
-  "b",
-  "b",
-  "c",
-  "c",
-  "d",
-  "d",
-  "d",
-  "d",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "e",
-  "f",
-  "f",
-  "g",
-  "g",
-  "g",
-  "h",
-  "h",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "i",
-  "j",
-  "k",
-  "l",
-  "l",
-  "l",
-  "l",
-  "m",
-  "m",
-  "n",
-  "n",
-  "n",
-  "n",
-  "n",
-  "n",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "o",
-  "p",
-  "p",
-  "q",
-  "r",
-  "r",
-  "r",
-  "r",
-  "r",
-  "r",
-  "s",
-  "s",
-  "s",
-  "s",
-  "t",
-  "t",
-  "t",
-  "t",
-  "t",
-  "t",
-  "u",
-  "u",
-  "u",
-  "u",
-  "v",
-  "v",
-  "w",
-  "w",
-  "x",
-  "y",
-  "y",
-  "z",
+  "A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "C", "C", "D", "D", "D", "D", "E", "E",
+  "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "F", "F", "G", "G", "G", "H", "H", "I", "I",
+  "I", "I", "I", "I", "I", "I", "I", "J", "K", "L", "L", "L", "L", "M", "M", "N", "N", "N", "N",
+  "N", "N", "O", "O", "O", "O", "O", "O", "O", "O", "P", "P", "Q", "R", "R", "R", "R", "R", "R",
+  "S", "S", "S", "S", "T", "T", "T", "T", "T", "T", "U", "U", "U", "U", "V", "V", "W", "W", "X",
+  "Y", "Y", "Z", "A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "C", "C", "D", "D", "D",
+  "D", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "F", "F", "G", "G", "G", "H",
+  "H", "I", "I", "I", "I", "I", "I", "I", "I", "I", "J", "K", "L", "L", "L", "L", "M", "M", "N",
+  "N", "N", "N", "N", "N", "O", "O", "O", "O", "O", "O", "O", "O", "P", "P", "Q", "R", "R", "R",
+  "R", "R", "R", "S", "S", "S", "S", "T", "T", "T", "T", "T", "T", "U", "U", "U", "U", "V", "V",
+  "W", "W", "X", "Y", "Y", "Z"
 ];
 //array for domino values for each space on grid
 let gridValues = [
@@ -660,7 +475,7 @@ function displaySelectedDomino(domKey) {
   rotated = false;
   //create HTML for domino image and style
   chosenName =
-    "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
+    "<img src = Images/" + domKey + '.png style="width:50px;height:100px;">';
   //populate chosen domino element with the HTML
   document.querySelector(".chosenDom").innerHTML = chosenName;
 }
@@ -1035,7 +850,7 @@ if (document.querySelector(".submit1"))
     xhr.open(
       "GET",
       `https://lingua-robot.p.rapidapi.com/language/v1/entries/en/${
-        document.querySelector(".wordText1").innerHTML
+        document.querySelector(".wordText1").innerHTML.toLowerCase()
       }`
     );
     xhr.setRequestHeader(
@@ -1093,7 +908,7 @@ if (document.querySelector(".submit2"))
     xhr2.open(
       "GET",
       `https://lingua-robot.p.rapidapi.com/language/v1/entries/en/${
-        document.querySelector(".wordText2").innerHTML
+        document.querySelector(".wordText2").innerHTML.toLowerCase()
       }`
     );
     xhr2.setRequestHeader(
@@ -1160,7 +975,7 @@ if (document.querySelector(".chosenDom"))
           document.querySelector(".chosenDom").innerHTML =
             "<img src = Images/" +
             domKey +
-            '.png style="width:60px;height:120px;transform:rotate(180deg)">';
+            '.png style="width:50px;height:100px;transform:rotate(180deg)">';
         }
         document.querySelector(".chosenDom").style["display"] = "inline-block";
         // The domino values need to be swapped here before being passed for validation
@@ -1185,7 +1000,7 @@ if (document.querySelector(".chosenDom"))
           document.querySelector(".chosenDom").innerHTML =
             "<img src = Images/" +
             domKey +
-            '.png style="width:60px;height:120px;">';
+            '.png style="width:50px;height:100px;">';
         }
         lettersWord1 = lettersWord1Temp;
         lettersWord2 = lettersWord2Temp;
@@ -1456,7 +1271,7 @@ function displayTileLayoutChanges(rotation, margin, gridTile) {
   document.querySelector(".chosenDom").innerHTML = "";
   //name for chosenDom, ensure not impacted by rotation
   chosenName =
-    "<img src = Images/" + domKey + '.png style="width:60px;height:120px;">';
+    "<img src = Images/" + domKey + '.png style="width:40px;height:80px;">';
 }
 //handle resets after domino placed on grid
 function displayTileResetParameters() {

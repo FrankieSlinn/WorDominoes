@@ -7,10 +7,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #444;
   font-size: 1rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
   text-align: center;
   line-height: 1.5rem;
+
 }
 
 .overallContainer {
@@ -310,7 +311,7 @@ button:active {
   display: inline-grid !important;
   grid-template-columns: auto auto;
   grid-template-rows: 1fr 2fr 2fr 2fr;
-  grid-row-gap: 1rem;
+  grid-row-gap: 0.7;
   grid-column-gap: 2rem;
   text-align: center;
   margin-top: 0rem;
@@ -321,7 +322,7 @@ button:active {
   padding: 0rem;
   align-items: center;
   vertical-align: center;
-  width: 85%;
+  width: 90%;
 }
 
 .instruction {
@@ -342,6 +343,8 @@ button:active {
   font-size: 0.8rem;
   line-height: 1rem;
   font-weight: 700;
+  padding: 0.4rem;
+  margin-bottom: 0.9rem;
 }
 
 .wordText {
@@ -394,6 +397,9 @@ button:active {
   grid-row: 3;
   margin: auto 0;
 }
+.redo, .submit{
+  margin: 0.25rem;
+}
 
 .handLetters {
   padding-top: 1rem;
@@ -429,6 +435,7 @@ button:active {
 .giveUpContainer {
   text-align: center;
   justify-content: center;
+  margin-top: 4rem;
 }
 
 .giveUp {
@@ -531,6 +538,12 @@ input {
 .newGame{
   margin: -4.5rem 0 2rem 0;
 }
+@media (min-width: 1000px) {
+  body{
+    width: 50%;
+    margin: 0 auto;
+  }
+}
 @media (max-width: 922px) {
   .giveUp{
     margin-top: 3rem;
@@ -545,9 +558,28 @@ input {
   .helpContent{
     width: 100vw;
   }
-
+.handLetters{
+  margin-top: -0.5rem;
+}
+.redo, .submit{
+  margin: 0.1;
+}
+.createWordGrid {
+  grid-column-gap: 0.5rem;
+}
+.redo, .submit, .deleteButton{
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.wordText{
+  margin-top: 0.9rem;
+  margin-bottom:1rem;
+}
 }
 @media (max-width: 617px) {
+  handLetters{
+    margin-top: 1.5;
+  }
 
 
 }
@@ -558,13 +590,11 @@ input {
   .wordInstruct {
     margin-bottom: 1.5rem;
   }
-  /* .wordText {
-    line-height: 1rem;
-  } */
-  .createWordGrid {
-    margin-bottom: -0.5rem;
-  }
 
+  .createWordGrid {
+    grid-row-gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 }
 @media (max-width: 465px) {
   .about{
@@ -600,8 +630,13 @@ input {
 }
 .createWordGrid {
   margin-top: 1.5rem;
-  grid-column-gap: 0.5rem;
-  grid-row-gap: 1.5rem;
+  
 }
+}
+@media (max-width: 375px) {
+  .createWordGrid {
+ 
+    grid-row-gap: 0.7rem;
+  } 
 }
 
