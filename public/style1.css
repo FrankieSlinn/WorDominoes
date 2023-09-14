@@ -204,6 +204,7 @@ button:active {
   grid-template-columns: 30px 30px 60px 60px 30px 30px;
   grid-template-rows: 30px 60px 60px 30px;
   color: #333;
+  margin-bottom: 1rem;
 }
 
 .domGrid1,

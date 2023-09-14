@@ -1101,6 +1101,7 @@ function wordDominationDisplayChanges(score) {
   ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
   addBlankLine();
   instructionCenter.innerText = "WORD DOMINATION!!!";
+  document.querySelector(".domGrid").style["display"] = "inline-block";
   document.querySelector(".hallOfFame").style["display"] = "inline-block";
   updateScores();
   localStorage.setItem("gameScore", JSON.stringify(score));
@@ -1132,6 +1133,7 @@ function processWordDominationScore(gridValues) {
   console.log("score after 30 added to score", score);
   //ensure score populated
   console.log("score value", document.getElementById("score").value);
+
 }
 function assignDominoValuesToGridAfterPlaceTile(currentGridValue) {
   gridValues[currentGridValue][0] = Number(lettersWord1);
@@ -1191,26 +1193,31 @@ function evaluateGrid(i) {
   currentGridValue = i;
   console.log("currentGridValue in evaluate grid", currentGridValue);
   //Word Domination scenario - all tiles placed
-  if (
-    //check all tiiles have been placed
-    dominoesPlaced == gridTiles.length
-  ) {
-    console.log("WordDomination!!!!!");
-    wordDomination = true;
-    //process word domination score
-    processWordDominationScore(gridValues);
-    //Display for Word Domination
-    wordDominationDisplayChanges(score);
-    displayTile(currentGridValue);
-  }
+  console.log("dominoesPlaced", dominoesPlaced)
+
   //tile placed but game not yet completed
-  else if (
+   if (
     (gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
-    (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
-    (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
-    (gridValueCompare[0] == gridValueCompare[1] &&
-      gridValueCompare[2] == gridValueCompare[3])
-  ) {
+  (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
+  (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
+  (gridValueCompare[0] == gridValueCompare[1] &&
+    gridValueCompare[2] == gridValueCompare[3]
+  )){
+    dominoesPlaced+=1;
+    if (
+      //check all tiiles have been placed
+      // console.log("dominoesPlaced", dominoesPlaced)
+      dominoesPlaced >= gridTiles.length
+    ) {
+      console.log("WordDomination!!!!!");
+      wordDomination = true;
+      //process word domination score
+      processWordDominationScore(gridValues);
+      //Display for Word Domination
+      wordDominationDisplayChanges(score);
+      displayTile(currentGridValue);
+    }
+    else{
     console.log("tile successfully placed");
     layoutAfterPlaceTile();
     console.log("rotated before?", rotated);
@@ -1223,7 +1230,14 @@ function evaluateGrid(i) {
     console.log("new gridvalues", gridValues[i][0]);
     console.log("new gridvalues", gridValues[i][1]);
     console.log("gridValues", gridValues);
-  } else {
+    }
+  } 
+
+  if (!((gridValueCompare[0] == 0 && gridValueCompare[3] == 0) ||
+  (gridValueCompare[0] == gridValueCompare[1] && gridValueCompare[3] == 0) ||
+  (gridValueCompare[2] == gridValueCompare[3] && gridValueCompare[0] == 0) ||
+  (gridValueCompare[0] == gridValueCompare[1] &&
+    gridValueCompare[2] == gridValueCompare[3]))){
     //the tile cannot be placed handle changes
     console.log("word can't be placed running");
     displayChangesAfterTileCannotBePlaced();
@@ -1275,14 +1289,15 @@ function displayTileLayoutChanges(rotation, margin, gridTile) {
 }
 //handle resets after domino placed on grid
 function displayTileResetParameters() {
+  
+  if(wordDomination==false){
   newTilesDominoes();
   refillLetters();
-  dominoesPlaced += 1;
+  
   blockPlaceTile = true;
   domKey = "";
-  rotated = false;
-  // lettersWord1 = lettersWord1;
-  // lettersWord2 = lettersWord2;
+  rotated = false;}
+
 }
 
 function displayTile(i) {
