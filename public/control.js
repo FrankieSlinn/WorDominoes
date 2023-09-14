@@ -785,7 +785,7 @@ function wordLengthIncorrect(wordNumber) {
   let wordInstructText = `.word${wordNumber}Instruct`;
   document.querySelector(
     wordInstructText
-  ).innerHTML = `The word doesn't have the right amount of letters. It needs ${lettersWord1} letters. Try Again.`;
+  ).innerHTML = `Not the right amount of letters. The word needs ${lettersWord1} letters.`;
   //display changes for incorrect word
   wordNotCorrect(wordNumber);
 }
