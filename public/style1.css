@@ -342,7 +342,6 @@ button:active {
   font-size: 0.8rem;
   line-height: 1rem;
   font-weight: 700;
-
 }
 
 .wordText {
@@ -573,10 +572,10 @@ input {
     margin-bottom: -0.3rem;
   }
   .wordInstruct {
-    margin-bottom: 1rem;
+    margin-bottom: 1.9rem;
   }
   .createWordGrid {
-    margin-top: 2rem;
+    margin-top: 2.rem;
     margin-bottom: 1rem;
   }
   .wordText {
@@ -587,4 +586,22 @@ input {
 .about{
   font-size: 1.8rem;
 }
+.wordInstruct{
+  margin-top: 6rem;
+  margin-bottom: 7rem;
+
 }
+.handLetters{
+  margin-top: -1.8rem;
+}
+.wordText{
+  margin: 3rem 0 2.5rem 0;
+
+}
+.createWordGrid {
+  margin-top: 1.5rem;
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 1.5rem;
+}
+}
+
