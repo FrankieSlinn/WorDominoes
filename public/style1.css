@@ -343,8 +343,12 @@ button:active {
   font-size: 0.8rem;
   line-height: 1rem;
   font-weight: 700;
+<<<<<<< HEAD
   padding: 0.4rem;
   margin-bottom: 0.9rem;
+=======
+
+>>>>>>> parent of f896c95 (not enough letters layout fix)
 }
 
 .wordText {
@@ -565,7 +569,7 @@ input {
   margin: 0.1;
 }
 .createWordGrid {
-  grid-column-gap: 0.5rem;
+  grid-column-gap: 0.7rem;
 }
 .redo, .submit, .deleteButton{
   font-size: 0.7rem;
@@ -574,6 +578,9 @@ input {
 .wordText{
   margin-top: 0.9rem;
   margin-bottom:1rem;
+}
+.buttons{
+  margin-top: 0.5rem;
 }
 }
 @media (max-width: 617px) {
@@ -592,7 +599,7 @@ input {
   }
 
   .createWordGrid {
-    grid-row-gap: 0.5rem;
+    grid-row-gap: 0.7rem;
     margin-bottom: 0.5rem;
   }
 }
@@ -602,10 +609,10 @@ input {
     margin-bottom: -0.3rem;
   }
   .wordInstruct {
-    margin-bottom: 1.9rem;
+    margin-bottom: 1rem;
   }
   .createWordGrid {
-    margin-top: 2.rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
   }
   .wordText {
@@ -616,11 +623,8 @@ input {
 .about{
   font-size: 1.8rem;
 }
-.wordInstruct{
-  margin-top: 6rem;
-  margin-bottom: 7rem;
-
 }
+<<<<<<< HEAD
 .handLetters{
   margin-top: -1.8rem;
 }
@@ -640,3 +644,5 @@ input {
   } 
 }
 
+=======
+>>>>>>> parent of f896c95 (not enough letters layout fix)
