@@ -1101,8 +1101,9 @@ function wordDominationDisplayChanges(score) {
   ).innerHTML = `Congratulations, You have achieved Word Domination! Your score is ${score}`;
   addBlankLine();
   instructionCenter.innerText = "WORD DOMINATION!!!";
-  document.querySelector(".domGrid").style["display"] = "inline-block";
+  // document.querySelector(".domGrid").style["display"] = "inline-block";
   document.querySelector(".hallOfFame").style["display"] = "inline-block";
+  document.querySelector(".hallOfFame").style["margin-top"] = "-8rem";
   updateScores();
   localStorage.setItem("gameScore", JSON.stringify(score));
   finishGameDisplay();
@@ -1114,6 +1115,8 @@ function wordDominationDisplayChanges(score) {
   document.querySelector(".instruction").style["margin-top"] = "0.3";
   document.querySelector(".instructionCenter").style["margin"] =
     "1rem 0 -2rem 0";
+    document.querySelector(".domGridContainer").style["margin-bottom"] =
+    "2rem";
   document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
 }
 function tilePlacedDisplayChanges() {
@@ -1250,9 +1253,10 @@ function evaluateGrid(i) {
 //Doesn't contain other functions
 function finishGameDisplay() {
   addBlankLine();
+  if (wordDomination==false){
   document.querySelector(
     ".instructionCenter"
-  ).innerHTML = `You Have Scored ${score} Points`;
+  ).innerHTML = `You Have Scored ${score} Points`;}
   document.querySelector(".createWordGrid").style["z-index"] = "-1";
   document.querySelector(".createWordGrid").style["display"] = "none";
   document.querySelector(".createWordGrid").style["opacity"] = "none";
@@ -1275,6 +1279,7 @@ function finishGameDisplay() {
   instruction.style["display"] = "inline-block";
   //add a space line height
   document.querySelector(".instructionCenter").style["font-size"] = "1rem";
+  
 }
 //handle display after domino placed on grid
 function displayTileLayoutChanges(rotation, margin, gridTile) {
