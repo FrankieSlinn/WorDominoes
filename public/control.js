@@ -93,7 +93,7 @@ let dominoHandDisplayClasses = [".dom1", ".dom2", ".dom3", ".dom4"];
 //Define Initial Parameters
 
 //dictionary for words the dictionary api doesn't validate
-let dictionary = ["is", "be", "was"];
+let dictionary = ["is", "be", "was", "look"];
 //current tile
 let currentGridValue = 0;
 //array of four. 0: end of last tile 1: beginning of current tile 2: end of current tile 3: beginning of next tile
@@ -1113,13 +1113,14 @@ function wordDominationDisplayChanges(score) {
   document.querySelector(".instructionCenter").style["margin"] =
     "1rem 0 -2rem 0";
 
-  document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
+  document.querySelector(".hallOfFame").style["margin-top"] = "-7rem;";
 }
 function tilePlacedDisplayChanges() {
   document.querySelector(".instruction").style["display"] = "inline-block";
+  if(wordDomination==false){
   document.querySelector(
     ".instruction"
-  ).innerHTML = `Congratulations, you placed a tile!`;
+  ).innerHTML = `Congratulations, you placed a tile!`;}
 
   addBlankLine();
   giveUp.removeAttribute("hidden");
