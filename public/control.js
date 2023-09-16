@@ -309,9 +309,9 @@ function calcScore(gridValues) {
     score += gridValues[i][0];
     score += gridValues[i][1];
   }
-  console.log("wordDomination", wordDomination);
+  console.log("wordDomination, score before 30 added in calcscore", wordDomination, score);
   wordDomination == true ? (score = score + 30) : (score = score);
-  console.log("score", score);
+  console.log("score after 30 added for calcsore", score);
   //!!!important for getting score registered / in the HoF
   document.getElementById("score").value = score;
   //store score in local storage
@@ -921,16 +921,12 @@ if (document.querySelector(".submit2"))
 
 //process an attempt to place tile on the board
 for (let i = 0; i < gridTiles.length; i++) {
-  if (document.querySelector(gridTiles[i]))
+  if (document.querySelector(gridTiles[i])&&wordDomination==false)
     document.querySelector(gridTiles[i]).addEventListener("click", function () {
       console.log("gridValues[i]", gridValues[i]);
       //Ensure a grid space is empty before it can be processed. When a domino is placed
       //the gridValues array is populated with the numbers of domino spots on each side
       document.querySelector(".instruction").innerText = "";
-      console.log(
-        "(gridValues[i][0]==0&&gridValues[i][1]==0)",
-        gridValues[i][0] == 0 && gridValues[i][1] == 0
-      );
       //Check if there is a domino to place
       if (dominoPlaced == true) {
         document.querySelector(".instruction").innerText =
@@ -1107,6 +1103,7 @@ function wordDominationDisplayChanges(score) {
   updateScores();
   localStorage.setItem("gameScore", JSON.stringify(score));
   finishGameDisplay();
+  document.querySelector(".giveUp").style["display"] = "none";
   document.querySelector(".chosenDom").style["display"] = "none";
   giveUp.style["display"] = "none";
   document.querySelector(".instruction").style["font-size"] = "1rem";
@@ -1115,8 +1112,7 @@ function wordDominationDisplayChanges(score) {
   document.querySelector(".instruction").style["margin-top"] = "0.3";
   document.querySelector(".instructionCenter").style["margin"] =
     "1rem 0 -2rem 0";
-    document.querySelector(".domGridContainer").style["margin-bottom"] =
-    "2rem";
+
   document.querySelector(".hallOfFame").style["margin-top"] = "-6rem;";
 }
 function tilePlacedDisplayChanges() {
@@ -1132,10 +1128,10 @@ function processWordDominationScore(gridValues) {
   console.log("process word domination score running");
   let score = 0;
   calcScore(gridValues);
-  console.log("score after calcScore", score);
-  console.log("score after 30 added to score", score);
+  console.log("score after calcScore in word domination", score);
+
   //ensure score populated
-  console.log("score value", document.getElementById("score").value);
+  console.log("score value in word domination", document.getElementById("score").value);
 
 }
 function assignDominoValuesToGridAfterPlaceTile(currentGridValue) {
@@ -1210,7 +1206,7 @@ function evaluateGrid(i) {
     if (
       //check all tiiles have been placed
       // console.log("dominoesPlaced", dominoesPlaced)
-      dominoesPlaced >= gridTiles.length
+      dominoesPlaced >= gridTiles.length&&wordDomination==false
     ) {
       console.log("WordDomination!!!!!");
       wordDomination = true;
@@ -1257,6 +1253,8 @@ function finishGameDisplay() {
   document.querySelector(
     ".instructionCenter"
   ).innerHTML = `You Have Scored ${score} Points`;}
+  document.querySelector(".domGridContainer").style["margin-bottom"] =
+  "2rem";
   document.querySelector(".createWordGrid").style["z-index"] = "-1";
   document.querySelector(".createWordGrid").style["display"] = "none";
   document.querySelector(".createWordGrid").style["opacity"] = "none";
