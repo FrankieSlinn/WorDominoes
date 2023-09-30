@@ -1,3 +1,5 @@
+
+
 //***GAME SETUP***//
 
 //Game Pieces
@@ -1457,7 +1459,24 @@ document.querySelector(".newGame").addEventListener("click", function () {
 });
 
 
-// function startNewGame(){
-//   console.log("start new game running");
-//   setInitialDisplay()
-// }
+fetchMinimumHOFScore();
+
+function fetchMinimumHOFScore() {
+          console.log("updateMinimumHOFScore running")
+        
+                    fetch(/minimums/)
+                .then(response => {
+                    if (!response.ok) {
+                        console.log("Response not OK for change API");
+                        throw new Error("Error");
+                    }
+        
+                    return response.json(); // Call response.json() to parse JSON data
+                })
+                .catch(error => {
+                  if (error) {
+            console.log(error); // Log the error message  
+          }
+                });
+                }
+        
